@@ -15,6 +15,7 @@ import { levels } from "@/assets/json/block_levels.js";
 import { BlockController } from "@/scripts/BlockController";
 
 class Block extends Entity {
+  static DROP_FORCE = 40;
   constructor(app) {
     super("Block", app);
     this.level = Math.floor(math.random(0, 4));
@@ -46,15 +47,11 @@ class Block extends Entity {
     this.sprite.spriteAsset = this.createSpriteAsset(atlas, 1).id;
 
     this.setPosition(0, 8, 0);
-    this.setLocalScale(
-      levels[this.level].scale,
-      levels[this.level].scale,
-      levels[this.level].scale
-    );
+    this.setLocalScale(this.blockScale, this.blockScale, this.blockScale);
 
     this.addComponent("collision", {
       type: "sphere",
-      radius: levels[this.level].scale / 2,
+      radius: this.blockScale / 2,
     });
     this.addComponent("rigidbody", {
       type: BODYTYPE_STATIC,
@@ -63,7 +60,7 @@ class Block extends Entity {
     });
     this.rigidbody.on("collisionstart", this.onCollisionStart, this);
 
-    this.rigidbody.restitution = 0.4;
+    this.rigidbody.restitution = 0.3;
     this.rigidbody.friction = 0.3;
     this.rigidbody.linearFactor = new Vec3(1, 1, 0);
     this.rigidbody.angularFactor = new Vec3(0, 0, 1);
@@ -87,7 +84,7 @@ class Block extends Entity {
   drop() {
     this.rigidbody.type = BODYTYPE_DYNAMIC;
     this.rigidbody.mass = this.mass;
-    this.rigidbody.applyImpulse(new Vec3(0, -20 * this.mass, 0));
+    this.rigidbody.applyImpulse(new Vec3(0, -Block.DROP_FORCE * this.mass, 0));
 
     this.addComponent("script");
     this.script.create(BlockController);
