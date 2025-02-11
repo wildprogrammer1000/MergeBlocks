@@ -11,7 +11,6 @@ import {
 
 class InputHandler extends Script {
   initialize() {
-    this.app = this.app;
     this.isDragging = false;
     if (this.app.touch) {
       this.app.touch.on(EVENT_TOUCHSTART, this.onTouchStart, this);
@@ -37,10 +36,11 @@ class InputHandler extends Script {
     this.app.fire("pointer:move", { x: point.x, y: point.y });
   }
 
-  onMouseUp() {
+  onMouseUp(event) {
     if (!this.isDragging) return;
     this.isDragging = false;
-    this.app.fire("pointer:up");
+    const point = this.screenToWorld(event.x, event.y);
+    this.app.fire("pointer:up", { x: point.x, y: point.y });
   }
 
   onTouchStart(event) {
@@ -57,10 +57,14 @@ class InputHandler extends Script {
     this.app.fire("pointer:move", { x: point.x, y: point.y });
   }
 
-  onTouchEnd() {
+  onTouchEnd(event) {
     if (!this.isDragging) return;
     this.isDragging = false;
-    this.app.fire("pointer:up");
+    const touch = event.changedTouches[0];
+    if (touch) {
+      const point = this.screenToWorld(touch.x, touch.y);
+      this.app.fire("pointer:up", { x: point.x, y: point.y });
+    }
   }
 
   screenToWorld(x, y) {
