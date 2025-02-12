@@ -5,6 +5,7 @@ import { createInputHandler } from "@/scripts/InputHandler";
 import * as pc from "playcanvas";
 import { createDeadline } from "@/templates/Deadline";
 import { GoHome } from "react-icons/go";
+import { addRecord } from "@/api/nakama";
 
 if (import.meta.env.DEV) window.pc = pc;
 
@@ -21,16 +22,29 @@ window.addEventListener("contextmenu", (e) => {
 });
 
 function GamePage() {
+  const scoreRef = useRef(0);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
   const [countdown, setCountdown] = useState(0);
+  const [result, setResult] = useState(null);
 
   const canvasRef = useRef(null);
   const appRef = useRef(null);
   const updateScore = (level) => {
-    setScore((prev) => prev + (level + 1) * (level + 2) * 0.5);
+
+    if (gameOver) return;
+    scoreRef.current += (level + 1) * (level + 2) * 0.5;
+    setScore(scoreRef.current);
   };
-  const onGameOver = () => {
+  const onGameOver = async () => {
+    const { records } = await addRecord(scoreRef.current);
+    const ownerRecord = records.ownerRecords[0];
+    const rank = ownerRecord.rank;
+    const bestScore = ownerRecord.score;
+    setResult({
+      rank,
+      bestScore,
+    });
     setGameOver(true);
   };
   const onCountdown = (time) => {
@@ -38,8 +52,10 @@ function GamePage() {
   };
   const restartGame = () => {
     appRef.current.fire("game:restart");
-    setScore(0);
+    scoreRef.current = 0;
+    setScore(scoreRef.current);
     setGameOver(false);
+    setResult(null);
   };
   useEffect(() => {
     // Ammo 초기화
@@ -182,6 +198,12 @@ function GamePage() {
         <div className="absolute top-0 left-0 z-20 w-full h-full bg-black/50 flex flex-col items-center justify-center">
           <div className="text-4xl font-bold text-white">GAME OVER</div>
           <div className="text-2xl font-bold text-white">SCORE: {score}</div>
+          {result && (
+            <div className="text-2xl font-bold text-white text-center">
+              BEST SCORE: {result.bestScore} <br />
+              My Rank: {result.rank}
+            </div>
+          )}
           <div className="text-2xl font-bold text-white">
             <button
               className="bg-white text-black px-4 py-2 rounded-md hover:bg-black hover:text-white transition-all duration-300 hover:border-white border-2 border-black"
