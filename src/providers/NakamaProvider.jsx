@@ -39,12 +39,17 @@ export const NakamaProvider = ({ children }) => {
     setAccount(account);
     setSession(session);
   };
+  const refreshAccount = async () => {
+    const account = await client.getAccount(session);
+    nakama.account = account;
+    setAccount(account);
+  };
   useEffect(() => {
     authenticate();
   }, []);
 
   return (
-    <NakamaContext.Provider value={{ account, session }}>
+    <NakamaContext.Provider value={{ account, session, refreshAccount }}>
       {children}
     </NakamaContext.Provider>
   );
