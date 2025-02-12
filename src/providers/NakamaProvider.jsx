@@ -1,8 +1,8 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Client } from "@heroiclabs/nakama-js";
 import { nakamaConfig, NODE_API_ENDPOINT } from "../constants/config";
 import axios from "axios";
-import { rpc } from "@/api/nakama";
+
 const NakamaContext = createContext();
 export const nakama = {
   client: null,
@@ -50,5 +50,11 @@ export const NakamaProvider = ({ children }) => {
   );
 };
 
-export const useNakama = () => {};
+export const useNakama = () => {
+  const context = useContext(NakamaContext);
+  if (!context) {
+    throw new Error("useNakama must be used within a NakamaProvider");
+  }
+  return context;
+};
 export default NakamaProvider;

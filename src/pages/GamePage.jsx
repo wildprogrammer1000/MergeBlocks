@@ -6,6 +6,7 @@ import * as pc from "playcanvas";
 import { createDeadline } from "@/templates/Deadline";
 import { GoHome } from "react-icons/go";
 import { addRecord } from "@/api/nakama";
+import { VscDebugRestart } from "react-icons/vsc";
 
 if (import.meta.env.DEV) window.pc = pc;
 
@@ -31,7 +32,6 @@ function GamePage() {
   const canvasRef = useRef(null);
   const appRef = useRef(null);
   const updateScore = (level) => {
-
     if (gameOver) return;
     scoreRef.current += (level + 1) * (level + 2) * 0.5;
     setScore(scoreRef.current);
@@ -195,7 +195,7 @@ function GamePage() {
         </div>
       )}
       {gameOver && (
-        <div className="absolute top-0 left-0 z-20 w-full h-full bg-black/50 flex flex-col items-center justify-center">
+        <div className="absolute top-0 left-0 z-20 w-full h-full bg-black/50 flex flex-col gap-2 items-center justify-center">
           <div className="text-4xl font-bold text-white">GAME OVER</div>
           <div className="text-2xl font-bold text-white">SCORE: {score}</div>
           {result && (
@@ -204,13 +204,19 @@ function GamePage() {
               My Rank: {result.rank}
             </div>
           )}
-          <div className="text-2xl font-bold text-white">
+          <div className="flex gap-2 text-2xl font-bold text-white">
             <button
-              className="bg-white text-black px-4 py-2 rounded-md hover:bg-black hover:text-white transition-all duration-300 hover:border-white border-2 border-black"
+              className="w-16 h-16 flex justify-center items-center text-4xl bg-white text-black px-4 py-2 rounded-md hover:bg-black hover:text-white transition-all duration-300 hover:border-white border-2 border-black"
               onClick={restartGame}
             >
-              RESTART
+              <VscDebugRestart />
             </button>
+            <Link
+              className="w-16 h-16 flex justify-center items-center text-4xl bg-white text-black px-4 py-2 rounded-md hover:bg-black hover:text-white transition-all duration-300 hover:border-white border-2 border-black"
+              to="/"
+            >
+              <GoHome />
+            </Link>
           </div>
         </div>
       )}

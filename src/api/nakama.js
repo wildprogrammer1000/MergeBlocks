@@ -14,16 +14,17 @@ const rpc = async (id, data = {}) => {
 };
 
 const addRecord = async (score) => {
-  try {
-    const account = nakama.account;
-    const res = await rpc("record:add", {
-      score,
-      display_name: account.user.display_name || account.user.username,
-    });
-    return res;
-  } catch (err) {
-    console.error(err);
-  }
+  const account = nakama.account;
+  const res = await rpc("record:add", {
+    score,
+    display_name: account.user.display_name || account.user.username,
+  });
+  return res;
 };
 
-export { rpc, addRecord };
+const getRecords = async () => {
+  const res = await rpc("records:get");
+  return res;
+};
+
+export { rpc, addRecord, getRecords };

@@ -1,4 +1,9 @@
 @import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
 .game-page {
   width: 100vw;
   height: 100vh;
