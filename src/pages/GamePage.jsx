@@ -325,13 +325,13 @@ function GamePage() {
           )}
           <div className="flex gap-2 text-2xl font-bold text-white">
             <button
-              className="w-16 h-16 flex justify-center items-center text-4xl bg-white text-black px-4 py-2 rounded-md hover:bg-black hover:text-white transition-all duration-300 hover:border-white border-2 border-black"
+              className="w-16 h-16 flex justify-center items-center text-4xl bg-[var(--color-chocolate-100)] text-[var(--color-chocolate-900)] px-4 py-2 rounded-2xl hover:bg-[var(--color-chocolate-900)] hover:text-[var(--color-chocolate-100)] transition-all duration-300 hover:border-white "
               onClick={restartGame}
             >
               <VscDebugRestart />
             </button>
             <Link
-              className="w-16 h-16 flex justify-center items-center text-4xl bg-white text-black px-4 py-2 rounded-md hover:bg-black hover:text-white transition-all duration-300 hover:border-white border-2 border-black"
+              className="w-16 h-16 flex justify-center items-center text-4xl bg-[var(--color-chocolate-100)] text-[var(--color-chocolate-900)] px-4 py-2 rounded-2xl hover:bg-[var(--color-chocolate-900)] hover:text-[var(--color-chocolate-100)] transition-all duration-300 hover:border-white "
               to="/"
             >
               <GoHome />
@@ -351,13 +351,13 @@ function GamePage() {
           </div>
         </div>
       )}
-      <div className="absolute top-4 left-4 z-10 text-2xl font-bold text-white bg-black/50 px-4 py-2 rounded-md">
+      <div className="absolute top-4 left-4 z-10 text-2xl font-bold text-[var(--color-chocolate-100)] bg-[var(--color-chocolate-900)]/50 px-4 py-2 rounded-2xl">
         SCORE: {score}
       </div>
 
       <Link
         to="/"
-        className="absolute top-4 right-4 z-10 bg-white border border-black rounded-md hover:bg-black hover:text-white transition-all duration-300 w-12 h-12 flex justify-center items-center text-3xl"
+        className="absolute top-4 right-4 z-10 bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] hover:bg-[var(--color-chocolate-100)] hover:text-[var(--color-chocolate-900)] rounded-2xl  transition-all duration-300 w-12 h-12 flex justify-center items-center text-3xl "
       >
         <GoHome />
       </Link>

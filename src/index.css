@@ -1,5 +1,23 @@
 @import "tailwindcss";
 
+:root {
+  /* 초콜릿 색상 스케일 */
+  --color-chocolate-100: #FDF0E6;  /* 가장 연한 크림색 */
+  --color-chocolate-200: #F5E1D0;  /* 매우 연한 베이지 */
+  --color-chocolate-300: #E6CDB7;  /* 연한 베이지 */
+  --color-chocolate-400: #D4B69B;  /* 밝은 카라멜 */
+  --color-chocolate-500: #C4A484;  /* 중간 톤의 초콜릿 */
+  --color-chocolate-600: #B08E6B;  /* 카라멜 밀크 */
+  --color-chocolate-700: #9B7960;  /* 진한 카라멜 */
+  --color-chocolate-800: #866555;  /* 다크 초콜릿 */
+  --color-chocolate-900: #6F4E45;  /* 가장 진한 초콜릿 */
+
+  /* 기능성 색상 */
+  --color-surface: #FFFFFF;
+  --color-background: var(--color-chocolate-100);
+  --color-overlay: rgba(110, 78, 69, 0.5);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -11,6 +29,7 @@
   right: 0;
   bottom: 0;
 }
+
 .game-page {
   width: 100vw;
   height: 100vh;

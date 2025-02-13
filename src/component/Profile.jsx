@@ -72,7 +72,7 @@ const Profile = () => {
     <div className="absolute inset-0 bg-black/50 flex justify-center items-center z-50">
       <div className="w-96 bg-white rounded-lg p-6 flex flex-col gap-4">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold">Profile</h2>
+          <h2 className="text-2xl font-bold">Account</h2>
           <button
             onClick={closeProfile}
             className="text-gray-500 hover:text-gray-700"
@@ -113,7 +113,7 @@ const Profile = () => {
             <button
               onClick={linkGoogle}
               disabled={loading}
-              className="flex items-center justify-center gap-2  py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors disabled:opacity-50"
+              className="flex items-center justify-center gap-2  py-2 px-4 border border-gray-300  hover:bg-gray-100 transition-colors disabled:opacity-50 font-bold rounded-full"
             >
               Link
             </button>

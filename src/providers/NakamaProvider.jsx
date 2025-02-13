@@ -23,21 +23,25 @@ export const NakamaProvider = ({ children }) => {
   const [account, setAccount] = useState(null);
 
   const authenticate = async () => {
-    let res = await axios({
-      method: "get",
-      url: `${NODE_API_ENDPOINT}/auth`,
-      withCredentials: true,
-    });
-    const user_id = res.data.user_id;
+    try {
+      let res = await axios({
+        method: "get",
+        url: `${NODE_API_ENDPOINT}/auth`,
+        withCredentials: true,
+      });
+      const user_id = res.data.user_id;
 
-    const session = await client.authenticateCustom(user_id, true);
-    const account = await client.getAccount(session);
-    nakama.client = client;
-    nakama.session = session;
-    nakama.account = account;
+      const session = await client.authenticateCustom(user_id, true);
+      const account = await client.getAccount(session);
+      nakama.client = client;
+      nakama.session = session;
+      nakama.account = account;
 
-    setAccount(account);
-    setSession(session);
+      setAccount(account);
+      setSession(session);
+    } catch (error) {
+      console.error('Authentication failed:', error);
+    }
   };
   const refreshAccount = async () => {
     const account = await client.getAccount(session);
@@ -46,6 +50,20 @@ export const NakamaProvider = ({ children }) => {
   };
   useEffect(() => {
     authenticate();
+
+    // 페이지 가시성 변경 이벤트 리스너
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        authenticate();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // 클린업
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   return (

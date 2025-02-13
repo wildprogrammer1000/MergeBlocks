@@ -52,9 +52,15 @@ const DisplayNameModal = () => {
   }, [displayName]);
   if (!isOpen) return null;
   return (
-    <div className="absolute top-0 left-0 z-20 w-full h-full bg-black/50 flex flex-col gap-2 items-center justify-center">
-      <div className="bg-white border-2 rounded-2xl">
-        <div className="text-xl p-1 font-bold text-center border-b-2">
+    <div
+      className="absolute top-0 left-0 z-20 w-full h-full bg-black/50 flex flex-col gap-2 items-center justify-center"
+      onClick={() => setOpen(false)}
+    >
+      <div
+        className="bg-white border-2 border-[var(--color-chocolate-900)] rounded-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="text-xl p-1 font-bold text-center border-b-2 border-[var(--color-chocolate-900)] text-[var(--color-chocolate-900)]">
           SET NICKNAME
         </div>
         <div className="flex flex-col gap-2 p-2">

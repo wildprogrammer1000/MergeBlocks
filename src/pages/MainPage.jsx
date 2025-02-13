@@ -11,15 +11,17 @@ function MainPage() {
   const { account } = useNakama();
   const navigate = useNavigate();
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center gap-4 ">
-      <h1 className="text-[80px] font-bold text-center leading-none">
-        Merge Blocks!
+    <div className="w-full h-full flex flex-col justify-center items-center gap-4 bg-[var(--color-background)]">
+      <h1 className="text-[80px] font-bold text-center leading-none text-[var(--color-chocolate-900)]">
+        Merge
+        <br />
+        Blocks
       </h1>
       <div className="flex gap-4">
         {account && (
           <>
             <button
-              className="w-16 h-16 text-3xl flex justify-center items-center text-center border-2 border-black rounded-2xl hover:bg-black hover:text-white transition-all duration-300 font-bold"
+              className="w-16 h-16 text-3xl flex justify-center text-[var(--color-chocolate-900)] items-center text-center border-2 border-[var(--color-chocolate-900)] rounded-2xl hover:bg-[var(--color-chocolate-900)] hover:text-white transition-all duration-300 font-bold"
               onClick={() => {
                 account.user.display_name
                   ? navigate("/game")
@@ -30,7 +32,7 @@ function MainPage() {
             </button>
             <button
               onClick={() => evt.emit("leaderboard:open")}
-              className="w-16 h-16 text-3xl flex justify-center items-center text-center border-2 border-black rounded-2xl hover:bg-black hover:text-white transition-all duration-300 font-bold cursor-pointer"
+              className="w-16 h-16 text-3xl flex justify-center text-[var(--color-chocolate-900)] items-center text-center border-2 border-[var(--color-chocolate-900)] rounded-2xl hover:bg-[var(--color-chocolate-900)] hover:text-white transition-all duration-300 font-bold cursor-pointer"
             >
               <MdLeaderboard />
             </button>
@@ -41,7 +43,7 @@ function MainPage() {
         <div className="absolute top-4 right-4">
           <button
             onClick={() => evt.emit("profile:open")}
-            className="w-12 h-12 text-xl flex justify-center items-center text-center border-2 border-black rounded-xl hover:bg-black hover:text-white transition-all duration-300"
+            className="w-12 h-12 text-xl flex justify-center text-[var(--color-chocolate-900)] items-center text-center border-2 border-[var(--color-chocolate-900)] rounded-xl hover:bg-[var(--color-chocolate-900)] hover:text-white transition-all duration-300"
           >
             <FaUser />
           </button>
