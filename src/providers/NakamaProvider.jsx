@@ -49,7 +49,9 @@ export const NakamaProvider = ({ children }) => {
   }, []);
 
   return (
-    <NakamaContext.Provider value={{ account, session, refreshAccount }}>
+    <NakamaContext.Provider
+      value={{ account, client, session, refreshAccount }}
+    >
       {children}
     </NakamaContext.Provider>
   );
