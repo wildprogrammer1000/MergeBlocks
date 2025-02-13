@@ -11,7 +11,7 @@ function MainPage() {
   const { account } = useNakama();
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col justify-center items-center h-screen gap-4">
+    <div className="w-full h-full flex flex-col justify-center items-center gap-4 ">
       <h1 className="text-[80px] font-bold text-center leading-none">
         Merge Blocks!
       </h1>
