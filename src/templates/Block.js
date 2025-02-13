@@ -12,7 +12,7 @@ import {
   Vec4,
 } from "playcanvas";
 import { levels } from "@/assets/json/block_levels.js";
-import { BlockController } from "@/scripts/BlockController";
+import { BlockController } from "@/gamescripts/BlockController";
 
 class Block extends Entity {
   static DROP_FORCE = 40;

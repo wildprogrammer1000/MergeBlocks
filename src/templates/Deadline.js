@@ -1,4 +1,4 @@
-import DeadlineController from "@/scripts/DeadlineController";
+import DeadlineController from "@/gamescripts/DeadlineController";
 import { Color, Entity, StandardMaterial, Vec3 } from "playcanvas";
 
 class Deadline extends Entity {

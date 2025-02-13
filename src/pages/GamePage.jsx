@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { createGameManager } from "@/scripts/GameManager";
-import { createInputHandler } from "@/scripts/InputHandler";
+import { createGameManager } from "@/gamescripts/GameManager";
+import { createInputHandler } from "@/gamescripts/InputHandler";
 import * as pc from "playcanvas";
 import { createDeadline } from "@/templates/Deadline";
 import { GoHome } from "react-icons/go";
