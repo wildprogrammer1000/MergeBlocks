@@ -1,13 +1,13 @@
-# Block Merger - Physics Puzzle Game
+# Merge Blocks - Physics-based Puzzle Game
 # 블록 머지 - 물리 퍼즐 게임
 
-A physics-based puzzle game where you merge blocks to achieve higher scores!
-물리 기반 퍼즐 게임으로 블록을 합쳐 높은 점수를 획득하세요!
+- A physics-based puzzle game where you merge blocks to achieve higher scores!
+- 물리 기반 퍼즐 게임으로 블록을 합쳐 높은 점수를 획득하세요!
 
 ## Game Objective | 게임 목표
 
-Merge identical blocks to upgrade them and earn higher scores!
-같은 블록을 합치며 더 높은 점수를 획득하세요!
+- Merge identical blocks to upgrade them and earn higher scores!
+- 같은 블록을 합치며 더 높은 점수를 획득하세요!
 
 ## Game Rules | 게임 규칙
 
@@ -18,8 +18,8 @@ Merge identical blocks to upgrade them and earn higher scores!
 
 ## How to Play | 게임 방법
 
-Move and drop blocks using touch or mouse controls to your desired location
-생성된 블록을 터치 혹은 마우스 조작을 통해 원하는 위치로 이동시킨 후 떨어뜨립니다
+- Move and drop blocks using touch or mouse controls to your desired location
+- 생성된 블록을 터치 혹은 마우스 조작을 통해 원하는 위치로 이동시킨 후 떨어뜨립니다
 
 ## Tech Stack | 기술 스택
 
