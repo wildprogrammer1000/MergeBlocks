@@ -7,6 +7,7 @@ import { createDeadline } from "@/templates/Deadline";
 import { GoHome } from "react-icons/go";
 import { addRecord } from "@/api/nakama";
 import { VscDebugRestart } from "react-icons/vsc";
+import { levels } from "@/assets/json/block_levels.js";
 
 if (import.meta.env.DEV) window.pc = pc;
 
@@ -77,6 +78,72 @@ function GamePage() {
       texture: new pc.Asset("cat", "texture", {
         url: new URL("../assets/Ellipse.png", import.meta.url).toString(),
       }),
+      texture1: new pc.Asset("chocolate_0", "texture", {
+        url: new URL(
+          "../assets/chocolate/chocolate_0.png",
+          import.meta.url
+        ).toString(),
+      }),
+      texture2: new pc.Asset("chocolate_1", "texture", {
+        url: new URL(
+          "../assets/chocolate/chocolate_1.png",
+          import.meta.url
+        ).toString(),
+      }),
+      texture3: new pc.Asset("chocolate_2", "texture", {
+        url: new URL(
+          "../assets/chocolate/chocolate_2.png",
+          import.meta.url
+        ).toString(),
+      }),
+      texture4: new pc.Asset("chocolate_3", "texture", {
+        url: new URL(
+          "../assets/chocolate/chocolate_3.png",
+          import.meta.url
+        ).toString(),
+      }),
+      texture5: new pc.Asset("chocolate_4", "texture", {
+        url: new URL(
+          "../assets/chocolate/chocolate_4.png",
+          import.meta.url
+        ).toString(),
+      }),
+      texture6: new pc.Asset("chocolate_5", "texture", {
+        url: new URL(
+          "../assets/chocolate/chocolate_5.png",
+          import.meta.url
+        ).toString(),
+      }),
+      texture7: new pc.Asset("chocolate_6", "texture", {
+        url: new URL(
+          "../assets/chocolate/chocolate_6.png",
+          import.meta.url
+        ).toString(),
+      }),
+      texture8: new pc.Asset("chocolate_7", "texture", {
+        url: new URL(
+          "../assets/chocolate/chocolate_7.png",
+          import.meta.url
+        ).toString(),
+      }),
+      texture9: new pc.Asset("chocolate_8", "texture", {
+        url: new URL(
+          "../assets/chocolate/chocolate_8.png",
+          import.meta.url
+        ).toString(),
+      }),
+      texture10: new pc.Asset("chocolate_9", "texture", {
+        url: new URL(
+          "../assets/chocolate/chocolate_9.png",
+          import.meta.url
+        ).toString(),
+      }),
+      texture11: new pc.Asset("chocolate_10", "texture", {
+        url: new URL(
+          "../assets/chocolate/chocolate_10.png",
+          import.meta.url
+        ).toString(),
+      }),
     };
 
     const assetLoader = new pc.AssetListLoader(
@@ -86,6 +153,40 @@ function GamePage() {
     assetLoader.load(() => {
       app.start();
 
+      // 레벨별 스프라이트 미리 생성
+      levels.forEach((_, index) => {
+        const textureAsset = app.assets.find(`chocolate_${index}`);
+        const atlas = new pc.TextureAtlas();
+
+        atlas.frames = {
+          1: {
+            rect: new pc.Vec4(
+              0,
+              0,
+              textureAsset.resource.width,
+              textureAsset.resource.height
+            ),
+            pivot: new pc.Vec2(0.5, 0.5),
+            border: new pc.Vec4(0, 0, 0, 0),
+          },
+        };
+        atlas.texture = textureAsset.resource;
+
+        const sprite = new pc.Sprite(app.graphicsDevice, {
+          atlas: atlas,
+          frameKeys: [1],
+          pixelsPerUnit: 512, // Block 클래스의 textureSize와 동일한 값
+          renderMode: pc.SPRITE_RENDERMODE_SIMPLE,
+        });
+
+        const spriteAsset = new pc.Asset(`level_${index}`, "sprite", {
+          url: "",
+        });
+        spriteAsset.resource = sprite;
+        spriteAsset.loaded = true;
+        app.assets.add(spriteAsset);
+      });
+
       createGameManager(app);
       createInputHandler(app);
       createDeadline(app);
@@ -93,7 +194,7 @@ function GamePage() {
       const camera = new pc.Entity("Camera");
       camera.tags.add("MainCamera");
       camera.addComponent("camera", {
-        clearColor: new pc.Color(0.1, 0.1, 0.1),
+        clearColor: new pc.Color(0.9, 0.8, 0.7),
         projection: pc.PROJECTION_ORTHOGRAPHIC,
       });
       camera.setPosition(0, 0, 10);
@@ -220,7 +321,7 @@ function GamePage() {
           </div>
         </div>
       )}
-      <div className="absolute top-4 left-4 z-10 text-2xl font-bold text-white">
+      <div className="absolute top-4 left-4 z-10 text-2xl font-bold text-white bg-black/50 px-4 py-2 rounded-md">
         SCORE: {score}
       </div>
 

@@ -23,28 +23,12 @@ class Block extends Entity {
 
     this.mass = levels[this.level].mass;
     this.blockScale = levels[this.level].scale;
-
-    this.textureSize = 512;
     this.app = app;
 
-    const textureAsset = this.app.assets.find("cat");
-    const atlas = new TextureAtlas();
+    this.textureSize = 512;
 
-    atlas.frames = {
-      1: {
-        rect: new Vec4(
-          0,
-          0,
-          textureAsset.resource.width,
-          textureAsset.resource.height
-        ),
-        pivot: new Vec2(0.5, 0.5),
-        border: new Vec4(0, 0, 0, 0),
-      },
-    };
-    atlas.texture = textureAsset.resource;
     this.addComponent("sprite");
-    this.sprite.spriteAsset = this.createSpriteAsset(atlas, 1).id;
+    this.sprite.spriteAsset = this.app.assets.find(`level_${this.level}`).id;
 
     this.setPosition(0, 8, 0);
     this.setLocalScale(this.blockScale, this.blockScale, this.blockScale);
@@ -67,20 +51,6 @@ class Block extends Entity {
 
     this.app.root.addChild(this);
   }
-  createSpriteAsset = function (atlas, frame) {
-    const sprite = new Sprite(this.app.graphicsDevice, {
-      atlas: atlas,
-      frameKeys: [frame],
-      pixelsPerUnit: this.textureSize,
-      renderMode: SPRITE_RENDERMODE_SIMPLE,
-    });
-
-    const spriteAsset = new Asset("sprite", "sprite", { url: "" });
-    spriteAsset.resource = sprite;
-    spriteAsset.loaded = true;
-    this.app.assets.add(spriteAsset);
-    return spriteAsset;
-  };
   drop() {
     this.rigidbody.type = BODYTYPE_DYNAMIC;
     this.rigidbody.mass = this.mass;
@@ -91,12 +61,14 @@ class Block extends Entity {
   }
   upgrade() {
     if (this.level < levels.length - 1) {
-      this.level++;
+      this.level += 1;
       this.blockScale = levels[this.level].scale;
       this.mass = levels[this.level].mass;
       this.setLocalScale(this.blockScale, this.blockScale, this.blockScale);
       this.rigidbody.mass = this.mass;
       this.collision.radius = this.blockScale / 2;
+      const spriteAsset = this.app.assets.find(`level_${this.level}`);
+      this.sprite.spriteAsset = spriteAsset.id;
     }
   }
   onCollisionStart({ other }) {
