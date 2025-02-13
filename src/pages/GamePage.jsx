@@ -8,6 +8,7 @@ import { GoHome } from "react-icons/go";
 import { addRecord } from "@/api/nakama";
 import { VscDebugRestart } from "react-icons/vsc";
 import { levels } from "@/assets/json/block_levels.js";
+import { IoShareSocialOutline } from "react-icons/io5";
 
 if (import.meta.env.DEV) window.pc = pc;
 
@@ -29,6 +30,7 @@ function GamePage() {
   const [score, setScore] = useState(0);
   const [countdown, setCountdown] = useState(0);
   const [result, setResult] = useState(null);
+  const [canShare, setCanShare] = useState(false);
 
   const canvasRef = useRef(null);
   const appRef = useRef(null);
@@ -282,6 +284,22 @@ function GamePage() {
     };
   }, []); // 컴포넌트 마운트 시 한 번만 실행
 
+  useEffect(() => {
+    setCanShare(!!navigator.share);
+  }, []);
+
+  const handleShare = async () => {
+    try {
+      await navigator.share({
+        title: "Merge Blocks!",
+        text: `I scored ${score} points! Can you beat my score?`,
+        url: window.location.origin,
+      });
+    } catch (error) {
+      console.log("Error sharing:", error);
+    }
+  };
+
   return (
     <div className="game-page">
       {countdown > 0 && (
@@ -318,6 +336,18 @@ function GamePage() {
             >
               <GoHome />
             </Link>
+            {canShare && (
+              <button
+                className={`w-16 h-16 flex justify-center items-center text-4xl bg-white text-black px-4 py-2 rounded-md transition-all duration-300 border-2 ${
+                  canShare
+                    ? "hover:bg-black hover:text-white hover:border-white border-black"
+                    : "opacity-50 cursor-not-allowed border-gray-400"
+                }`}
+                onClick={handleShare}
+              >
+                <IoShareSocialOutline />
+              </button>
+            )}
           </div>
         </div>
       )}
