@@ -339,7 +339,7 @@ function GamePage() {
             {canShare && (
               <button
                 className={`w-16 h-16 flex justify-center items-center text-4xl  text-[var(--color-chocolate-900)] px-4 py-2 rounded-2xl transition-all duration-300  ${
-                  !canShare
+                  canShare
                     ? "bg-[var(--color-chocolate-100)] hover:text-[var(--color-chocolate-100)] hover:bg-[var(--color-chocolate-900)]"
                     : "opacity-50 cursor-not-allowed border-gray-400"
                 }`}
