@@ -10,7 +10,7 @@ export class BlockController extends Script {
   update() {
     if (
       this.entity.rigidbody.type === BODYTYPE_DYNAMIC &&
-      this.app._time % 3 === 0
+      this.app._time % 2 === 0
     )
       this.checkCollision();
   }
@@ -28,7 +28,10 @@ export class BlockController extends Script {
         const distance = this.entity
           .getPosition()
           .distance(block.getPosition());
-        if (distance < this.entity.collision.radius + block.collision.radius) {
+        if (
+          distance - (this.entity.collision.radius + block.collision.radius) <
+          0.01
+        ) {
           this.app.fire("score:get", this.entity.level);
           block.destroy();
           this.entity.upgrade();

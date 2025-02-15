@@ -20,6 +20,7 @@ class Block extends Entity {
     this.mass = levels[this.level].mass;
     this.blockScale = levels[this.level].scale;
     this.app = app;
+    this.createdAt = this.app._time;
 
     this.textureSize = 512;
 
@@ -73,10 +74,16 @@ class Block extends Entity {
       if (this.level === other.level) {
         const velocity = this.rigidbody.linearVelocity.length();
         const otherVelocity = other.rigidbody.linearVelocity.length();
-        if (velocity <= otherVelocity) {
+        if (velocity < otherVelocity) {
           this.app.fire("score:get", this.level);
           other.destroy();
           this.upgrade();
+        } else {
+          if (this.createdAt < other.createdAt) {
+            this.app.fire("score:get", other.level);
+            other.destroy();
+            this.upgrade();
+          }
         }
       }
     }
