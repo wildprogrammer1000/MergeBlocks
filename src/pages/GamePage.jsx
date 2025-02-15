@@ -269,13 +269,12 @@ function GamePage() {
     // 앱 참조 저장
     appRef.current = app;
 
-    app.on("score:get", updateScore);
     app.on("game:over", onGameOver);
     app.on("game:countdown", onCountdown);
+    
     // 클린업 함수
     return () => {
       if (appRef.current) {
-        appRef.current.off("score:get", updateScore);
         appRef.current.off("game:over", onGameOver);
         appRef.current.off("game:countdown", onCountdown);
         window.removeEventListener("resize", appRef.current.resizeCanvas);
@@ -287,6 +286,17 @@ function GamePage() {
   useEffect(() => {
     setCanShare(!!navigator.share);
   }, []);
+
+  useEffect(() => {
+    if (appRef.current) {
+      appRef.current.on("score:get", updateScore);
+    }
+    return () => {
+      if (appRef.current) {
+        appRef.current.off("score:get", updateScore);
+      }
+    };
+  }, [gameOver]);
 
   const handleShare = async () => {
     try {

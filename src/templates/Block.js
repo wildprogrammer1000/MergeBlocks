@@ -1,21 +1,17 @@
 import {
-  Asset,
   BODYTYPE_DYNAMIC,
   BODYTYPE_STATIC,
   Entity,
   math,
-  Sprite,
-  SPRITE_RENDERMODE_SIMPLE,
-  TextureAtlas,
-  Vec2,
   Vec3,
-  Vec4,
 } from "playcanvas";
 import { levels } from "@/assets/json/block_levels.js";
 import { BlockController } from "@/gamescripts/BlockController";
 
 class Block extends Entity {
+  static SPAWN_HEIGHT = 8;
   static DROP_FORCE = 40;
+
   constructor(app) {
     super("Block", app);
     this.level = Math.floor(math.random(0, 4));
@@ -30,7 +26,7 @@ class Block extends Entity {
     this.addComponent("sprite");
     this.sprite.spriteAsset = this.app.assets.find(`level_${this.level}`).id;
 
-    this.setPosition(0, 8, 0);
+    this.setPosition(0, Block.SPAWN_HEIGHT, 0);
     this.setLocalScale(this.blockScale, this.blockScale, this.blockScale);
 
     this.addComponent("collision", {
@@ -40,7 +36,6 @@ class Block extends Entity {
     this.addComponent("rigidbody", {
       type: BODYTYPE_STATIC,
       enabled: true,
-      // mass: this.mass,
     });
     this.rigidbody.on("collisionstart", this.onCollisionStart, this);
 
@@ -52,6 +47,7 @@ class Block extends Entity {
     this.app.root.addChild(this);
   }
   drop() {
+    if (!this.rigidbody) return;
     this.rigidbody.type = BODYTYPE_DYNAMIC;
     this.rigidbody.mass = this.mass;
     this.rigidbody.applyImpulse(new Vec3(0, -Block.DROP_FORCE * this.mass, 0));
