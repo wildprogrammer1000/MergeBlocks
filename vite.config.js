@@ -24,13 +24,13 @@ export default defineConfig({
             src: "/mergeblocks.png",
             sizes: "192x192",
             type: "image/png",
-            purpose: "any maskable"
+            purpose: "any maskable",
           },
           {
             src: "/mergeblocks.png",
             sizes: "512x512",
             type: "image/png",
-            purpose: "any maskable"
+            purpose: "any maskable",
           },
         ],
       },
@@ -39,11 +39,12 @@ export default defineConfig({
         clientsClaim: true,
         disableDevLogs: true,
         cleanupOutdatedCaches: true,
+        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
       },
-      includeAssets: ['mergeblocks.png', 'robots.txt'],
+      includeAssets: ["mergeblocks.png", "robots.txt"],
       devOptions: {
-        enabled: true
-      }
+        enabled: true,
+      },
     }),
   ],
   resolve: {
