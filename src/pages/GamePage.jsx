@@ -1,13 +1,16 @@
 import main from "@/playcanvas/start";
 import { app } from "playcanvas";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { VscDebugRestart } from "react-icons/vsc";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { addRecord } from "@/api/nakama";
+import { useNakama } from "@/providers/NakamaProvider";
 
 const GamePage = () => {
+  const { account } = useNakama();
+  const navigate = useNavigate();
   const scoreRef = useRef(0);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
@@ -65,6 +68,10 @@ const GamePage = () => {
   };
 
   useEffect(() => {
+    if (!account) {
+      navigate("/");
+      return;
+    }
     initialize();
 
     return () => {
