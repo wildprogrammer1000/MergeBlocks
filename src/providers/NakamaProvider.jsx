@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { Client } from "@heroiclabs/nakama-js";
 import { nakamaConfig, NODE_API_ENDPOINT } from "../constants/config";
 import axios from "axios";
+import { WebSocketAdapterPb } from "@heroiclabs/nakama-js-protobuf";
 
 const NakamaContext = createContext();
 export const nakama = {
@@ -21,6 +22,7 @@ export const NakamaProvider = ({ children }) => {
   );
   const [session, setSession] = useState(null);
   const [account, setAccount] = useState(null);
+  const [socket, setSocket] = useState(null);
 
   const authenticate = async () => {
     try {
@@ -37,10 +39,18 @@ export const NakamaProvider = ({ children }) => {
       nakama.session = session;
       nakama.account = account;
 
+      const socket = client.createSocket(
+        nakamaConfig.useSSL === "true",
+        false,
+        new WebSocketAdapterPb()
+      );
+      await socket.connect(session);
+
       setAccount(account);
       setSession(session);
+      setSocket(socket);
     } catch (error) {
-      console.error('Authentication failed:', error);
+      console.error("Authentication failed:", error);
     }
   };
   const refreshAccount = async () => {
@@ -53,22 +63,22 @@ export const NakamaProvider = ({ children }) => {
 
     // 페이지 가시성 변경 이벤트 리스너
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
+      if (document.visibilityState === "visible") {
         authenticate();
       }
     };
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     // 클린업
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
   return (
     <NakamaContext.Provider
-      value={{ account, client, session, refreshAccount }}
+      value={{ account, client, session, refreshAccount, socket }}
     >
       {children}
     </NakamaContext.Provider>

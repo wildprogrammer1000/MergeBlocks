@@ -39,5 +39,13 @@ const addRecord = async (score) => {
 };
 
 const getRecords = async () => await rpc("records:get");
-
-export { rpc, addRecord, getRecords, checkDisplayName, initDisplayName };
+const listChannelMessages = async () =>
+  await commonRpc("channelmessage:list_recent");
+export {
+  rpc,
+  addRecord,
+  getRecords,
+  checkDisplayName,
+  initDisplayName,
+  listChannelMessages,
+};
