@@ -24,26 +24,39 @@ class InputHandler extends Script {
     }
   }
 
+  isUIElement(event) {
+    const target = event.element;
+    return target.id !== "app-canvas";
+  }
+
   onMouseDown(event) {
+    if (this.isUIElement(event)) return;
+
     this.isDragging = true;
     const point = this.screenToWorld(event.x, event.y);
     this.app.fire("pointer:down", { x: point.x, y: point.y });
   }
 
   onMouseMove(event) {
+    if (this.isUIElement(event)) return;
     if (!this.isDragging) return;
+
     const point = this.screenToWorld(event.x, event.y);
     this.app.fire("pointer:move", { x: point.x, y: point.y });
   }
 
   onMouseUp(event) {
+    if (this.isUIElement(event)) return;
     if (!this.isDragging) return;
+
     this.isDragging = false;
     const point = this.screenToWorld(event.x, event.y);
     this.app.fire("pointer:up", { x: point.x, y: point.y });
   }
 
   onTouchStart(event) {
+    if (this.isUIElement(event)) return;
+
     this.isDragging = true;
     const touch = event.touches[0];
     const point = this.screenToWorld(touch.x, touch.y);
@@ -51,14 +64,18 @@ class InputHandler extends Script {
   }
 
   onTouchMove(event) {
+    if (this.isUIElement(event)) return;
     if (!this.isDragging) return;
+
     const touch = event.touches[0];
     const point = this.screenToWorld(touch.x, touch.y);
     this.app.fire("pointer:move", { x: point.x, y: point.y });
   }
 
   onTouchEnd(event) {
+    if (this.isUIElement(event)) return;
     if (!this.isDragging) return;
+
     this.isDragging = false;
     const touch = event.changedTouches[0];
     if (touch) {

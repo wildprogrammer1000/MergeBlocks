@@ -1,12 +1,19 @@
 import main from "@/playcanvas/start";
 import { app } from "playcanvas";
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { GoHome } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
+import { GoHomeFill } from "react-icons/go";
+
 import { VscDebugRestart } from "react-icons/vsc";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { addRecord } from "@/api/nakama";
 import { useNakama } from "@/providers/NakamaProvider";
+import { FaPause } from "react-icons/fa6";
+import { WSButton } from "@/component/WSComponents";
+import { IoMdHelp } from "react-icons/io";
+import evt from "@/utils/event-handler";
+import PauseModal from "@/component/modal/PauseModal";
+import HelpModal from "@/component/modal/HelpModal";
 
 const GamePage = () => {
   const { account } = useNakama();
@@ -73,8 +80,10 @@ const GamePage = () => {
       return;
     }
     initialize();
+    evt.on("restart", restartGame);
 
     return () => {
+      evt.off("restart", restartGame);
       if (app) {
         app.destroy();
       }
@@ -112,29 +121,16 @@ const GamePage = () => {
             </div>
           )}
           <div className="flex gap-2 text-2xl font-bold text-white">
-            <button
-              className="w-16 h-16 flex justify-center items-center text-4xl bg-[var(--color-chocolate-100)] text-[var(--color-chocolate-900)] px-4 py-2 rounded-2xl hover:bg-[var(--color-chocolate-900)] hover:text-[var(--color-chocolate-100)] transition-all duration-300 hover:border-white "
-              onClick={restartGame}
-            >
+            <WSButton onClick={restartGame}>
               <VscDebugRestart />
-            </button>
-            <Link
-              className="w-16 h-16 flex justify-center items-center text-4xl bg-[var(--color-chocolate-100)] text-[var(--color-chocolate-900)] px-4 py-2 rounded-2xl hover:bg-[var(--color-chocolate-900)] hover:text-[var(--color-chocolate-100)] transition-all duration-300 hover:border-white "
-              to="/"
-            >
-              <GoHome />
-            </Link>
+            </WSButton>
+            <WSButton onClick={() => navigate("/")}>
+              <GoHomeFill />
+            </WSButton>
             {canShare && (
-              <button
-                className={`w-16 h-16 flex justify-center items-center text-4xl  text-[var(--color-chocolate-900)] px-4 py-2 rounded-2xl transition-all duration-300  ${
-                  canShare
-                    ? "bg-[var(--color-chocolate-100)] hover:text-[var(--color-chocolate-100)] hover:bg-[var(--color-chocolate-900)]"
-                    : "opacity-50 cursor-not-allowed border-gray-400"
-                }`}
-                onClick={handleShare}
-              >
+              <WSButton onClick={handleShare}>
                 <IoShareSocialOutline />
-              </button>
+              </WSButton>
             )}
           </div>
         </div>
@@ -143,13 +139,17 @@ const GamePage = () => {
         SCORE: {score}
       </div>
 
-      <Link
-        to="/"
-        className="absolute top-4 right-4 z-10 bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] hover:bg-[var(--color-chocolate-100)] hover:text-[var(--color-chocolate-900)] rounded-2xl  transition-all duration-300 w-12 h-12 flex justify-center items-center text-3xl "
-      >
-        <GoHome />
-      </Link>
+      <div className="absolute top-4 right-4 z-10 flex gap-2 ">
+        <WSButton onClick={() => evt.emit("help")}>
+          <IoMdHelp />
+        </WSButton>
+        <WSButton onClick={() => evt.emit("pause")}>
+          <FaPause />
+        </WSButton>
+      </div>
       <canvas id="app-canvas" className="bg-black/50 w-full h-full" />
+      <PauseModal />
+      <HelpModal />
     </div>
   );
 };

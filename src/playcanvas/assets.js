@@ -1,13 +1,5 @@
 export const assets = [
   {
-    name: "cat",
-    type: "texture",
-    preload: true,
-    file: {
-      url: new URL("../assets/Ellipse.png", import.meta.url).toString(),
-    },
-  },
-  {
     name: "chocolate_0",
     type: "texture",
     preload: true,

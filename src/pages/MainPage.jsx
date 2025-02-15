@@ -9,7 +9,7 @@ import Profile from "@/component/Profile";
 import { useEffect, useState } from "react";
 import Timer from "@/component/Timer";
 import Chat from "@/component/Chat";
-
+import { WSButton } from "@/component/WSComponents";
 function MainPage() {
   const { account } = useNakama();
   const navigate = useNavigate();
@@ -37,8 +37,7 @@ function MainPage() {
       <div className="flex gap-4">
         {account && (
           <>
-            <button
-              className="w-16 h-16 text-3xl flex justify-center text-[var(--color-chocolate-900)] items-center text-center border-2 border-[var(--color-chocolate-900)] rounded-2xl hover:bg-[var(--color-chocolate-900)] hover:text-white transition-all duration-300 font-bold"
+            <WSButton
               onClick={() => {
                 account.user.display_name
                   ? navigate("/game")
@@ -46,19 +45,16 @@ function MainPage() {
               }}
             >
               <FaPlay />
-            </button>
-            <button
-              onClick={() => evt.emit("leaderboard:open")}
-              className="w-16 h-16 text-3xl flex justify-center text-[var(--color-chocolate-900)] items-center text-center border-2 border-[var(--color-chocolate-900)] rounded-2xl hover:bg-[var(--color-chocolate-900)] hover:text-white transition-all duration-300 font-bold cursor-pointer"
-            >
+            </WSButton>
+            <WSButton onClick={() => evt.emit("leaderboard:open")}>
               <MdLeaderboard />
-            </button>
+            </WSButton>
           </>
         )}
       </div>
       {account && (
         <div className="absolute top-4 right-4">
-          <button
+          <WSButton
             onClick={() => {
               if (isSupportedBrowser) {
                 evt.emit("profile:open");
@@ -68,10 +64,9 @@ function MainPage() {
                 );
               }
             }}
-            className="w-12 h-12 text-xl flex justify-center text-[var(--color-chocolate-900)] items-center text-center border-2 border-[var(--color-chocolate-900)] rounded-xl hover:bg-[var(--color-chocolate-900)] hover:text-white transition-all duration-300"
           >
             <FaUser />
-          </button>
+          </WSButton>
         </div>
       )}
       <Chat />
