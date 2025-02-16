@@ -34,10 +34,11 @@ const changeDisplayname = async (displayName) => {
     display_name: displayName,
   });
 };
-const addRecord = async (score) => {
+const addRecord = async ({ score, point }) => {
   const account = nakama.account;
   const res = await rpc("record:add", {
     score,
+    point,
     display_name: account.user.display_name || account.user.username,
   });
   return res;

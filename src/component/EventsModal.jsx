@@ -1,10 +1,11 @@
 import evt from "@/utils/event-handler";
 import { useEffect, useState } from "react";
-import { WSCloseButton, WSModal, WSModalHeader } from "./WSComponents";
+import { WSCloseButton, WSModal, WSModalHeader } from "./ui/WSComponents";
 import { getEvents } from "@/api/nakama";
 import { useNakama } from "@/providers/NakamaProvider";
 import PropTypes from "prop-types";
-const Events = () => {
+import Timer from "./ui/Timer";
+const EventsModal = () => {
   const { client, session } = useNakama();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,7 +49,7 @@ const Events = () => {
   );
 };
 
-export default Events;
+export default EventsModal;
 
 // 📌 개별 이벤트 컴포넌트
 const Event = ({
@@ -62,6 +63,7 @@ const Event = ({
 }) => {
   return (
     <div className="flex flex-col gap-3 bg-[var(--color-chocolate-300)] text-[var(--color-chocolate-900)] rounded-2xl p-4">
+      <Timer endDate={end} />
       <div className="font-bold text-2xl">📌 {title}</div>
       <div className="text-md">{description}</div>
       <div className="text-sm text-gray-700">

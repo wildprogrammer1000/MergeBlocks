@@ -1,7 +1,7 @@
 import evt from "@/utils/event-handler";
 import { useEffect, useState } from "react";
-import { WSModal } from "../WSComponents";
-import Guide from "@/component/Guide";
+import { WSModal } from "../ui/WSComponents";
+import Guide from "@/component/ui/Guide";
 
 const HelpModal = () => {
   const [isOpen, setIsOpen] = useState(false);

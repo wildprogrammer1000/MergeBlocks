@@ -3,11 +3,17 @@ import { Entity, math, Script } from "playcanvas";
 
 class GameManager extends Script {
   initialize() {
+    this.score = 0;
+    this.point = 0;
+    this.pointCombo = 0;
+    this.pointComboTimeout = 0;
+
     this.app.on("pointer:down", this.onPointerDown, this);
     this.app.on("pointer:move", this.onPointerMove, this);
     this.app.on("pointer:up", this.onPointerUp, this);
     this.app.on("game:over", this.onGameOver, this);
     this.app.on("game:restart", this.onGameRestart, this);
+    this.app.on("score:get", this.onScoreGet, this);
 
     this.currentBlock = this.createBlock();
 
@@ -20,6 +26,7 @@ class GameManager extends Script {
     this.app.off("pointer:up", this.onPointerUp, this);
     this.app.off("game:over", this.onGameOver, this);
     this.app.off("game:restart", this.onGameRestart, this);
+    this.app.off("score:get", this.onScoreGet, this);
   }
 
   createBlock() {
@@ -70,6 +77,34 @@ class GameManager extends Script {
       b.destroy();
     });
     this.currentBlock = this.createBlock();
+
+    // reset point
+    this.point = 0;
+    this.pointCombo = 0;
+    this.app.fire("point:update", this.point, this.pointCombo);
+  }
+  onScoreGet(level) {
+    this.score += (level + 1) * (level + 2) * 0.5;
+
+    if (this.pointComboTimeout) {
+      this.point += 1;
+      this.pointCombo += 1;
+      clearTimeout(this.pointComboTimeout);
+    }
+
+    this.pointComboTimeout = setTimeout(() => {
+      this.pointCombo = 0;
+      this.app.fire("score:update", {
+        score: this.score,
+        point: this.point,
+        pointCombo: this.pointCombo,
+      });
+    }, 1000);
+    this.app.fire("score:update", {
+      score: this.score,
+      point: this.point,
+      pointCombo: this.pointCombo,
+    });
   }
 }
 

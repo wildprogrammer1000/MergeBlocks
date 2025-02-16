@@ -9,29 +9,44 @@ import { IoShareSocialOutline } from "react-icons/io5";
 import { addRecord } from "@/api/nakama";
 import { useNakama } from "@/providers/NakamaProvider";
 import { FaPause } from "react-icons/fa6";
-import { WSButton } from "@/component/WSComponents";
+import { WSButton } from "@/component/ui/WSComponents";
 import { IoMdHelp } from "react-icons/io";
 import evt from "@/utils/event-handler";
 import PauseModal from "@/component/modal/PauseModal";
 import HelpModal from "@/component/modal/HelpModal";
+import WalletPoint from "@/component/ui/WalletPoint";
 
 const GamePage = () => {
-  const { account } = useNakama();
+  const { account, refreshAccount } = useNakama();
   const navigate = useNavigate();
   const scoreRef = useRef(0);
+  const pointRef = useRef(0);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
+  const [point, setPoint] = useState(0);
+  const [pointCombo, setPointCombo] = useState(0);
   const [countdown, setCountdown] = useState(0);
   const [result, setResult] = useState(null);
   const [canShare, setCanShare] = useState(false);
 
-  const updateScore = (level) => {
+  const updateScore = ({ score, point, pointCombo }) => {
     if (gameOver) return;
-    scoreRef.current += (level + 1) * (level + 2) * 0.5;
+    scoreRef.current = score;
+    pointRef.current = point;
+    setPointCombo(pointCombo);
     setScore(scoreRef.current);
+    setPoint(pointRef.current);
+  };
+  const updatePoint = (point) => {
+    if (gameOver) return;
+    pointRef.current = point;
+    setPoint(pointRef.current);
   };
   const onGameOver = async () => {
-    const { records } = await addRecord(scoreRef.current);
+    const { records } = await addRecord({
+      score: scoreRef.current,
+      point: pointRef.current,
+    });
     const ownerRecord = records.ownerRecords[0];
     const rank = ownerRecord.rank;
     const bestScore = ownerRecord.score;
@@ -40,6 +55,7 @@ const GamePage = () => {
       bestScore,
     });
     setGameOver(true);
+    await refreshAccount();
   };
   const onCountdown = (time) => {
     setCountdown(time.toFixed(2));
@@ -47,7 +63,10 @@ const GamePage = () => {
   const restartGame = () => {
     app.fire("game:restart");
     scoreRef.current = 0;
+    pointRef.current = 0;
+    setPointCombo(0);
     setScore(scoreRef.current);
+    setPoint(pointRef.current);
     setGameOver(false);
     setResult(null);
   };
@@ -69,7 +88,8 @@ const GamePage = () => {
 
     const app = await main();
 
-    app.on("score:get", updateScore);
+    app.on("score:update", updateScore);
+    app.on("point:update", updatePoint);
     app.on("game:over", onGameOver);
     app.on("game:countdown", onCountdown);
   };
@@ -91,10 +111,10 @@ const GamePage = () => {
   }, []);
 
   useEffect(() => {
-    if (app) app.on("score:get", updateScore);
+    if (app) app.on("score:update", updateScore);
 
     return () => {
-      if (app) app.off("score:get", updateScore);
+      if (app) app.off("score:update", updateScore);
     };
   }, [gameOver]);
   return (
@@ -135,8 +155,20 @@ const GamePage = () => {
           </div>
         </div>
       )}
-      <div className="absolute top-4 left-4 z-10 text-2xl font-bold text-[var(--color-chocolate-100)] bg-[var(--color-chocolate-900)]/50 px-4 py-2 rounded-2xl">
-        SCORE: {score}
+      <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
+        <div className="font-bold text-[var(--color-chocolate-100)] bg-[var(--color-chocolate-900)]/80 px-4 py-2 rounded-full">
+          SCORE: {score}
+        </div>
+        <WalletPoint
+          type="point"
+          value={point}
+          className="w-fit  bg-[var(--color-chocolate-900)]/80"
+        />
+        {pointCombo > 0 && (
+          <i className="text-[var(--color-chocolate-900)] font-bold">
+            {pointCombo} COMBO!
+          </i>
+        )}
       </div>
 
       <div className="absolute top-4 right-4 flex gap-2 ">

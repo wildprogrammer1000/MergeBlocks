@@ -4,14 +4,14 @@ import Leaderboard from "@/component/Leaderboard";
 import { FaPlay, FaUser } from "react-icons/fa";
 import { MdLeaderboard } from "react-icons/md";
 import { useNakama } from "@/providers/NakamaProvider";
-import DisplayNameModal from "@/component/DisplayNameModal";
+import DisplayNameModal from "@/component/modal/DisplayNameModal";
 import Profile from "@/component/Profile";
 import { useEffect, useState } from "react";
-import Timer from "@/component/Timer";
 import Chat from "@/component/Chat";
 import { MdEvent } from "react-icons/md";
-import { WSButton } from "@/component/WSComponents";
-import Events from "@/component/Events";
+import { WSButton } from "@/component/ui/WSComponents";
+import Header from "@/component/layout/Header";
+import EventsModal from "@/component/EventsModal";
 function MainPage() {
   const { account } = useNakama();
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ function MainPage() {
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center gap-4 bg-[var(--color-background)]">
-      <Timer />
+      <Header />
       <h1 className="text-[80px] font-bold text-center leading-none text-[var(--color-chocolate-900)]">
         MERGE
         <br />
@@ -39,7 +39,7 @@ function MainPage() {
       {account && (
         <div className="flex justify-center items-center gap-4 flex-col">
           <WSButton
-            className="w-24 h-24 text-[60px]"
+            className="w-24 h-24 text-[60px] rounded-4xl"
             onClick={() => {
               account.user.display_name
                 ? navigate("/game")
@@ -78,7 +78,7 @@ function MainPage() {
       <Profile />
       <Leaderboard />
       <DisplayNameModal />
-      <Events />
+      <EventsModal />
     </div>
   );
 }

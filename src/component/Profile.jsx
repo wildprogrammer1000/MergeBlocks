@@ -10,7 +10,7 @@ import {
   WSCloseButton,
   WSModal,
   WSModalHeader,
-} from "./WSComponents";
+} from "./ui/WSComponents";
 import {
   changeDisplayname,
   checkDisplayName,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { WSButton, WSModal } from "../WSComponents";
+import { WSButton, WSModal } from "../ui/WSComponents";
 
 import { VscDebugRestart } from "react-icons/vsc";
 import { GoHomeFill } from "react-icons/go";

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-const Timer = () => {
+const Timer = ({ endDate }) => {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -9,7 +10,7 @@ const Timer = () => {
   });
 
   useEffect(() => {
-    const finishTime = new Date("2025-02-21T00:00:00");
+    const finishTime = new Date(endDate);
 
     const timer = setInterval(() => {
       const now = new Date();
@@ -39,7 +40,7 @@ const Timer = () => {
   )
     return null;
   return (
-    <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-2 items-center font-bold border-2 border-[var(--color-chocolate-900)] rounded-full px-2">
+    <div className="flex gap-2 justify-center items-center font-bold border-2 border-[var(--color-chocolate-900)] rounded-full px-2">
       <TimeUnit value={timeLeft.days} unit="D" />
       <TimeUnit value={timeLeft.hours} unit="H" />
       <TimeUnit value={timeLeft.minutes} unit="M" />
@@ -58,3 +59,7 @@ const TimeUnit = ({ value, unit }) => (
 );
 
 export default Timer;
+
+Timer.propTypes = {
+  endDate: PropTypes.string.isRequired,
+};
