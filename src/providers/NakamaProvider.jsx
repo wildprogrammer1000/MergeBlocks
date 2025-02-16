@@ -24,12 +24,13 @@ export const NakamaProvider = ({ children }) => {
   const [account, setAccount] = useState(null);
   const [socket, setSocket] = useState(null);
 
-  const authenticate = async () => {
+  const authenticate = async (id) => {
     try {
       let res = await axios({
-        method: "get",
+        method: "post",
         url: `${NODE_API_ENDPOINT}/auth`,
         withCredentials: true,
+        data: { user_id: id },
       });
       const user_id = res.data.user_id;
 
@@ -78,7 +79,7 @@ export const NakamaProvider = ({ children }) => {
 
   return (
     <NakamaContext.Provider
-      value={{ account, client, session, refreshAccount, socket }}
+      value={{ account, client, session, refreshAccount, socket, authenticate }}
     >
       {children}
     </NakamaContext.Provider>

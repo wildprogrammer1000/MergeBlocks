@@ -14,7 +14,9 @@ import {
 import {
   changeDisplayname,
   checkDisplayName,
+  getGoogleLinkedAccount,
   initDisplayName,
+  unlinkGoogle,
 } from "@/api/nakama";
 import { CgSpinner } from "react-icons/cg";
 import { FaCheck } from "react-icons/fa";
@@ -22,9 +24,12 @@ import { BsThreeDots } from "react-icons/bs";
 import { MdEdit } from "react-icons/md";
 import { FaUnlink } from "react-icons/fa";
 import { FaLink } from "react-icons/fa";
+import { FaCloudDownloadAlt } from "react-icons/fa";
+import axios from "axios";
 
 const Profile = () => {
-  const { client, session, account, refreshAccount } = useNakama();
+  const { client, session, account, refreshAccount, authenticate } =
+    useNakama();
   const [isOpen, setIsOpen] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [nicknameLoading, setNicknameLoading] = useState(false);
@@ -92,23 +97,59 @@ const Profile = () => {
   const openProfile = () => setIsOpen(true);
   const closeProfile = () => setIsOpen(false);
 
-  const unlinkGoogle = async () => {
+  const load = async () => {
+    if (
+      !window.confirm(
+        "Are you sure you want to load your Google account?\n(Data that is not saved may be lost."
+      )
+    )
+      return;
+
+    try {
+      let response;
+      const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
+      const url = `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${apiKey}`;
+
+      setGoogleLoading(true);
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      const idToken = await user.getIdToken(); // Firebase ID Token
+
+      response = await axios({
+        url,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: { idToken },
+      });
+      const rawId = response.data.users[0].providerUserInfo[0].rawId;
+      const { userId } = await getGoogleLinkedAccount(rawId);
+      if (userId) {
+        await authenticate(userId);
+        alert("Google account loaded successfully.\nPage will be reloaded");
+      } else {
+        alert("Account is not registered.");
+      }
+    } catch (error) {
+      console.error("Load error:", error);
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  const unlink = async () => {
+    if (
+      !window.confirm(
+        "Are you sure you want to unlink your Google account?\n(Data that is not saved may be lost."
+      )
+    )
+      return;
+
     try {
       setGoogleLoading(true);
-
-      // 사용자 재인증 요청
-      const result = await signInWithPopup(auth, googleProvider);
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-
-      if (!credential) {
-        throw new Error("재인증에 실패했습니다.");
-      }
-
-      // 재인증 성공 후 토큰으로 연동 해제
-      const token = credential.idToken;
-      await client.unlinkGoogle(session, { token });
-      refreshAccount();
-
+      await unlinkGoogle();
+      await refreshAccount();
       await signOut(auth);
     } catch (error) {
       console.error("Unlink error:", error);
@@ -218,27 +259,28 @@ const Profile = () => {
                 <FcGoogle className="text-xl" />
                 Google
               </div>
-              {account.user.google_id ? (
-                <button
-                  onClick={unlinkGoogle}
-                  disabled={googleLoading}
-                  className="flex items-center justify-center gap-2 py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors disabled:opacity-50"
-                >
-                  {googleLoading ? (
-                    <CgSpinner className="animate-spin" />
-                  ) : (
-                    <FaUnlink />
-                  )}
-                </button>
-              ) : (
-                <WSButton onClick={linkGoogle} disabled={googleLoading}>
-                  {googleLoading ? (
-                    <CgSpinner className="animate-spin" />
-                  ) : (
-                    <FaLink />
-                  )}
+              <div className="flex gap-2">
+                <WSButton onClick={load}>
+                  <FaCloudDownloadAlt />
                 </WSButton>
-              )}
+                {account.user.google_id ? (
+                  <WSButton onClick={unlink} disabled={googleLoading}>
+                    {googleLoading ? (
+                      <CgSpinner className="animate-spin" />
+                    ) : (
+                      <FaUnlink />
+                    )}
+                  </WSButton>
+                ) : (
+                  <WSButton onClick={linkGoogle} disabled={googleLoading}>
+                    {googleLoading ? (
+                      <CgSpinner className="animate-spin" />
+                    ) : (
+                      <FaLink />
+                    )}
+                  </WSButton>
+                )}
+              </div>
             </div>
           </div>
         </div>

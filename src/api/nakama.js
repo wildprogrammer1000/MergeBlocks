@@ -48,6 +48,11 @@ const getEvents = async () => await rpc("events:get");
 const getRecords = async () => await rpc("records:get");
 const listChannelMessages = async () =>
   await commonRpc("channelmessage:list_recent");
+
+const unlinkGoogle = async () => await commonRpc("google:unlink");
+const getGoogleLinkedAccount = async (google_id) =>
+  await commonRpc("google:linkedAccount", { google_id });
+
 export {
   rpc,
   addRecord,
@@ -57,4 +62,6 @@ export {
   listChannelMessages,
   getEvents,
   changeDisplayname,
+  unlinkGoogle,
+  getGoogleLinkedAccount,
 };
