@@ -139,7 +139,7 @@ const GamePage = () => {
         SCORE: {score}
       </div>
 
-      <div className="absolute top-4 right-4 z-10 flex gap-2 ">
+      <div className="absolute top-4 right-4 flex gap-2 ">
         <WSButton onClick={() => evt.emit("help")}>
           <IoMdHelp />
         </WSButton>

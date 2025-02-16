@@ -20,7 +20,7 @@ const PauseModal = () => {
   if (!isOpen) return;
   return (
     <WSModal onClick={closeModal}>
-      <div className="flex gap-2">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-2 p-4 bg-[var(--color-chocolate-100)] rounded-2xl">
         <WSButton onClick={() => navigate("/")}>
           <GoHomeFill />
         </WSButton>

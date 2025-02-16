@@ -1,22 +1,100 @@
 import { useNakama } from "@/providers/NakamaProvider";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import evt from "@/utils/event-handler";
 import { auth, googleProvider } from "@/utils/firebase";
 import { signInWithPopup, signOut } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { GoogleAuthProvider } from "firebase/auth";
+import {
+  WSButton,
+  WSCloseButton,
+  WSModal,
+  WSModalHeader,
+} from "./WSComponents";
+import {
+  changeDisplayname,
+  checkDisplayName,
+  initDisplayName,
+} from "@/api/nakama";
+import { CgSpinner } from "react-icons/cg";
+import { FaCheck } from "react-icons/fa";
+import { BsThreeDots } from "react-icons/bs";
+import { MdEdit } from "react-icons/md";
+import { FaUnlink } from "react-icons/fa";
+import { FaLink } from "react-icons/fa";
 
 const Profile = () => {
   const { client, session, account, refreshAccount } = useNakama();
   const [isOpen, setIsOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [nicknameLoading, setNicknameLoading] = useState(false);
+  const [displayName, setDisplayName] = useState("");
+  const [checked, setChecked] = useState(false);
+  const [checking, setChecking] = useState(false);
+  const checkTimeout = useRef(null);
+
+  useEffect(() => {
+    if (account) {
+      setDisplayName(account.user.display_name || "");
+    }
+  }, [account]);
+
+  const handleDisplayNameChange = (e) => {
+    const value =
+      e.target.value.length > 16 ? e.target.value.slice(0, 16) : e.target.value;
+
+    setDisplayName(value);
+
+    if (value === account.user.display_name) {
+      setChecked(true);
+      setChecking(false);
+      return;
+    }
+
+    setChecking(true);
+    if (checkTimeout.current) clearTimeout(checkTimeout.current);
+    checkTimeout.current = setTimeout(() => check(value), 1000);
+  };
+
+  const check = async (value) => {
+    setChecking(false);
+    if (value.length < 3 || value.length > 16) {
+      setChecked(false);
+      return;
+    }
+    const { success } = await checkDisplayName(value);
+    setChecked(success);
+  };
+
+  const handleUpdateDisplayName = async (e) => {
+    e.preventDefault();
+    if (
+      checking ||
+      !checked ||
+      !displayName.trim() ||
+      displayName === account.user.display_name
+    )
+      return;
+
+    try {
+      setNicknameLoading(true);
+      if (account.user.display_name) await changeDisplayname(displayName);
+      else await initDisplayName(displayName);
+      await refreshAccount();
+      alert("Nickname updated successfully.");
+    } catch (error) {
+      console.error("Update display name error:", error);
+    } finally {
+      setNicknameLoading(false);
+    }
+  };
 
   const openProfile = () => setIsOpen(true);
   const closeProfile = () => setIsOpen(false);
 
   const unlinkGoogle = async () => {
     try {
-      setLoading(true);
+      setGoogleLoading(true);
 
       // 사용자 재인증 요청
       const result = await signInWithPopup(auth, googleProvider);
@@ -36,13 +114,13 @@ const Profile = () => {
       console.error("Unlink error:", error);
       // 사용자에게 에러 메시지 표시
     } finally {
-      setLoading(false);
+      setGoogleLoading(false);
     }
   };
 
   const linkGoogle = async () => {
     try {
-      setLoading(true);
+      setGoogleLoading(true);
       const result = await signInWithPopup(auth, googleProvider);
       const credential = GoogleAuthProvider.credentialFromResult(result);
       await client.linkGoogle(session, { token: credential.idToken });
@@ -53,7 +131,7 @@ const Profile = () => {
       }
       console.error("Google link error:", error);
     } finally {
-      setLoading(false);
+      setGoogleLoading(false);
     }
   };
 
@@ -69,58 +147,103 @@ const Profile = () => {
   if (!isOpen || !account) return null;
 
   return (
-    <div className="absolute inset-0 bg-black/50 flex justify-center items-center z-50">
-      <div className="w-96 bg-white rounded-lg p-6 flex flex-col gap-4">
-        <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold">Account</h2>
-          <button
+    <WSModal onClick={() => setIsOpen(false)}>
+      <div className="rounded-lg flex flex-col">
+        <WSModalHeader className="flex w-full p-2">
+          <div className="text-xl font-bold">ACCOUNT</div>
+          <WSCloseButton
             onClick={closeProfile}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-2xl rounded-2xl font-bold text-[var(--color-chocolate-100)]"
+          />
+        </WSModalHeader>
+        <div className="flex flex-col gap-4 p-4">
+          <form
+            onSubmit={handleUpdateDisplayName}
+            className="flex flex-col gap-1"
           >
-            ✕
-          </button>
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-4">
-            {account.photoURL && (
-              <img
-                src={account.photoURL}
-                alt="profile"
-                className="w-12 h-12 rounded-full"
-              />
-            )}
-            <div>
-              <div className="font-bold">{account.displayName}</div>
-              <div className="text-sm text-gray-500">{account.email}</div>
+            <div className="text-[var(--color-chocolate-900)] font-bold">
+              NICKNAME
+            </div>
+            <div className="flex gap-2">
+              <div className="flex-1 relative flex gap-2 items-center">
+                <input
+                  type="text"
+                  value={displayName || ""}
+                  onChange={handleDisplayNameChange}
+                  className="w-full p-2 border-2 border-[var(--color-chocolate-900)] rounded-xl focus:border-[var(--color-chocolate-500)] outline-none text-[var(--color-chocolate-900)] font-bold"
+                  disabled={nicknameLoading}
+                />
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center">
+                  {displayName !== account.user.display_name &&
+                  displayName &&
+                  displayName.length > 0 ? (
+                    checking ? (
+                      <CgSpinner className="animate-spin text-2xl text-chocolate-900" />
+                    ) : (
+                      <FaCheck
+                        className={`text-2xl ${
+                          checked ? "text-green-500" : "text-red-500"
+                        }`}
+                      />
+                    )
+                  ) : (
+                    <BsThreeDots className="text-2xl text-chocolate-900" />
+                  )}
+                </div>
+              </div>
+              <WSButton
+                disabled={
+                  nicknameLoading ||
+                  checking ||
+                  !checked ||
+                  !displayName ||
+                  displayName.length === 0 ||
+                  displayName === account.user.display_name
+                }
+              >
+                {nicknameLoading ? (
+                  <CgSpinner className="animate-spin" />
+                ) : (
+                  <MdEdit />
+                )}
+              </WSButton>
+            </div>
+          </form>
+          <div className="flex flex-col gap-2">
+            <div className="text-[var(--color-chocolate-900)] font-bold">
+              SOCIAL
+            </div>
+            <div className="flex justify-between">
+              <div className="flex gap-1 items-center">
+                <FcGoogle className="text-xl" />
+                Google
+              </div>
+              {account.user.google_id ? (
+                <button
+                  onClick={unlinkGoogle}
+                  disabled={googleLoading}
+                  className="flex items-center justify-center gap-2 py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors disabled:opacity-50"
+                >
+                  {googleLoading ? (
+                    <CgSpinner className="animate-spin" />
+                  ) : (
+                    <FaUnlink />
+                  )}
+                </button>
+              ) : (
+                <WSButton onClick={linkGoogle} disabled={googleLoading}>
+                  {googleLoading ? (
+                    <CgSpinner className="animate-spin" />
+                  ) : (
+                    <FaLink />
+                  )}
+                </WSButton>
+              )}
             </div>
           </div>
         </div>
-        <div className="flex justify-between">
-          <div className="flex gap-1 items-center">
-            <FcGoogle className="text-xl" />
-            Google
-          </div>
-          {account.user.google_id ? (
-            <button
-              onClick={unlinkGoogle}
-              disabled={loading}
-              className="flex items-center justify-center gap-2  py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors disabled:opacity-50"
-            >
-              {loading ? "LOADING" : "UNLINK"}
-            </button>
-          ) : (
-            <button
-              onClick={linkGoogle}
-              disabled={loading}
-              className="flex items-center justify-center gap-2  py-2 px-4 border border-gray-300  hover:bg-gray-100 transition-colors disabled:opacity-50 font-bold rounded-full"
-            >
-              Link
-            </button>
-          )}
-        </div>
       </div>
-    </div>
+    </WSModal>
   );
 };
 

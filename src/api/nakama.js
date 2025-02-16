@@ -29,6 +29,11 @@ const initDisplayName = async (displayName) =>
     display_name: displayName,
   });
 
+const changeDisplayname = async (displayName) => {
+  await rpc("displayname:change", {
+    display_name: displayName,
+  });
+};
 const addRecord = async (score) => {
   const account = nakama.account;
   const res = await rpc("record:add", {
@@ -51,4 +56,5 @@ export {
   initDisplayName,
   listChannelMessages,
   getEvents,
+  changeDisplayname,
 };

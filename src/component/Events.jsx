@@ -29,7 +29,7 @@ const Events = () => {
   if (!isOpen) return null;
 
   return (
-    <WSModal className="p-0 ">
+    <WSModal onClick={() => setIsOpen(false)}>
       <WSModalHeader className="flex w-full p-2">
         <div className="text-xl font-bold">EVENTS</div>
         <WSCloseButton
