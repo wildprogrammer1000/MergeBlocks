@@ -36,44 +36,44 @@ function MainPage() {
         <br />
         BLOCKS
       </h1>
-      <div className="flex gap-4">
-        {account && (
-          <>
-            <WSButton
-              onClick={() => {
-                account.user.display_name
-                  ? navigate("/game")
-                  : evt.emit("displayname:init");
-              }}
-            >
-              <FaPlay />
+      {account && (
+        <div className="flex justify-center items-center gap-4 flex-col">
+          <WSButton
+            className="w-24 h-24 text-[60px]"
+            onClick={() => {
+              account.user.display_name
+                ? navigate("/game")
+                : evt.emit("displayname:init");
+            }}
+          >
+            <FaPlay />
+          </WSButton>
+          <div className="flex gap-4">
+            {account && (
+              <WSButton
+                onClick={() => {
+                  if (isSupportedBrowser) {
+                    evt.emit("profile:open");
+                  } else {
+                    alert(
+                      "This feature is not supported in in-app browsers.\nPlease use browsers\n(Chrome , Safari, etc.)"
+                    );
+                  }
+                }}
+              >
+                <FaUser />
+              </WSButton>
+            )}
+            <WSButton onClick={() => evt.emit("events")}>
+              <MdEvent />
             </WSButton>
             <WSButton onClick={() => evt.emit("leaderboard:open")}>
               <MdLeaderboard />
             </WSButton>
-          </>
-        )}
-      </div>
-      <div className="absolute top-4 right-4 flex flex-col gap-2">
-        {account && (
-          <WSButton
-            onClick={() => {
-              if (isSupportedBrowser) {
-                evt.emit("profile:open");
-              } else {
-                alert(
-                  "This feature is not supported in in-app browsers.\nPlease use browsers\n(Chrome , Safari, etc.)"
-                );
-              }
-            }}
-          >
-            <FaUser />
-          </WSButton>
-        )}
-        <WSButton onClick={() => evt.emit("events")}>
-          <MdEvent />
-        </WSButton>
-      </div>
+          </div>
+        </div>
+      )}
+
       <Chat />
       <Profile />
       <Leaderboard />
