@@ -38,6 +38,8 @@ const addRecord = async (score) => {
   return res;
 };
 
+const getEvents = async () => await rpc("events:get");
+
 const getRecords = async () => await rpc("records:get");
 const listChannelMessages = async () =>
   await commonRpc("channelmessage:list_recent");
@@ -48,4 +50,5 @@ export {
   checkDisplayName,
   initDisplayName,
   listChannelMessages,
+  getEvents,
 };

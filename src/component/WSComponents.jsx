@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-
+import { IoMdClose } from "react-icons/io";
 const WSButton = (props) => {
   return (
     <button
@@ -17,10 +17,10 @@ const WSModal = (props) => {
   return (
     <div
       onClick={props.onClick}
-      className={`absolute inset-0 bg-black/50 flex justify-center items-center ${props.className}`}
+      className={`absolute inset-0 bg-black/50 flex justify-center items-end ${props.className}`}
     >
       <div
-        className="rounded-2xl p-4  bg-[var(--color-chocolate-100)]"
+        className="w-full max-w-[500px] rounded-t-2xl bg-[var(--color-chocolate-100)]"
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -34,10 +34,18 @@ const WSModalHeader = (props) => {
   return (
     <div
       onClick={props.onClick}
-      className={`flex justify-between items-center ${props.className || ""}`}
+      className={`flex justify-between items-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] rounded-t-xl ${props.className || ""}`}
     >
       {props && props.children && props.children}
     </div>
+  );
+};
+
+const WSCloseButton = (props) => {
+  return (
+    <button onClick={props.onClick} className={`cursor-pointer ${props.className || ""}`}>
+      <IoMdClose />
+    </button>
   );
 };
 
@@ -59,4 +67,9 @@ WSModalHeader.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export { WSButton, WSModal, WSModalHeader };
+WSCloseButton.propTypes = {
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+};
+
+export { WSButton, WSModal, WSModalHeader, WSCloseButton };

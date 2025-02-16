@@ -60,7 +60,7 @@ const GamePage = () => {
         url: window.location.origin,
       });
     } catch (error) {
-      console.log("Error sharing:", error);
+      console.error("Error sharing:", error);
     }
   };
 

@@ -9,7 +9,9 @@ import Profile from "@/component/Profile";
 import { useEffect, useState } from "react";
 import Timer from "@/component/Timer";
 import Chat from "@/component/Chat";
+import { MdEvent } from "react-icons/md";
 import { WSButton } from "@/component/WSComponents";
+import Events from "@/component/Events";
 function MainPage() {
   const { account } = useNakama();
   const navigate = useNavigate();
@@ -30,9 +32,9 @@ function MainPage() {
     <div className="w-full h-full flex flex-col justify-center items-center gap-4 bg-[var(--color-background)]">
       <Timer />
       <h1 className="text-[80px] font-bold text-center leading-none text-[var(--color-chocolate-900)]">
-        Merge
+        MERGE
         <br />
-        Blocks
+        BLOCKS
       </h1>
       <div className="flex gap-4">
         {account && (
@@ -52,8 +54,8 @@ function MainPage() {
           </>
         )}
       </div>
-      {account && (
-        <div className="absolute top-4 right-4">
+      <div className="absolute top-4 right-4 flex flex-col gap-2">
+        {account && (
           <WSButton
             onClick={() => {
               if (isSupportedBrowser) {
@@ -67,12 +69,16 @@ function MainPage() {
           >
             <FaUser />
           </WSButton>
-        </div>
-      )}
+        )}
+        <WSButton onClick={() => evt.emit("events")}>
+          <MdEvent />
+        </WSButton>
+      </div>
       <Chat />
       <Profile />
       <Leaderboard />
       <DisplayNameModal />
+      <Events />
     </div>
   );
 }
