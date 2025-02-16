@@ -99,7 +99,7 @@ class GameManager extends Script {
         point: this.point,
         pointCombo: this.pointCombo,
       });
-    }, 1000);
+    }, 500);
     this.app.fire("score:update", {
       score: this.score,
       point: this.point,
