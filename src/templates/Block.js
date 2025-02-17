@@ -66,7 +66,7 @@ class Block extends Entity {
       this.collision.radius = this.blockScale / 2;
       const spriteAsset = this.app.assets.find(`level_${this.level}`);
       this.sprite.spriteAsset = spriteAsset.id;
-    }
+    } else this.destroy();
   }
   onCollisionStart({ other }) {
     if (!other.tags.has("block")) return;
