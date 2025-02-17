@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import NakamaProvider from "@/providers/NakamaProvider";
 import "@/utils/firebase";
+import "@/utils/confetti";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>

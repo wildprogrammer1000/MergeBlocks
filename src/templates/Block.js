@@ -7,6 +7,7 @@ import {
 } from "playcanvas";
 import { levels } from "@/assets/json/block_levels.js";
 import { BlockController } from "@/gamescripts/BlockController";
+import evt from "@/utils/event-handler";
 
 class Block extends Entity {
   static SPAWN_HEIGHT = 8;
@@ -14,7 +15,7 @@ class Block extends Entity {
 
   constructor(app) {
     super("Block", app);
-    this.level = Math.floor(math.random(0, 4));
+    this.level = Math.floor(math.random(8, 10));
     this.tags.add(["block", this.level]);
 
     this.mass = levels[this.level].mass;
@@ -66,7 +67,12 @@ class Block extends Entity {
       this.collision.radius = this.blockScale / 2;
       const spriteAsset = this.app.assets.find(`level_${this.level}`);
       this.sprite.spriteAsset = spriteAsset.id;
-    } else this.destroy();
+    } else {
+      this.destroy();
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => evt.emit("confetti"), i * 200);
+      }
+    }
   }
   onCollisionStart({ other }) {
     if (!other.tags.has("block")) return;
