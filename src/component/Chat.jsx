@@ -174,7 +174,9 @@ const ChatMessage = ({ content, multiLine = true }) => {
       </div>
       <div
         className={`border-2 border-[var(--color-chocolate-100)] overflow-x-hidden p-1 text-[var(--color-chocolate-100)] font-bold rounded-lg ${
-          multiLine ? "break-words" : "flex-1 overflow-x-hidden text-ellipsis"
+          multiLine
+            ? "break-words"
+            : "flex-1 overflow-x-hidden text-ellipsis whitespace-nowrap"
         }`}
       >
         {message}
