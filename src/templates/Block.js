@@ -15,7 +15,7 @@ class Block extends Entity {
 
   constructor(app) {
     super("Block", app);
-    this.level = Math.floor(math.random(8, 10));
+    this.level = Math.floor(math.random(0, 4));
     this.tags.add(["block", this.level]);
 
     this.mass = levels[this.level].mass;
