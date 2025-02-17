@@ -38,7 +38,7 @@ const addRecord = async ({ score, point }) => {
   const account = nakama.account;
   const res = await rpc("record:add", {
     score,
-    point,
+    point: 0,
     display_name: account.user.display_name || account.user.username,
   });
   return res;

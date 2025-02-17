@@ -159,11 +159,11 @@ const GamePage = () => {
         <div className="font-bold text-[var(--color-chocolate-100)] bg-[var(--color-chocolate-900)]/80 px-4 py-2 rounded-full">
           SCORE: {score}
         </div>
-        <WalletPoint
+        {/* <WalletPoint
           type="point"
           value={point}
           className="w-fit  bg-[var(--color-chocolate-900)]/80"
-        />
+        /> */}
         {pointCombo > 0 && (
           <i className="text-[var(--color-chocolate-900)] font-bold">
             {pointCombo} COMBO!
