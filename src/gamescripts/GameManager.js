@@ -78,6 +78,7 @@ class GameManager extends Script {
     });
     this.currentBlock = this.createBlock();
 
+    this.score = 0;
     // reset point
     this.point = 0;
     this.pointCombo = 0;
