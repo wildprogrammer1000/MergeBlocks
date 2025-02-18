@@ -11,8 +11,9 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate", // 자동 업데이트 설정
       injectRegister: "auto", // 자동 서비스 워커 등록
-      srcDir: "src", // 서비스 워커 파일을 `src` 디렉터리에 위치시킴
-      filename: "service-worker.js", // 사용자 정의 서비스 워커 파일 지정
+      strategies: "injectManifest", // injectManifest 전략 사용
+      injectManifest: { swSrc: "public/service-worker.js" },
+      filename: "service-worker.js",
       manifest: {
         name: "Merge Blocks",
         short_name: "Merge Blocks",
