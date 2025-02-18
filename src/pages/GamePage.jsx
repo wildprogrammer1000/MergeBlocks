@@ -14,9 +14,10 @@ import { IoMdHelp } from "react-icons/io";
 import evt from "@/utils/event-handler";
 import PauseModal from "@/component/modal/PauseModal";
 import HelpModal from "@/component/modal/HelpModal";
-import WalletPoint from "@/component/ui/WalletPoint";
+// import WalletPoint from "@/component/ui/WalletPoint";
 import Version from "@/component/ui/Version";
 import CacheController from "@/component/CacheController";
+import Chat from "@/component/Chat";
 
 const GamePage = () => {
   const pageRef = useRef(null);
@@ -26,7 +27,7 @@ const GamePage = () => {
   const pointRef = useRef(0);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
-  const [point, setPoint] = useState(0);
+  // const [point, setPoint] = useState(0);
   const [pointCombo, setPointCombo] = useState(0);
   const [countdown, setCountdown] = useState(0);
   const [result, setResult] = useState(null);
@@ -38,12 +39,12 @@ const GamePage = () => {
     pointRef.current = point;
     setPointCombo(pointCombo);
     setScore(scoreRef.current);
-    setPoint(pointRef.current);
+    // setPoint(pointRef.current);
   };
   const updatePoint = (point) => {
     if (gameOver) return;
     pointRef.current = point;
-    setPoint(pointRef.current);
+    // setPoint(pointRef.current);
   };
   const onGameOver = async () => {
     const { records } = await addRecord({
@@ -69,7 +70,7 @@ const GamePage = () => {
     pointRef.current = 0;
     setPointCombo(0);
     setScore(scoreRef.current);
-    setPoint(pointRef.current);
+    // setPoint(pointRef.current);
     setGameOver(false);
     setResult(null);
   };
@@ -126,7 +127,10 @@ const GamePage = () => {
     };
   }, [gameOver]);
   return (
-    <div className="w-full h-full select-none" ref={pageRef}>
+    <div
+      className="absolute inset-0 flex flex-col border-4 w-full h-full select-none"
+      ref={pageRef}
+    >
       {countdown > 0 && (
         <div className="absolute top-0 left-0 z-20 w-full h-full  flex flex-col items-center justify-center pointer-events-none">
           <div
@@ -187,12 +191,17 @@ const GamePage = () => {
           <FaPause />
         </WSButton>
       </div>
-      <canvas id="app-canvas" className="bg-black/50 w-full h-full" />
+      <div className="w-full flex-1 overflow-hidden">
+        <div className="w-full h-full" id="app-canvas-container">
+          <canvas id="app-canvas" className="bg-black/50 " />
+        </div>
+      </div>
+      <Chat className="static" />
       <PauseModal />
       <HelpModal />
       <CacheController />
       {/* Version */}
-      {/* <Version visible={false} /> */}
+      <Version visible={false} />
     </div>
   );
 };

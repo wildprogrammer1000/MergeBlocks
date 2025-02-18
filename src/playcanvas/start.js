@@ -3,10 +3,8 @@ import {
   Asset,
   createGraphicsDevice,
   ElementInput,
-  FILLMODE_NONE,
   Keyboard,
   Mouse,
-  RESOLUTION_AUTO,
   TouchDevice,
 } from "playcanvas";
 import { CONTEXT_OPTIONS, PRELOAD_MODULES } from "./settings";
@@ -17,6 +15,7 @@ import { initSceneBase } from "./scenes/sceneBase";
 import { assets } from "./assets";
 
 async function main() {
+  const container = document.querySelector("#app-canvas-container");
   const canvas = document.querySelector("#app-canvas");
   if (!canvas) {
     console.error("canvas not found");
@@ -24,6 +23,14 @@ async function main() {
   }
   const device = await createGraphicsDevice(canvas, CONTEXT_OPTIONS);
   device.maxPixelRatio = Math.min(window.devicePixelRatio, 2);
+  const resize = () => {
+    canvas.width = container.clientWidth * device.maxPixelRatio;
+    canvas.height = container.clientHeight * device.maxPixelRatio;
+    canvas.style.width = container.clientWidth + "px";
+    canvas.style.height = container.clientHeight + "px";
+  };
+  resize();
+  window.addEventListener("resize", resize);
 
   const app = new Application(canvas, {
     graphicsDevice: device,
@@ -64,8 +71,6 @@ async function main() {
     // TODO: Add resize handler
     // orientationchange
     // resize
-    app.setCanvasFillMode(FILLMODE_NONE);
-    app.setCanvasResolution(RESOLUTION_AUTO);
     app.preload(() => {
       app.start();
       initSceneBase();

@@ -4,10 +4,10 @@ import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { IoSend } from "react-icons/io5";
 import evt from "@/utils/event-handler";
 import { listChannelMessages } from "@/api/nakama";
-
+import PropTypes from "prop-types";
 const CHANNEL_ALL = "all";
 
-const Chat = () => {
+const Chat = ({ className }) => {
   const scrollRef = useRef();
   const { account, client, session, socket } = useNakama();
   const [isOpen, setOpen] = useState(false);
@@ -102,7 +102,9 @@ const Chat = () => {
     }
   }, [isOpen]);
   return (
-    <div className="absolute bottom-0 w-full bg-[var(--color-chocolate-700)]">
+    <div
+      className={`absolute bottom-0 w-full bg-[var(--color-chocolate-700)] ${className}`}
+    >
       {isOpen ? (
         <div className="relative">
           <div className="relative h-10 flex items-center border-b-2 border-[var(--color-chocolate-900)] ">
@@ -183,4 +185,12 @@ const ChatMessage = ({ content, multiLine = true }) => {
       </div>
     </div>
   );
+};
+
+Chat.propTypes = {
+  className: PropTypes.string,
+};
+ChatMessage.propTypes = {
+  content: PropTypes.string.isRequired,
+  multiLine: PropTypes.bool,
 };
