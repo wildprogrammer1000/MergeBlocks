@@ -12,3 +12,5 @@ self.addEventListener("fetch", (event) => {
   // 캐시를 사용하지 않고 항상 네트워크에서 최신 파일을 가져오도록 설정
   event.respondWith(fetch(event.request));
 });
+
+self.__WB_MANIFEST;
