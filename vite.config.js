@@ -10,13 +10,6 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate", // 자동 업데이트 설정
-      injectRegister: "auto", // 자동 서비스 워커 등록
-      strategies: "injectManifest", // injectManifest 전략 사용
-      injectManifest: {
-        swSrc: "public/service-worker.js",
-        swDest: "dist/service-worker.js",
-      },
-      filename: "service-worker.js",
       manifest: {
         name: "Merge Blocks",
         short_name: "Merge Blocks",
@@ -42,11 +35,8 @@ export default defineConfig({
         ],
       },
       workbox: {
-        skipWaiting: true,
-        clientsClaim: true,
-        disableDevLogs: true,
-        cleanupOutdatedCaches: true,
         maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
+        runtimeCaching: [],
       },
       includeAssets: ["mergeblocks.png", "robots.txt"],
       devOptions: {

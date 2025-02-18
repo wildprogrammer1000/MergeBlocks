@@ -16,6 +16,7 @@ import PauseModal from "@/component/modal/PauseModal";
 import HelpModal from "@/component/modal/HelpModal";
 import WalletPoint from "@/component/ui/WalletPoint";
 import Version from "@/component/ui/Version";
+import CacheController from "@/component/CacheController";
 
 const GamePage = () => {
   const pageRef = useRef(null);
@@ -189,7 +190,7 @@ const GamePage = () => {
       <canvas id="app-canvas" className="bg-black/50 w-full h-full" />
       <PauseModal />
       <HelpModal />
-
+      <CacheController />
       {/* Version */}
       {/* <Version visible={false} /> */}
     </div>

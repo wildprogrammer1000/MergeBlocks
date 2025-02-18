@@ -12,6 +12,7 @@ import { MdEvent } from "react-icons/md";
 import { WSButton } from "@/component/ui/WSComponents";
 import Header from "@/component/layout/Header";
 import EventsModal from "@/component/EventsModal";
+import CacheController from "@/component/CacheController";
 function MainPage() {
   const pageRef = useRef(null);
   const { account } = useNakama();
@@ -90,6 +91,7 @@ function MainPage() {
       <Leaderboard />
       <DisplayNameModal />
       <EventsModal />
+      <CacheController />
     </div>
   );
 }

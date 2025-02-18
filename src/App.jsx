@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import MainPage from "@/pages/MainPage";
 import GamePage from "@/pages/GamePage";
-import { useEffect } from "react";
 import OutdatedPage from "./pages/OutdatedPage";
 
 function App() {
