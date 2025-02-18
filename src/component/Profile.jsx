@@ -27,7 +27,7 @@ import { FaLink } from "react-icons/fa";
 import { FaCloudDownloadAlt } from "react-icons/fa";
 import axios from "axios";
 
-const Profile = () => {
+const Profile = ({ backup = false }) => {
   const { client, session, account, refreshAccount, authenticate } =
     useNakama();
   const [isOpen, setIsOpen] = useState(false);
@@ -255,14 +255,16 @@ const Profile = () => {
               SOCIAL
             </div>
             <div className="flex justify-between">
-              <div className="flex gap-1 items-center">
+              <div className="flex gap-1 items-center text-[var(--color-chocolate-900)]">
                 <FcGoogle className="text-xl" />
                 Google
               </div>
               <div className="flex gap-2">
-                <WSButton onClick={load}>
-                  <FaCloudDownloadAlt />
-                </WSButton>
+                {!backup && (
+                  <WSButton onClick={load}>
+                    <FaCloudDownloadAlt />
+                  </WSButton>
+                )}
                 {account.user.google_id ? (
                   <WSButton onClick={unlink} disabled={googleLoading}>
                     {googleLoading ? (

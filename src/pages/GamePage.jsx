@@ -15,8 +15,10 @@ import evt from "@/utils/event-handler";
 import PauseModal from "@/component/modal/PauseModal";
 import HelpModal from "@/component/modal/HelpModal";
 import WalletPoint from "@/component/ui/WalletPoint";
+import Version from "@/component/ui/Version";
 
 const GamePage = () => {
+  const pageRef = useRef(null);
   const { account, refreshAccount } = useNakama();
   const navigate = useNavigate();
   const scoreRef = useRef(0);
@@ -100,9 +102,14 @@ const GamePage = () => {
       return;
     }
     initialize();
+
+    const handlePWAOutdated = () => pageRef.current.remove();
+
     evt.on("restart", restartGame);
+    evt.on("version:pwa-outdated", handlePWAOutdated);
 
     return () => {
+      evt.off("version:pwa-outdated", handlePWAOutdated);
       evt.off("restart", restartGame);
       if (app) {
         app.destroy();
@@ -118,7 +125,7 @@ const GamePage = () => {
     };
   }, [gameOver]);
   return (
-    <div className="w-full h-full select-none">
+    <div className="w-full h-full select-none" ref={pageRef}>
       {countdown > 0 && (
         <div className="absolute top-0 left-0 z-20 w-full h-full  flex flex-col items-center justify-center pointer-events-none">
           <div
@@ -182,6 +189,9 @@ const GamePage = () => {
       <canvas id="app-canvas" className="bg-black/50 w-full h-full" />
       <PauseModal />
       <HelpModal />
+
+      {/* Version */}
+      {/* <Version visible={false} /> */}
     </div>
   );
 };

@@ -6,13 +6,14 @@ import { MdLeaderboard } from "react-icons/md";
 import { useNakama } from "@/providers/NakamaProvider";
 import DisplayNameModal from "@/component/modal/DisplayNameModal";
 import Profile from "@/component/Profile";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Chat from "@/component/Chat";
 import { MdEvent } from "react-icons/md";
 import { WSButton } from "@/component/ui/WSComponents";
 import Header from "@/component/layout/Header";
 import EventsModal from "@/component/EventsModal";
 function MainPage() {
+  const pageRef = useRef(null);
   const { account } = useNakama();
   const navigate = useNavigate();
   const [isSupportedBrowser, setIsSupportedBrowser] = useState(false);
@@ -26,10 +27,20 @@ function MainPage() {
     );
 
     setIsSupportedBrowser(!isInApp);
+
+    const handlePWAOutdated = () => pageRef.current.remove();
+    evt.on("version:pwa-outdated", handlePWAOutdated);
+
+    return () => {
+      evt.off("version:pwa-outdated", handlePWAOutdated);
+    };
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center gap-4 bg-[var(--color-background)]">
+    <div
+      ref={pageRef}
+      className="w-full h-full flex flex-col justify-center items-center gap-4 bg-[var(--color-background)]"
+    >
       <Header />
       <h1 className="text-[80px] font-bold text-center leading-none text-[var(--color-chocolate-900)]">
         MERGE
