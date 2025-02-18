@@ -3,6 +3,7 @@ import { Client } from "@heroiclabs/nakama-js";
 import { nakamaConfig, NODE_API_ENDPOINT } from "../constants/config";
 import axios from "axios";
 import { WebSocketAdapterPb } from "@heroiclabs/nakama-js-protobuf";
+import evt from "@/utils/event-handler";
 
 const NakamaContext = createContext();
 export const nakama = {
@@ -50,6 +51,7 @@ export const NakamaProvider = ({ children }) => {
       setAccount(account);
       setSession(session);
       setSocket(socket);
+      evt.emit("version:check");
     } catch (error) {
       console.error("Authentication failed:", error);
     }

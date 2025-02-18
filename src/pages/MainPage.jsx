@@ -13,6 +13,7 @@ import { WSButton } from "@/component/ui/WSComponents";
 import Header from "@/component/layout/Header";
 import EventsModal from "@/component/EventsModal";
 import CacheController from "@/component/CacheController";
+import Version from "@/component/ui/Version";
 function MainPage() {
   const pageRef = useRef(null);
   const { account } = useNakama();
@@ -92,6 +93,7 @@ function MainPage() {
       <DisplayNameModal />
       <EventsModal />
       <CacheController />
+      <Version />
     </div>
   );
 }

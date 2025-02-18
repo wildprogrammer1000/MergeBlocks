@@ -21,6 +21,8 @@ const rpc = async (id, data = {}) => {
   }
 };
 
+const getVersion = async () => await commonRpc("version:get");
+
 const checkDisplayName = async (displayName) =>
   await commonRpc("displayname:check", { display_name: displayName });
 
@@ -65,4 +67,5 @@ export {
   changeDisplayname,
   unlinkGoogle,
   getGoogleLinkedAccount,
+  getVersion,
 };
