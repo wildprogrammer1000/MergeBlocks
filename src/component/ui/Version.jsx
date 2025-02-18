@@ -1,7 +1,7 @@
-import { getVersion } from "@/api/nakama";
+// import { getVersion } from "@/api/nakama";
 import evt from "@/utils/event-handler";
 import { useEffect } from "react";
-import { compareVersions } from "@/utils/version";
+// import { compareVersions } from "@/utils/version";
 import { useNavigate } from "react-router-dom";
 
 const Version = ({ visible = false }) => {
