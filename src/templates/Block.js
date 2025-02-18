@@ -75,6 +75,11 @@ class Block extends Entity {
       }
     }
   }
+  execDestroy(position) {
+    this.rigidbody.enabled = false;
+    this.isDestroying = true;
+    this.destroyTargetPosition = position;
+  }
   onCollisionStart({ other }) {
     if (!other.tags.has("block")) return;
     if (other.tags.has("block")) {
@@ -83,12 +88,12 @@ class Block extends Entity {
         const otherVelocity = other.rigidbody.linearVelocity.length();
         if (velocity < otherVelocity) {
           this.app.fire("score:get", this.level);
-          other.destroy();
+          other.execDestroy(this.getPosition().clone());
           this.upgrade();
         } else {
           if (this.createdAt < other.createdAt) {
             this.app.fire("score:get", other.level);
-            other.destroy();
+            other.execDestroy(this.getPosition().clone());
             this.upgrade();
           }
         }
