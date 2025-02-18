@@ -37,7 +37,7 @@ class Block extends Entity {
     });
     this.addComponent("rigidbody", {
       type: BODYTYPE_STATIC,
-      enabled: true,
+      enabled: false,
     });
     this.rigidbody.on("collisionstart", this.onCollisionStart, this);
 
@@ -50,6 +50,7 @@ class Block extends Entity {
   }
   drop() {
     if (!this.rigidbody) return;
+    this.rigidbody.enabled = true;
     this.rigidbody.type = BODYTYPE_DYNAMIC;
     this.rigidbody.mass = this.mass;
     this.rigidbody.applyImpulse(new Vec3(0, -Block.DROP_FORCE * this.mass, 0));

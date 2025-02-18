@@ -128,7 +128,7 @@ const GamePage = () => {
   }, [gameOver]);
   return (
     <div
-      className="absolute inset-0 flex flex-col border-4 w-full h-full select-none"
+      className="absolute inset-0 flex flex-col w-full h-full select-none"
       ref={pageRef}
     >
       {countdown > 0 && (
