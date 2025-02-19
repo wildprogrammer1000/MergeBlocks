@@ -2,10 +2,7 @@ import main from "@/playcanvas/start";
 import { app } from "playcanvas";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoHomeFill } from "react-icons/go";
 
-import { VscDebugRestart } from "react-icons/vsc";
-import { IoShareSocialOutline } from "react-icons/io5";
 import { addRecord } from "@/api/nakama";
 import { useNakama } from "@/providers/NakamaProvider";
 import { FaPause } from "react-icons/fa6";
@@ -18,6 +15,7 @@ import HelpModal from "@/component/modal/HelpModal";
 import Version from "@/component/ui/Version";
 import CacheController from "@/component/CacheController";
 import Chat from "@/component/Chat";
+import GameResultModal from "@/component/modal/GameResultModal";
 
 const GamePage = () => {
   const pageRef = useRef(null);
@@ -30,8 +28,10 @@ const GamePage = () => {
   // const [point, setPoint] = useState(0);
   const [pointCombo, setPointCombo] = useState(0);
   const [countdown, setCountdown] = useState(0);
-  const [result, setResult] = useState(null);
-  const [canShare, setCanShare] = useState(false);
+  const [result, setResult] = useState({
+    bestScore: 0,
+    rank: 0,
+  });
 
   const updateScore = ({ score, point, pointCombo }) => {
     if (gameOver) return;
@@ -72,24 +72,13 @@ const GamePage = () => {
     setScore(scoreRef.current);
     // setPoint(pointRef.current);
     setGameOver(false);
-    setResult(null);
-  };
-
-  const handleShare = async () => {
-    try {
-      await navigator.share({
-        title: "Merge Blocks!",
-        text: `I scored ${score} points! Can you beat my score?`,
-        url: window.location.origin,
-      });
-    } catch (error) {
-      console.error("Error sharing:", error);
-    }
+    setResult({
+      bestScore: 0,
+      rank: 0,
+    });
   };
 
   const initialize = async () => {
-    setCanShare(!!navigator.share);
-
     const app = await main();
 
     app.on("score:update", updateScore);
@@ -142,31 +131,6 @@ const GamePage = () => {
           </div>
         </div>
       )}
-      {gameOver && (
-        <div className="absolute top-0 left-0 z-20 w-full h-full bg-black/50 flex flex-col gap-2 items-center justify-center">
-          <div className="text-4xl font-bold text-white">GAME OVER</div>
-          <div className="text-2xl font-bold text-white">SCORE: {score}</div>
-          {result && (
-            <div className="text-2xl font-bold text-white text-center">
-              BEST SCORE: {result.bestScore} <br />
-              My Rank: {result.rank}
-            </div>
-          )}
-          <div className="flex gap-2 text-2xl font-bold text-white">
-            <WSButton onClick={restartGame}>
-              <VscDebugRestart />
-            </WSButton>
-            <WSButton onClick={() => navigate("/")}>
-              <GoHomeFill />
-            </WSButton>
-            {canShare && (
-              <WSButton onClick={handleShare}>
-                <IoShareSocialOutline />
-              </WSButton>
-            )}
-          </div>
-        </div>
-      )}
       <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
         <div className="font-bold text-[var(--color-chocolate-100)] bg-[var(--color-chocolate-900)]/80 px-4 py-2 rounded-full">
           SCORE: {score}
@@ -202,6 +166,7 @@ const GamePage = () => {
       <CacheController />
       {/* Version */}
       <Version visible={false} />
+      {gameOver && <GameResultModal score={score} result={result} />}
     </div>
   );
 };

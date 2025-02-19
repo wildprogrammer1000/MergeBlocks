@@ -6,7 +6,7 @@ const WSButton = (props) => {
       disabled={props.disabled || false}
       onClick={props.onClick}
       className={`bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] hover:bg-[var(--color-chocolate-100)] hover:text-[var(--color-chocolate-900)] rounded-2xl  transition-all duration-300 w-12 h-12 flex justify-center items-center text-3xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
-        props.className
+        props.className || ""
       }`}
     >
       {props && props.children && props.children}
@@ -18,7 +18,7 @@ const WSModal = (props) => {
   return (
     <div
       onClick={props.onClick}
-      className={`absolute inset-0 bg-black/50 flex justify-center items-end ${props.className}`}
+      className={`absolute inset-0 bg-black/50 flex justify-center items-end ${props.className || ""}`}
     >
       <div
         className="w-full max-w-[500px] rounded-t-2xl bg-[var(--color-chocolate-100)]"
