@@ -36,8 +36,8 @@ class GameManager extends Script {
     this.currentBlock.setPosition(
       math.clamp(
         x,
-        -4.85 + this.currentBlock.blockScale / 2,
-        4.85 - this.currentBlock.blockScale / 2
+        -5 + this.currentBlock.blockScale / 2,
+        5 - this.currentBlock.blockScale / 2
       ),
       this.currentBlock.getPosition().y,
       0

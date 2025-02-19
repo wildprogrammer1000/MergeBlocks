@@ -1,6 +1,7 @@
 import { BODYTYPE_DYNAMIC, Script, Vec3 } from "playcanvas";
 
 export class BlockController extends Script {
+  static GRAVITY = new Vec3(0, -9.81, 0);
   initialize() {
     this.entity.rigidbody.on("triggerenter", this.onTriggerEnter, this);
     this.entity.rigidbody.on("triggerleave", this.onTriggerLeave, this);
@@ -37,10 +38,12 @@ export class BlockController extends Script {
       return;
     }
     if (
-      this.entity.rigidbody.type === BODYTYPE_DYNAMIC &&
-      this.app._time % 2 === 0
-    )
-      this.checkCollision();
+      this.entity.rigidbody &&
+      this.entity.rigidbody.type === BODYTYPE_DYNAMIC
+    ) {
+      this.entity.rigidbody.applyForce(BlockController.GRAVITY);
+      if (this.app._time % 2 === 0) this.checkCollision();
+    }
   }
   checkCollision() {
     const blocks = this.app.root

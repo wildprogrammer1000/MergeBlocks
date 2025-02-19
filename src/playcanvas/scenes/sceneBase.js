@@ -1,4 +1,11 @@
-import { app, Color, Entity, PROJECTION_ORTHOGRAPHIC, Vec3 } from "playcanvas";
+import {
+  app,
+  Color,
+  Entity,
+  PROJECTION_ORTHOGRAPHIC,
+  StandardMaterial,
+  Vec3,
+} from "playcanvas";
 
 export const initSceneBase = () => {
   // 카메라 설정
@@ -11,54 +18,56 @@ export const initSceneBase = () => {
   camera.setPosition(0, 0, 10);
   app.root.addChild(camera);
 
-  // Deadline
-
+  // Ground Material
+  const groundMaterial = new StandardMaterial();
+  groundMaterial.diffuse.set(111 / 255, 78 / 255, 69 / 255);
+  groundMaterial.update();
   // 바닥 생성
   const ground = new Entity("Ground");
-  ground.addComponent("model", {
+  ground.addComponent("render", {
     type: "box",
   });
+  ground.render.material = groundMaterial;
   ground.setPosition(0, -10, 0);
-  ground.setLocalScale(10, 0.5, 10);
+  ground.setLocalScale(10, 1, 10);
   ground.addComponent("rigidbody", {
     type: "static",
-    restitution: 0,
   });
   ground.addComponent("collision", {
     type: "box",
-    halfExtents: new Vec3(5, 0.25, 5),
+    halfExtents: new Vec3(5, 0.5, 5),
   });
   app.root.addChild(ground);
 
   const wall = new Entity("Wall");
-  wall.addComponent("model", {
+  wall.addComponent("render", {
     type: "box",
   });
-  wall.setPosition(5, 0, 0);
-  wall.setLocalScale(0.3, 20, 5);
+  wall.render.material = groundMaterial;
+  wall.setPosition(5.5, 0, 0);
+  wall.setLocalScale(1, 20, 5);
   wall.addComponent("collision", {
     type: "box",
-    halfExtents: new Vec3(0.15, 10, 2.5),
+    halfExtents: new Vec3(0.5, 10, 2.5),
   });
   wall.addComponent("rigidbody", {
     type: "static",
-    restitution: 0,
   });
   app.root.addChild(wall);
 
   const wall2 = new Entity("Wall2");
-  wall2.addComponent("model", {
+  wall2.addComponent("render", {
     type: "box",
   });
-  wall2.setPosition(-5, 0, 0);
-  wall2.setLocalScale(0.3, 20, 1);
+  wall2.render.material = groundMaterial;
+  wall2.setPosition(-5.5, 0, 0);
+  wall2.setLocalScale(1, 20, 5);
   wall2.addComponent("collision", {
     type: "box",
-    halfExtents: new Vec3(0.15, 10, 0.05),
+    halfExtents: new Vec3(0.5, 10, 2.5),
   });
   wall2.addComponent("rigidbody", {
     type: "static",
-    restitution: 0,
   });
   app.root.addChild(wall2);
 
