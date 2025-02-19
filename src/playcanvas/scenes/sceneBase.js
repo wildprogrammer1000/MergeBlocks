@@ -29,13 +29,13 @@ export const initSceneBase = () => {
   });
   ground.render.material = groundMaterial;
   ground.setPosition(0, -10, 0);
-  ground.setLocalScale(10, 1, 10);
+  ground.setLocalScale(13, 1, 10);
   ground.addComponent("rigidbody", {
     type: "static",
   });
   ground.addComponent("collision", {
     type: "box",
-    halfExtents: new Vec3(5, 0.5, 5),
+    halfExtents: new Vec3(6.5, 0.5, 5),
   });
   app.root.addChild(ground);
 
@@ -44,11 +44,11 @@ export const initSceneBase = () => {
     type: "box",
   });
   wall.render.material = groundMaterial;
-  wall.setPosition(5.5, 0, 0);
+  wall.setPosition(6, 0, 0);
   wall.setLocalScale(1, 20, 5);
   wall.addComponent("collision", {
     type: "box",
-    halfExtents: new Vec3(0.5, 10, 2.5),
+    halfExtents: new Vec3(0.5, 12, 2.5),
   });
   wall.addComponent("rigidbody", {
     type: "static",
@@ -60,11 +60,11 @@ export const initSceneBase = () => {
     type: "box",
   });
   wall2.render.material = groundMaterial;
-  wall2.setPosition(-5.5, 0, 0);
+  wall2.setPosition(-6, 0, 0);
   wall2.setLocalScale(1, 20, 5);
   wall2.addComponent("collision", {
     type: "box",
-    halfExtents: new Vec3(0.5, 10, 2.5),
+    halfExtents: new Vec3(0.5, 12, 2.5),
   });
   wall2.addComponent("rigidbody", {
     type: "static",

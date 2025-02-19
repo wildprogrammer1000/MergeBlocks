@@ -11,7 +11,7 @@ class Deadline extends Entity {
     });
     this.tags.add("deadline");
     this.setPosition(0, Deadline.DEADLINE_POSITION, 0);
-    this.setLocalScale(10, 0.3, 10);
+    this.setLocalScale(13, 0.3, 10);
     const deadlineMaterial = new StandardMaterial();
     deadlineMaterial.diffuse = new Color(1, 0, 0);
     deadlineMaterial.update();

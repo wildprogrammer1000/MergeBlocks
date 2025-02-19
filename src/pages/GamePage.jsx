@@ -7,6 +7,7 @@ import { addRecord } from "@/api/nakama";
 import { useNakama } from "@/providers/NakamaProvider";
 import { FaPause } from "react-icons/fa6";
 import { WSButton } from "@/component/ui/WSComponents";
+import { BiLogoZoom } from "react-icons/bi";
 import { IoMdHelp } from "react-icons/io";
 import evt from "@/utils/event-handler";
 import PauseModal from "@/component/modal/PauseModal";
@@ -132,7 +133,7 @@ const GamePage = () => {
         </div>
       )}
       <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
-        <div className="font-bold text-[var(--color-chocolate-100)] bg-[var(--color-chocolate-900)]/80 px-4 py-2 rounded-full">
+        <div className="font-bold text-[var(--color-chocolate-900)] bg-[var(--color-chocolate-100)]/80 px-4 py-2 rounded-full">
           SCORE: {score}
         </div>
         {/* <WalletPoint
@@ -141,13 +142,16 @@ const GamePage = () => {
           className="w-fit  bg-[var(--color-chocolate-900)]/80"
         /> */}
         {pointCombo > 0 && (
-          <i className="text-[var(--color-chocolate-900)] font-bold">
+          <i className="text-[var(--color-chocolate-100)] font-bold text-xl">
             {pointCombo} COMBO!
           </i>
         )}
       </div>
 
       <div className="absolute top-4 right-4 flex gap-2 ">
+        <WSButton onClick={() => app.fire("game:view")}>
+          <BiLogoZoom />
+        </WSButton>
         <WSButton onClick={() => evt.emit("help")}>
           <IoMdHelp />
         </WSButton>
