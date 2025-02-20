@@ -24,17 +24,17 @@ export const NakamaProvider = ({ children }) => {
   const [session, setSession] = useState(null);
   const [account, setAccount] = useState(null);
   const [socket, setSocket] = useState(null);
-
+  const logOut = async () => {
+    socket && socket.disconnect();
+    if (client && session) {
+      await client.sessionLogout(session, session.token, session.refreshToken);
+    }
+    setSession(null);
+    setSocket(null);
+  };
   const authenticate = async (id) => {
     try {
-      nakama.socket && nakama.socket.disconnect();
-      if (nakama.client && nakama.session) {
-        await nakama.client.sessionLogout(
-          nakama.session,
-          nakama.session.token,
-          nakama.session.refreshToken
-        );
-      }
+      await logOut();
       let res = await axios({
         method: "post",
         url: `${NODE_API_ENDPOINT}/auth`,
@@ -49,16 +49,16 @@ export const NakamaProvider = ({ children }) => {
       nakama.session = newSession;
       nakama.account = account;
 
-      const socket = client.createSocket(
+      const newSocket = client.createSocket(
         nakamaConfig.useSSL === "true",
         false,
         new WebSocketAdapterPb()
       );
-      await socket.connect(newSession);
+      await newSocket.connect(newSession);
 
       setAccount(account);
       setSession(newSession);
-      setSocket(socket);
+      setSocket(newSocket);
       evt.emit("version:check");
     } catch (error) {
       console.error("Authentication failed:", error);
@@ -71,11 +71,16 @@ export const NakamaProvider = ({ children }) => {
   };
   useEffect(() => {
     authenticate();
+  }, []);
 
+  useEffect(() => {
     // 페이지 가시성 변경 이벤트 리스너
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         authenticate();
+      }
+      if (document.visibilityState === "hidden") {
+        logOut();
       }
     };
 
@@ -85,7 +90,7 @@ export const NakamaProvider = ({ children }) => {
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, []);
+  }, [session]);
 
   return (
     <NakamaContext.Provider
