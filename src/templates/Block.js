@@ -75,10 +75,15 @@ class Block extends Entity {
       }
     }
   }
-  execDestroy(position) {
+  execDestroy({ targetPosition, destroyPosition }) {
+    this.app.fire("particle:play", {
+      level: this.level,
+      position: destroyPosition,
+    });
+
     this.rigidbody.enabled = false;
     this.isDestroying = true;
-    this.destroyTargetPosition = position;
+    this.destroyTargetPosition = targetPosition;
   }
   onCollisionStart({ other }) {
     if (!other.tags.has("block")) return;
@@ -88,12 +93,18 @@ class Block extends Entity {
         const otherVelocity = other.rigidbody.linearVelocity.length();
         if (velocity < otherVelocity) {
           this.app.fire("score:get", this.level);
-          other.execDestroy(this.getPosition().clone());
+          other.execDestroy({
+            targetPosition: this.getPosition(),
+            destroyPosition: other.getPosition(),
+          });
           this.upgrade();
         } else {
           if (this.createdAt < other.createdAt) {
             this.app.fire("score:get", other.level);
-            other.execDestroy(this.getPosition().clone());
+            other.execDestroy({
+              targetPosition: this.getPosition(),
+              destroyPosition: other.getPosition(),
+            });
             this.upgrade();
           }
         }

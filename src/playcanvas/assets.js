@@ -1,5 +1,6 @@
 export const assets = [
   {
+    id: 1,
     name: "chocolate_0",
     type: "texture",
     preload: true,
@@ -11,6 +12,7 @@ export const assets = [
     },
   },
   {
+    id: 2,
     name: "chocolate_1",
     type: "texture",
     preload: true,
@@ -22,6 +24,7 @@ export const assets = [
     },
   },
   {
+    id: 3,
     name: "chocolate_2",
     type: "texture",
     preload: true,
@@ -33,6 +36,7 @@ export const assets = [
     },
   },
   {
+    id: 4,
     name: "chocolate_3",
     type: "texture",
     preload: true,
@@ -44,6 +48,7 @@ export const assets = [
     },
   },
   {
+    id: 5,
     name: "chocolate_4",
     type: "texture",
     preload: true,
@@ -55,6 +60,7 @@ export const assets = [
     },
   },
   {
+    id: 6,
     name: "chocolate_5",
     type: "texture",
     preload: true,
@@ -66,6 +72,7 @@ export const assets = [
     },
   },
   {
+    id: 7,
     name: "chocolate_6",
     type: "texture",
     preload: true,
@@ -77,6 +84,7 @@ export const assets = [
     },
   },
   {
+    id: 8,
     name: "chocolate_7",
     type: "texture",
     preload: true,
@@ -88,6 +96,7 @@ export const assets = [
     },
   },
   {
+    id: 9,
     name: "chocolate_8",
     type: "texture",
     preload: true,
@@ -99,6 +108,7 @@ export const assets = [
     },
   },
   {
+    id: 10,
     name: "chocolate_9",
     type: "texture",
     preload: true,
@@ -110,6 +120,7 @@ export const assets = [
     },
   },
   {
+    id: 10,
     name: "chocolate_10",
     type: "texture",
     preload: true,

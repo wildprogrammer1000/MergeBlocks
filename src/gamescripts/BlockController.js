@@ -64,7 +64,10 @@ export class BlockController extends Script {
           0.01
         ) {
           this.app.fire("score:get", this.entity.level);
-          block.execDestroy(this.entity.getPosition().clone());
+          block.execDestroy({
+            targetPosition: this.entity.getPosition(),
+            destroyPosition: block.getPosition(),
+          });
           this.entity.upgrade();
         }
       }

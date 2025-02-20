@@ -1,4 +1,5 @@
 import Block from "@/templates/Block";
+import { BlockParticle } from "@/templates/BlockParticle";
 import { Entity, math, Script } from "playcanvas";
 
 class GameManager extends Script {
@@ -8,6 +9,20 @@ class GameManager extends Script {
     this.pointCombo = 0;
     this.pointComboTimeout = 0;
     this.mainCamera = this.app.root.findByName("Camera");
+    this.particleTemplate = new BlockParticle();
+    this.textures = [
+      this.app.assets.find("chocolate_0"),
+      this.app.assets.find("chocolate_1"),
+      this.app.assets.find("chocolate_2"),
+      this.app.assets.find("chocolate_3"),
+      this.app.assets.find("chocolate_4"),
+      this.app.assets.find("chocolate_5"),
+      this.app.assets.find("chocolate_6"),
+      this.app.assets.find("chocolate_7"),
+      this.app.assets.find("chocolate_8"),
+      this.app.assets.find("chocolate_9"),
+      this.app.assets.find("chocolate_10"),
+    ];
 
     this.app.on("pointer:down", this.onPointerDown, this);
     this.app.on("pointer:move", this.onPointerMove, this);
@@ -16,6 +31,8 @@ class GameManager extends Script {
     this.app.on("game:restart", this.onGameRestart, this);
     this.app.on("score:get", this.onScoreGet, this);
     this.app.on("game:view", this.onGameView, this);
+
+    this.app.on("particle:play", this.onPlayParticle, this);
 
     this.currentBlock = this.createBlock();
 
@@ -30,6 +47,7 @@ class GameManager extends Script {
     this.app.off("game:restart", this.onGameRestart, this);
     this.app.off("score:get", this.onScoreGet, this);
     this.app.off("game:view", this.onGameView, this);
+    this.app.off("particle:play", this.onPlayParticle, this);
   }
 
   createBlock() {
@@ -120,6 +138,14 @@ class GameManager extends Script {
     } else {
       this.mainCamera.camera.orthoHeight = orthoHeights[0];
     }
+  }
+  onPlayParticle({ level, position }) {
+    const particle = this.particleTemplate.clone();
+    particle.setPosition(position);
+    this.app.root.addChild(particle);
+    particle.particlesystem.colorMapAsset = this.textures[level].id;
+    particle.particlesystem.play();
+    setTimeout(() => particle.destroy(), 1000);
   }
 }
 
