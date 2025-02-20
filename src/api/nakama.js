@@ -1,12 +1,8 @@
 import { nakama } from "@/providers/NakamaProvider";
 
 const commonRpc = async (id, data = {}) => {
-  try {
-    const res = await nakama.client.rpc(nakama.session, id, data);
-    return res.payload;
-  } catch (err) {
-    console.error(err);
-  }
+  const res = await nakama.client.rpc(nakama.session, id, data);
+  return res.payload;
 };
 const rpc = async (id, data = {}) => {
   try {
@@ -20,7 +16,14 @@ const rpc = async (id, data = {}) => {
     console.error(err);
   }
 };
-
+const doHealthCheck = async () => {
+  const res = await commonRpc("healthcheck", {});
+  return res.payload;
+};
+const getServerConfig = async () => {
+  const res = await commonRpc("config:get", {});
+  return res;
+};
 const getVersion = async () => await commonRpc("version:get");
 
 const checkDisplayName = async (displayName) =>
@@ -58,6 +61,8 @@ const getGoogleLinkedAccount = async (google_id) =>
 
 export {
   rpc,
+  doHealthCheck,
+  getServerConfig,
   addRecord,
   getRecords,
   checkDisplayName,

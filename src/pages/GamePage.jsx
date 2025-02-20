@@ -24,8 +24,10 @@ const GamePage = () => {
   const navigate = useNavigate();
   const scoreRef = useRef(0);
   const pointRef = useRef(0);
+  const maxComboRef = useRef(0);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
+  const [maxCombo, setMaxCombo] = useState(0);
   // const [point, setPoint] = useState(0);
   const [pointCombo, setPointCombo] = useState(0);
   const [countdown, setCountdown] = useState(0);
@@ -38,6 +40,8 @@ const GamePage = () => {
     if (gameOver) return;
     scoreRef.current = score;
     pointRef.current = point;
+    maxComboRef.current = Math.max(maxComboRef.current, pointCombo);
+    setMaxCombo(maxComboRef.current);
     setPointCombo(pointCombo);
     setScore(scoreRef.current);
     // setPoint(pointRef.current);
@@ -69,7 +73,9 @@ const GamePage = () => {
     app.fire("game:restart");
     scoreRef.current = 0;
     pointRef.current = 0;
+    maxComboRef.current = 0;
     setPointCombo(0);
+    setMaxCombo(0);
     setScore(scoreRef.current);
     // setPoint(pointRef.current);
     setGameOver(false);
@@ -170,7 +176,9 @@ const GamePage = () => {
       <CacheController />
       {/* Version */}
       <Version visible={false} />
-      {gameOver && <GameResultModal score={score} result={result} />}
+      {gameOver && (
+        <GameResultModal score={score} result={result} maxCombo={maxCombo} />
+      )}
     </div>
   );
 };

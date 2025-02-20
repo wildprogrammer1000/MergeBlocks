@@ -6,7 +6,11 @@ import { useEffect, useState } from "react";
 import evt from "@/utils/event-handler";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-const GameResultModal = ({ score, result = { bestScore: 0, rank: 0 } }) => {
+const GameResultModal = ({
+  score,
+  result = { bestScore: 0, rank: 0 },
+  maxCombo,
+}) => {
   const navigate = useNavigate();
   const [canShare, setCanShare] = useState(false);
 
@@ -35,15 +39,21 @@ const GameResultModal = ({ score, result = { bestScore: 0, rank: 0 } }) => {
         </WSModalHeader>
         <div className="flex flex-col gap-4 p-4">
           <div className="flex justify-center gap-4">
-            <div className="flex flex-col text-4xl font-bold text-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] p-4 rounded-2xl">
+            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] p-4 rounded-2xl">
               <span className="text-2xl">SCORE</span>
               {score}
             </div>
-            <div className="flex flex-col text-4xl font-bold text-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] p-4 rounded-2xl">
+            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] p-4 rounded-2xl">
+              <span className="text-2xl">MAX COMBO</span>
+              {maxCombo}
+            </div>
+          </div>
+          <div className="flex justify-center gap-4">
+            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] p-4 rounded-2xl">
               <span className="text-2xl">BEST SCORE</span>
               {result.bestScore}
             </div>
-            <div className="flex flex-col text-4xl font-bold text-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] p-4 rounded-2xl">
+            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] p-4 rounded-2xl">
               <span className="text-2xl">MY RANK</span>
               {result.rank}
             </div>
@@ -74,4 +84,5 @@ export default GameResultModal;
 GameResultModal.propTypes = {
   score: PropTypes.number.isRequired,
   result: PropTypes.object,
+  maxCombo: PropTypes.number,
 };
