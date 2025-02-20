@@ -27,6 +27,14 @@ export const NakamaProvider = ({ children }) => {
 
   const authenticate = async (id) => {
     try {
+      nakama.socket && nakama.socket.disconnect();
+      if (nakama.client && nakama.session) {
+        await nakama.client.sessionLogout(
+          nakama.session,
+          nakama.session.token,
+          nakama.session.refreshToken
+        );
+      }
       let res = await axios({
         method: "post",
         url: `${NODE_API_ENDPOINT}/auth`,
@@ -35,10 +43,10 @@ export const NakamaProvider = ({ children }) => {
       });
       const user_id = res.data.user_id;
 
-      const session = await client.authenticateCustom(user_id, true);
-      const account = await client.getAccount(session);
+      const newSession = await client.authenticateCustom(user_id, true);
+      const account = await client.getAccount(newSession);
       nakama.client = client;
-      nakama.session = session;
+      nakama.session = newSession;
       nakama.account = account;
 
       const socket = client.createSocket(
@@ -46,10 +54,10 @@ export const NakamaProvider = ({ children }) => {
         false,
         new WebSocketAdapterPb()
       );
-      await socket.connect(session);
+      await socket.connect(newSession);
 
       setAccount(account);
-      setSession(session);
+      setSession(newSession);
       setSocket(socket);
       evt.emit("version:check");
     } catch (error) {
