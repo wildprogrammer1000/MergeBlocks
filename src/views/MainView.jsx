@@ -32,7 +32,6 @@ function MainPage() {
 
     const handlePWAOutdated = () => pageRef.current.remove();
 
-    main();
     evt.on("version:pwa-outdated", handlePWAOutdated);
 
     return () => {
