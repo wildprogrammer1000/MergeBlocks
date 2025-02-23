@@ -40,9 +40,13 @@ const EventsModal = () => {
       </WSModalHeader>
       <div className="p-4 max-h-[500px] overflow-y-auto">
         <div className="flex flex-col gap-4">
-          {events.map((event, index) => (
-            <Event key={index} {...event} />
-          ))}
+          {events.length > 0 ? (
+            events.map((event, index) => <Event key={index} {...event} />)
+          ) : (
+            <div className="font-bold text-[var(--color-chocolate-900)]">
+              No events in progress
+            </div>
+          )}
         </div>
       </div>
     </WSModal>

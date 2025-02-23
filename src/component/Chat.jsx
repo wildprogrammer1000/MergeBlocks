@@ -5,6 +5,7 @@ import { IoSend } from "react-icons/io5";
 import evt from "@/utils/event-handler";
 import { listChannelMessages } from "@/api/nakama";
 import PropTypes from "prop-types";
+import { app } from "playcanvas";
 const CHANNEL_ALL = "all";
 
 const Chat = ({ className }) => {
@@ -101,10 +102,13 @@ const Chat = ({ className }) => {
       }, 100);
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (account) app && app.fire("canvas:resize");
+  }, [account]);
+  if (!account) return;
   return (
-    <div
-      className={`absolute bottom-0 w-full bg-[var(--color-chocolate-700)] ${className}`}
-    >
+    <div className={`w-full bg-[var(--color-chocolate-700)] ${className}`}>
       {isOpen ? (
         <div className="relative">
           <div className="relative h-10 flex items-center border-b-2 border-[var(--color-chocolate-900)] ">
@@ -175,9 +179,9 @@ const ChatMessage = ({ content, multiLine = true }) => {
         {displayName}
       </div>
       <div
-        className={`border-2 border-[var(--color-chocolate-100)] overflow-x-hidden p-1 text-[var(--color-chocolate-100)] font-bold rounded-lg ${
+        className={`overflow-x-hidden p-1 text-[var(--color-chocolate-100)] font-bold rounded-lg ${
           multiLine
-            ? "break-words"
+            ? "border-2 border-[var(--color-chocolate-100)] break-words"
             : "flex-1 overflow-x-hidden text-ellipsis whitespace-nowrap"
         }`}
       >

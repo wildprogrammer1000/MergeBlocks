@@ -1,11 +1,9 @@
 import { getVersion } from "@/api/nakama";
 import { useEffect, useState } from "react";
 import { compareVersions } from "@/utils/version";
-import { useNavigate } from "react-router-dom";
 import evt from "@/utils/event-handler";
 
 const Version = ({ visible = false }) => {
-  const navigate = useNavigate();
   const [isUpdaterVisible, setIsUpdaterVisible] = useState(false);
   const check = async () => {
     const { version } = await getVersion();
@@ -14,7 +12,7 @@ const Version = ({ visible = false }) => {
     if (compareVersions(version, appVersion) > 0) {
       // alert("App Version Updated");
       if (isPWA) {
-        navigate("/outdated");
+        evt.emit("view:outdated");
         evt.emit("version:pwa-outdated");
       } else {
         setIsUpdaterVisible(true);

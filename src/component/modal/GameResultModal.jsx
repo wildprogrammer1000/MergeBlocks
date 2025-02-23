@@ -4,14 +4,12 @@ import { VscDebugRestart } from "react-icons/vsc";
 import { GoHomeFill } from "react-icons/go";
 import { useEffect, useState } from "react";
 import evt from "@/utils/event-handler";
-import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 const GameResultModal = ({
   score,
   result = { bestScore: 0, rank: 0 },
   maxCombo,
 }) => {
-  const navigate = useNavigate();
   const [canShare, setCanShare] = useState(false);
 
   const handleShare = async () => {
@@ -63,7 +61,7 @@ const GameResultModal = ({
               <WSButton onClick={restartGame}>
                 <VscDebugRestart />
               </WSButton>
-              <WSButton onClick={() => navigate("/")}>
+              <WSButton onClick={() => evt.emit("view:main")}>
                 <GoHomeFill />
               </WSButton>
               {canShare && (

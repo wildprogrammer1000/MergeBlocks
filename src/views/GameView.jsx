@@ -1,7 +1,5 @@
-import main from "@/playcanvas/start";
 import { app } from "playcanvas";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { addRecord } from "@/api/nakama";
 import { useNakama } from "@/providers/NakamaProvider";
@@ -15,13 +13,11 @@ import HelpModal from "@/component/modal/HelpModal";
 // import WalletPoint from "@/component/ui/WalletPoint";
 import Version from "@/component/ui/Version";
 import CacheController from "@/component/CacheController";
-import Chat from "@/component/Chat";
 import GameResultModal from "@/component/modal/GameResultModal";
 
 const GamePage = () => {
   const pageRef = useRef(null);
-  const { account, refreshAccount } = useNakama();
-  const navigate = useNavigate();
+  const { refreshAccount } = useNakama();
   const scoreRef = useRef(0);
   const pointRef = useRef(0);
   const maxComboRef = useRef(0);
@@ -85,22 +81,11 @@ const GamePage = () => {
     });
   };
 
-  const initialize = async () => {
-    const app = await main();
-
+  useEffect(() => {
     app.on("score:update", updateScore);
     app.on("point:update", updatePoint);
     app.on("game:over", onGameOver);
     app.on("game:countdown", onCountdown);
-  };
-
-  useEffect(() => {
-    if (!account) {
-      navigate("/");
-      return;
-    }
-    initialize();
-
     const handlePWAOutdated = () => pageRef.current.remove();
 
     evt.on("restart", restartGame);
@@ -123,10 +108,7 @@ const GamePage = () => {
     };
   }, [gameOver]);
   return (
-    <div
-      className="absolute inset-0 flex flex-col w-full h-full select-none"
-      ref={pageRef}
-    >
+    <div>
       {countdown > 0 && (
         <div className="absolute top-0 left-0 z-20 w-full h-full  flex flex-col items-center justify-center pointer-events-none">
           <div
@@ -165,15 +147,10 @@ const GamePage = () => {
           <FaPause />
         </WSButton>
       </div>
-      <div className="w-full flex-1 overflow-hidden">
-        <div className="w-full h-full" id="app-canvas-container">
-          <canvas id="app-canvas" className="bg-black/50 " />
-        </div>
-      </div>
-      <Chat className="static" />
       <PauseModal />
       <HelpModal />
       <CacheController />
+
       {/* Version */}
       <Version visible={false} />
       {gameOver && (

@@ -6,6 +6,7 @@ import {
   StandardMaterial,
   Vec3,
 } from "playcanvas";
+import { initProjectScene } from "./ProjectScene";
 
 export const initSceneBase = () => {
   // 카메라 설정
@@ -78,4 +79,8 @@ export const initSceneBase = () => {
   light.setPosition(0, 0, 0);
   light.setEulerAngles(90, 0, 0);
   app.root.addChild(light);
+
+  app.on("game:start", () => {
+    initProjectScene();
+  });
 };

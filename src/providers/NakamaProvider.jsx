@@ -4,7 +4,7 @@ import { nakamaConfig, NODE_API_ENDPOINT } from "../constants/config";
 import axios from "axios";
 import { WebSocketAdapterPb } from "@heroiclabs/nakama-js-protobuf";
 import evt from "@/utils/event-handler";
-
+import PropTypes from "prop-types";
 const NakamaContext = createContext();
 export const nakama = {
   client: null,
@@ -109,3 +109,7 @@ export const useNakama = () => {
   return context;
 };
 export default NakamaProvider;
+
+NakamaProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

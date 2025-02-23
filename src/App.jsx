@@ -1,18 +1,24 @@
-import { Routes, Route } from "react-router-dom";
-import MainPage from "@/pages/MainPage";
-import GamePage from "@/pages/GamePage";
-import OutdatedPage from "./pages/OutdatedPage";
-import WSContainer from "./component/layout/WSContainer";
+import Interface from "./component/Interface";
+import NetworkController from "./component/NetworkController";
+import Chat from "./component/Chat";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<WSContainer />}>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/game" element={<GamePage />} />
-        <Route path="/outdated" element={<OutdatedPage />} />
-      </Route>
-    </Routes>
+    <div className="absolute top-0 left-0 flex flex-col w-full h-full overflow-hidden">
+      {/* Canvas */}
+      <div className="flex-1 overflow-hidden">
+        <div className="w-full h-full" id="app-canvas-container">
+          <canvas id="app-canvas" />
+        </div>
+      </div>
+      <Chat />
+
+      {/* UI */}
+      <Interface />
+
+      {/* Modules */}
+      <NetworkController />
+    </div>
   );
 }
 

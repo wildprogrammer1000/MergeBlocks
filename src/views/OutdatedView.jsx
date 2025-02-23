@@ -3,6 +3,7 @@ import { WSButton } from "@/component/ui/WSComponents";
 import { useNakama } from "@/providers/NakamaProvider";
 import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
+import evt from "@/utils/event-handler";
 
 const OutdatedPage = () => {
   const { account } = useNakama();

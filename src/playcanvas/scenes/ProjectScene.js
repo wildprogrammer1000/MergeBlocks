@@ -2,6 +2,7 @@ import { levels } from "@/assets/json/block_levels";
 import { createGameManager } from "@/gamescripts/GameManager";
 import { createInputHandler } from "@/gamescripts/InputHandler";
 import { createDeadline } from "@/templates/Deadline";
+import evt from "@/utils/event-handler";
 import {
   app,
   Asset,
@@ -50,4 +51,6 @@ export const initProjectScene = () => {
   createGameManager(app);
   createInputHandler(app);
   createDeadline(app);
+
+  evt.emit("view:game");
 };

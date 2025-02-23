@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import evt from "@/utils/event-handler";
 import Leaderboard from "@/component/Leaderboard";
 import { FaPlay, FaUser } from "react-icons/fa";
@@ -7,17 +6,18 @@ import { useNakama } from "@/providers/NakamaProvider";
 import DisplayNameModal from "@/component/modal/DisplayNameModal";
 import Profile from "@/component/Profile";
 import { useEffect, useRef, useState } from "react";
-import Chat from "@/component/Chat";
 import { MdEvent } from "react-icons/md";
 import { WSButton } from "@/component/ui/WSComponents";
 import Header from "@/component/layout/Header";
 import EventsModal from "@/component/EventsModal";
 import CacheController from "@/component/CacheController";
 import Version from "@/component/ui/Version";
+import { app } from "playcanvas";
+import main from "@/playcanvas/start";
+
 function MainPage() {
   const pageRef = useRef(null);
   const { account } = useNakama();
-  const navigate = useNavigate();
   const [isSupportedBrowser, setIsSupportedBrowser] = useState(false);
 
   useEffect(() => {
@@ -31,6 +31,8 @@ function MainPage() {
     setIsSupportedBrowser(!isInApp);
 
     const handlePWAOutdated = () => pageRef.current.remove();
+
+    main();
     evt.on("version:pwa-outdated", handlePWAOutdated);
 
     return () => {
@@ -41,7 +43,7 @@ function MainPage() {
   return (
     <div
       ref={pageRef}
-      className="w-full h-full flex flex-col justify-center items-center gap-4 bg-[var(--color-background)]"
+      className="absolute w-full h-full flex flex-col justify-center items-center gap-4 bg-[var(--color-background)]"
     >
       <Header />
       <h1 className="text-[80px] font-bold text-center leading-none text-[var(--color-chocolate-900)]">
@@ -55,7 +57,7 @@ function MainPage() {
             className="w-24 h-24 text-[60px] rounded-4xl"
             onClick={() => {
               account.user.display_name
-                ? navigate("/game")
+                ? app.fire("game:start")
                 : evt.emit("displayname:init");
             }}
           >
@@ -87,7 +89,7 @@ function MainPage() {
         </div>
       )}
 
-      <Chat />
+      {/* <Chat /> */}
       <Profile />
       <Leaderboard />
       <DisplayNameModal />

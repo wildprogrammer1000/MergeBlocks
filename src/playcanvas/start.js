@@ -10,7 +10,6 @@ import {
 import { CONTEXT_OPTIONS, PRELOAD_MODULES } from "./settings";
 import { loadModules } from "./modules";
 import showLoadingScreen from "./loading";
-import { initProjectScene } from "./scenes/ProjectScene";
 import { initSceneBase } from "./scenes/sceneBase";
 import { assets } from "./assets";
 
@@ -42,6 +41,7 @@ async function main() {
     mouse: new Mouse(canvas),
     touch: new TouchDevice(canvas),
   });
+  app.on("canvas:resize", resize);
 
   const configureAssets = (assetList) => {
     for (let i = 0; i < assetList.length; i++) {
@@ -68,13 +68,9 @@ async function main() {
   configureAssets(assets);
   loadModules(PRELOAD_MODULES, "", () => {
     showLoadingScreen(app);
-    // TODO: Add resize handler
-    // orientationchange
-    // resize
     app.preload(() => {
       app.start();
       initSceneBase();
-      initProjectScene();
     });
   });
   return app;
