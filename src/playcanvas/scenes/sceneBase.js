@@ -7,6 +7,7 @@ import {
   Vec3,
 } from "playcanvas";
 import { initProjectScene } from "./ProjectScene";
+import evt from "@/utils/event-handler";
 
 export const initSceneBase = () => {
   // 카메라 설정
@@ -17,6 +18,7 @@ export const initSceneBase = () => {
     projection: PROJECTION_ORTHOGRAPHIC,
   });
   camera.setPosition(0, 0, 10);
+  evt.emit("camera:clearColor", camera.camera);
   app.root.addChild(camera);
 
   // Ground Material

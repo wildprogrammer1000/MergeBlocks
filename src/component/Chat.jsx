@@ -108,15 +108,15 @@ const Chat = ({ className }) => {
   }, [account]);
   if (!account) return;
   return (
-    <div className={`w-full bg-[var(--color-chocolate-700)] ${className}`}>
+    <div className={`w-full bg-[var(--color-main-700)] ${className}`}>
       {isOpen ? (
         <div className="relative">
-          <div className="relative h-10 flex items-center border-b-2 border-[var(--color-chocolate-900)] ">
-            <div className="text-[var(--color-chocolate-100)] text-xl font-bold text-center w-full">
+          <div className="relative h-10 flex items-center border-b-2 border-[var(--color-main-900)] ">
+            <div className="text-[var(--color-main-100)] text-xl font-bold text-center w-full">
               MESSAGES
             </div>
             <button
-              className="absolute top-0 right-0 flex items-center justify-center w-10 h-10 text-[var(--color-chocolate-100)] text-xl"
+              className="absolute top-0 right-0 flex items-center justify-center w-10 h-10 text-[var(--color-main-100)] text-xl"
               onClick={() => setOpen(false)}
             >
               <TbTriangleInvertedFilled />
@@ -130,21 +130,21 @@ const Chat = ({ className }) => {
           </div>
           <form
             onSubmit={sendMessage}
-            className="flex h-12 border-t-2 border-[var(--color-chocolate-900)]"
+            className="flex h-12 border-t-2 border-[var(--color-main-900)]"
           >
             <input
-              className="flex-1 bg-[var(--color-chocolate-100)] px-2 text-[var(--color-chocolate-900)]"
+              className="flex-1 bg-[var(--color-main-100)] px-2 text-[var(--color-main-900)]"
               value={message}
               onChange={handleMessage}
             ></input>
-            <button className="w-12 h-12 flex items-center justify-center text-2xl text-[var(--color-chocolate-100)]">
+            <button className="w-12 h-12 flex items-center justify-center text-2xl text-[var(--color-main-100)]">
               <IoSend />
             </button>
           </form>
         </div>
       ) : (
         <div
-          className="flex items-center h-12 border-t-2 border-[var(--color-chocolate-900)]"
+          className="flex items-center h-12 border-t-2 border-[var(--color-main-900)]"
           onClick={() => setOpen(true)}
         >
           {messages.length > 0 && (
@@ -175,13 +175,13 @@ const ChatMessage = ({ content, multiLine = true }) => {
   if (!content) return;
   return (
     <div className={`flex gap-1 p-1 w-full ${multiLine ? "" : "items-center"}`}>
-      <div className="h-fit bg-[var(--color-chocolate-100)] text-[var(--color-chocolate-900)] font-bold p-1 rounded-lg">
+      <div className="h-fit bg-[var(--color-main-100)] text-[var(--color-main-900)] font-bold p-1 rounded-lg">
         {displayName}
       </div>
       <div
-        className={`overflow-x-hidden p-1 text-[var(--color-chocolate-100)] font-bold rounded-lg ${
+        className={`overflow-x-hidden p-1 text-[var(--color-main-100)] font-bold rounded-lg ${
           multiLine
-            ? "border-2 border-[var(--color-chocolate-100)] break-words"
+            ? "border-2 border-[var(--color-main-100)] break-words"
             : "flex-1 overflow-x-hidden text-ellipsis whitespace-nowrap"
         }`}
       >

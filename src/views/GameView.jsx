@@ -121,16 +121,16 @@ const GamePage = () => {
         </div>
       )}
       <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
-        <div className="font-bold text-[var(--color-chocolate-900)] bg-[var(--color-chocolate-100)]/80 px-4 py-2 rounded-full">
+        <div className="font-bold text-[var(--color-main-900)] bg-[var(--color-main-100)]/80 px-4 py-2 rounded-full">
           SCORE: {score}
         </div>
         {/* <WalletPoint
           type="point"
           value={point}
-          className="w-fit  bg-[var(--color-chocolate-900)]/80"
+          className="w-fit  bg-[var(--color-main-900)]/80"
         /> */}
         {pointCombo > 0 && (
-          <i className="text-[var(--color-chocolate-100)] font-bold text-xl">
+          <i className="text-[var(--color-main-100)] font-bold text-xl">
             {pointCombo} COMBO!
           </i>
         )}

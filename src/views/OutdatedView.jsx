@@ -20,7 +20,7 @@ const OutdatedPage = () => {
     setIsSupportedBrowser(!isInApp);
   }, []);
   return (
-    <div className="absolute inset-0 flex items-center justify-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)]">
+    <div className="absolute inset-0 flex items-center justify-center bg-[var(--color-main-900)] text-[var(--color-main-100)]">
       <div className="text-center">
         <h1 className="text-2xl font-bold">App Version Updated</h1>
         <p className="text-sm">Please reinstall the latest version of app.</p>

@@ -42,10 +42,10 @@ function MainPage() {
   return (
     <div
       ref={pageRef}
-      className="absolute w-full h-full flex flex-col justify-center items-center gap-4 bg-[var(--color-background)]"
+      className="absolute w-full h-full flex flex-col justify-center items-center gap-4 bg-[var(--color-main-100)]"
     >
       <Header />
-      <h1 className="text-[80px] font-bold text-center leading-none text-[var(--color-chocolate-900)]">
+      <h1 className="text-[80px] font-bold text-center leading-none text-[var(--color-main-900)]">
         MERGE
         <br />
         BLOCKS

@@ -1,23 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  /* 초콜릿 색상 스케일 */
-  --color-chocolate-100: #fdf0e6; /* 가장 연한 크림색 */
-  --color-chocolate-200: #f5e1d0; /* 매우 연한 베이지 */
-  --color-chocolate-300: #e6cdb7; /* 연한 베이지 */
-  --color-chocolate-400: #d4b69b; /* 밝은 카라멜 */
-  --color-chocolate-500: #c4a484; /* 중간 톤의 초콜릿 */
-  --color-chocolate-600: #b08e6b; /* 카라멜 밀크 */
-  --color-chocolate-700: #9b7960; /* 진한 카라멜 */
-  --color-chocolate-800: #866555; /* 다크 초콜릿 */
-  --color-chocolate-900: #6f4e45; /* 가장 진한 초콜릿 */
-
-  /* 기능성 색상 */
-  --color-surface: #ffffff;
-  --color-background: var(--color-chocolate-100);
-  --color-overlay: rgba(110, 78, 69, 0.5);
-}
-
 * {
   box-sizing: border-box;
 }

@@ -31,27 +31,27 @@ const GameResultModal = ({
   }, []);
   return (
     <WSModal className="z-20">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] bg-[var(--color-chocolate-100)] rounded-2xl">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] bg-[var(--color-main-100)] rounded-2xl">
         <WSModalHeader className="p-2">
           <div className="text-2xl font-bold text-center w-full">GAME OVER</div>
         </WSModalHeader>
         <div className="flex flex-col gap-4 p-4">
           <div className="flex justify-center gap-4">
-            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] p-4 rounded-2xl">
+            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
               <span className="text-2xl">SCORE</span>
               {score}
             </div>
-            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] p-4 rounded-2xl">
+            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
               <span className="text-2xl">MAX COMBO</span>
               {maxCombo}
             </div>
           </div>
           <div className="flex justify-center gap-4">
-            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] p-4 rounded-2xl">
+            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
               <span className="text-2xl">BEST SCORE</span>
               {result.bestScore}
             </div>
-            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] p-4 rounded-2xl">
+            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
               <span className="text-2xl">MY RANK</span>
               {result.rank}
             </div>

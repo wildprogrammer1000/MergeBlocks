@@ -5,7 +5,7 @@ const WSButton = (props) => {
     <button
       disabled={props.disabled || false}
       onClick={props.onClick}
-      className={`bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] hover:bg-[var(--color-chocolate-100)] hover:text-[var(--color-chocolate-900)] rounded-2xl  transition-all duration-300 w-12 h-12 flex justify-center items-center text-3xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
+      className={`bg-[var(--color-main-900)] text-[var(--color-main-100)] hover:bg-[var(--color-main-100)] hover:text-[var(--color-main-900)] rounded-2xl  transition-all duration-300 w-12 h-12 flex justify-center items-center text-3xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
         props.className || ""
       }`}
     >
@@ -21,7 +21,7 @@ const WSModal = (props) => {
       className={`absolute inset-0 bg-black/50 flex justify-center items-end ${props.className || ""}`}
     >
       <div
-        className="w-full max-w-[500px] rounded-t-2xl bg-[var(--color-chocolate-100)]"
+        className="w-full max-w-[500px] rounded-t-2xl bg-[var(--color-main-100)]"
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -35,7 +35,7 @@ const WSModalHeader = (props) => {
   return (
     <div
       onClick={props.onClick}
-      className={`flex justify-between items-center bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] rounded-t-xl ${
+      className={`flex justify-between items-center bg-[var(--color-main-900)] text-[var(--color-main-100)] rounded-t-xl ${
         props.className || ""
       }`}
     >

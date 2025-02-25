@@ -59,7 +59,7 @@ const DisplayNameModal = () => {
           <div className="text-xl font-bold">SET NICKNAME</div>
         </WSModalHeader>
         <div className="flex flex-col gap-1 p-4">
-          <div className="text-[var(--color-chocolate-900)] font-bold">
+          <div className="text-[var(--color-main-900)] font-bold">
             NICKNAME
           </div>
           <div className="flex gap-2">
@@ -68,7 +68,7 @@ const DisplayNameModal = () => {
                 type="text"
                 value={displayName}
                 onChange={handleChange}
-                className="w-full p-2 border-2 border-[var(--color-chocolate-900)] rounded-xl focus:border-[var(--color-chocolate-500)] outline-none text-[var(--color-chocolate-900)] font-bold"
+                className="w-full p-2 border-2 border-[var(--color-main-900)] rounded-xl focus:border-[var(--color-main-500)] outline-none text-[var(--color-main-900)] font-bold"
               />
               <div className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center">
                 {displayName.length > 0 ? (

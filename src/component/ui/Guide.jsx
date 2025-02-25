@@ -15,7 +15,7 @@ const Guide = () => {
 
   return (
     <div className="relative w-[300px] h-[300px]">
-      <div className="border h-full rounded-full bg-[var(--color-chocolate-900)]">
+      <div className="border h-full rounded-full bg-[var(--color-main-900)]">
         {blockImages.map((block, index) => {
           // 시작 위치를 상단 중앙(270도)으로 하고 시계 방향으로 회전
           const angle = 270 + (index * 360) / blockImages.length;
@@ -36,7 +36,7 @@ const Guide = () => {
                 height: `${imageSize}px`,
               }}
             >
-              <div className="absolute  bg-[var(--color-chocolate-400)] rounded-full">
+              <div className="absolute  bg-[var(--color-main-400)] rounded-full">
                 <img
                   src={block.file.url}
                   alt={block.name}
@@ -46,7 +46,7 @@ const Guide = () => {
             </div>
           );
         })}
-        <div className="absolute w-45 h-45 top-1/2 left-1/2 -translate-1/2 flex items-center justify-center text-lg font-bold bg-[var(--color-chocolate-100)] rounded-full text-[120px] rotate-230 text-[var(--color-chocolate-900)]">
+        <div className="absolute w-45 h-45 top-1/2 left-1/2 -translate-1/2 flex items-center justify-center text-lg font-bold bg-[var(--color-main-100)] rounded-full text-[120px] rotate-230 text-[var(--color-main-900)]">
           <FaArrowRotateRight />
         </div>
       </div>

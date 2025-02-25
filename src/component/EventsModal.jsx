@@ -35,7 +35,7 @@ const EventsModal = () => {
         <div className="text-xl font-bold">EVENTS</div>
         <WSCloseButton
           onClick={() => setIsOpen(false)}
-          className="text-2xl rounded-2xl font-bold text-[var(--color-chocolate-100)]"
+          className="text-2xl rounded-2xl font-bold text-[var(--color-main-100)]"
         />
       </WSModalHeader>
       <div className="p-4 max-h-[500px] overflow-y-auto">
@@ -43,7 +43,7 @@ const EventsModal = () => {
           {events.length > 0 ? (
             events.map((event, index) => <Event key={index} {...event} />)
           ) : (
-            <div className="font-bold text-[var(--color-chocolate-900)]">
+            <div className="font-bold text-[var(--color-main-900)]">
               No events in progress
             </div>
           )}
@@ -66,7 +66,7 @@ const Event = ({
   rewardInfo,
 }) => {
   return (
-    <div className="flex flex-col gap-3 bg-[var(--color-chocolate-300)] text-[var(--color-chocolate-900)] rounded-2xl p-4">
+    <div className="flex flex-col gap-3 bg-[var(--color-main-300)] text-[var(--color-main-900)] rounded-2xl p-4">
       <Timer endDate={end} />
       <div className="font-bold text-2xl">📌 {title}</div>
       <div className="text-md">{description}</div>

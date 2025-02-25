@@ -35,7 +35,7 @@ const Version = ({ visible = false }) => {
   return (
     <>
       <i
-        className={`text-sm text-[var(--color-chocolate-900)] font-bold p-2 ${
+        className={`text-sm text-[var(--color-main-900)] font-bold p-2 ${
           visible ? "block" : "hidden"
         }`}
       >
@@ -43,7 +43,7 @@ const Version = ({ visible = false }) => {
       </i>
       {isUpdaterVisible && (
         <button
-          className="absolute top-2 left-1/2 -translate-x-1/2 bg-[var(--color-chocolate-900)] text-[var(--color-chocolate-100)] p-2 rounded-xl hover:underline cursor-pointer"
+          className="absolute top-2 left-1/2 -translate-x-1/2 bg-[var(--color-main-900)] text-[var(--color-main-100)] p-2 rounded-xl hover:underline cursor-pointer"
           onClick={openNewWindow}
         >
           Update Version?

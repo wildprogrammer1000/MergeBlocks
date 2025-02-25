@@ -40,7 +40,7 @@ const Timer = ({ endDate }) => {
   )
     return null;
   return (
-    <div className="flex gap-2 justify-center items-center font-bold border-2 border-[var(--color-chocolate-900)] rounded-full px-2">
+    <div className="flex gap-2 justify-center items-center font-bold border-2 border-[var(--color-main-900)] rounded-full px-2">
       <TimeUnit value={timeLeft.days} unit="D" />
       <TimeUnit value={timeLeft.hours} unit="H" />
       <TimeUnit value={timeLeft.minutes} unit="M" />
@@ -50,7 +50,7 @@ const Timer = ({ endDate }) => {
 };
 
 const TimeUnit = ({ value, unit }) => (
-  <div className="flex items-center gap-1 text-[var(--color-chocolate-900)]">
+  <div className="flex items-center gap-1 text-[var(--color-main-900)]">
     <span className="min-w-[2ch] text-center">
       {value.toString().padStart(2, "0")}
     </span>

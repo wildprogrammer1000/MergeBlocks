@@ -194,7 +194,7 @@ const Profile = ({ backup = false }) => {
           <div className="text-xl font-bold">ACCOUNT</div>
           <WSCloseButton
             onClick={closeProfile}
-            className="text-2xl rounded-2xl font-bold text-[var(--color-chocolate-100)]"
+            className="text-2xl rounded-2xl font-bold text-[var(--color-main-100)]"
           />
         </WSModalHeader>
         <div className="flex flex-col gap-4 p-4">
@@ -202,7 +202,7 @@ const Profile = ({ backup = false }) => {
             onSubmit={handleUpdateDisplayName}
             className="flex flex-col gap-1"
           >
-            <div className="text-[var(--color-chocolate-900)] font-bold">
+            <div className="text-[var(--color-main-900)] font-bold">
               NICKNAME
             </div>
             <div className="flex gap-2">
@@ -211,7 +211,7 @@ const Profile = ({ backup = false }) => {
                   type="text"
                   value={displayName || ""}
                   onChange={handleDisplayNameChange}
-                  className="w-full p-2 border-2 border-[var(--color-chocolate-900)] rounded-xl focus:border-[var(--color-chocolate-500)] outline-none text-[var(--color-chocolate-900)] font-bold"
+                  className="w-full p-2 border-2 border-[var(--color-main-900)] rounded-xl focus:border-[var(--color-main-500)] outline-none text-[var(--color-main-900)] font-bold"
                   disabled={nicknameLoading}
                 />
                 <div className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center">
@@ -251,11 +251,11 @@ const Profile = ({ backup = false }) => {
             </div>
           </form>
           <div className="flex flex-col gap-2">
-            <div className="text-[var(--color-chocolate-900)] font-bold">
+            <div className="text-[var(--color-main-900)] font-bold">
               SOCIAL
             </div>
             <div className="flex justify-between">
-              <div className="flex gap-1 items-center text-[var(--color-chocolate-900)]">
+              <div className="flex gap-1 items-center text-[var(--color-main-900)]">
                 <FcGoogle className="text-xl" />
                 Google
               </div>

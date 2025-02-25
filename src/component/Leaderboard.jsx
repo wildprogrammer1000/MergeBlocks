@@ -52,10 +52,10 @@ const Leaderboard = () => {
       onClick={() => evt.emit("leaderboard:close")}
     >
       <div
-        className="flex flex-col w-full h-full max-h-[80%] max-w-md rounded-3xl bg-[var(--color-chocolate-100)]"
+        className="flex flex-col w-full h-full max-h-[80%] max-w-md rounded-3xl bg-[var(--color-main-100)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-center text-2xl font-bold text-[var(--color-chocolate-900)] border-b-2 p-4">
+        <h2 className="text-center text-2xl font-bold text-[var(--color-main-900)] border-b-2 p-4">
           👑 Ranking 👑
         </h2>
         <div className="flex-1 rounded-2xl overflow-y-auto">
@@ -65,23 +65,23 @@ const Leaderboard = () => {
                 <Record key={`record-${index}`} record={record} />
               ))
             ) : (
-              <div className="text-center text-[var(--color-chocolate-100)] font-bold">
+              <div className="text-center text-[var(--color-main-100)] font-bold">
                 No records...
               </div>
             )}
           </div>
         </div>
         {myRecord && (
-          <div className="p-2 border-y-2 border-[var(--color-chocolate-900)]">
+          <div className="p-2 border-y-2 border-[var(--color-main-900)]">
             <Record record={myRecord} />
           </div>
         )}
         <div className="flex gap-2 p-2">
           <button
             disabled={!canRefresh}
-            className={`flex justify-center items-center flex-1 text-2xl rounded-2xl border-2 bg-[var(--color-chocolate-100)] text-[var(--color-chocolate-900)] ${
+            className={`flex justify-center items-center flex-1 text-2xl rounded-2xl border-2 bg-[var(--color-main-100)] text-[var(--color-main-900)] ${
               canRefresh
-                ? "hover:bg-[var(--color-chocolate-900)] hover:text-[var(--color-chocolate-100)]"
+                ? "hover:bg-[var(--color-main-900)] hover:text-[var(--color-main-100)]"
                 : ""
             } transition-all duration-300`}
             onClick={() => {
@@ -95,7 +95,7 @@ const Leaderboard = () => {
             </div>
           </button>
           <button
-            className="flex justify-center items-center w-12 h-12 text-2xl rounded-2xl  border-red-400 hover:border-red-400    text-[var(--color-chocolate-100)] bg-red-400 hover:bg-[var(--color-chocolate-900)] transition-all duration-300  "
+            className="flex justify-center items-center w-12 h-12 text-2xl rounded-2xl  border-red-400 hover:border-red-400    text-[var(--color-main-100)] bg-red-400 hover:bg-[var(--color-main-900)] transition-all duration-300  "
             onClick={() => evt.emit("leaderboard:close")}
           >
             <IoMdClose />
@@ -116,9 +116,9 @@ const Record = ({ record }) => {
     3: "bg-amber-700",
   };
   return (
-    <div className="px-3 py-3 flex gap-2 items-center  rounded-2xl bg-[var(--color-chocolate-700)] text-[var(--color-chocolate-100)]">
+    <div className="px-3 py-3 flex gap-2 items-center  rounded-2xl bg-[var(--color-main-700)] text-[var(--color-main-100)]">
       <div
-        className={`w-10 h-10 flex justify-center items-center border-[var(--color-chocolate-900)] rounded-full ${
+        className={`w-10 h-10 flex justify-center items-center border-[var(--color-main-900)] rounded-full ${
           colors[record.rank]
         }`}
       >

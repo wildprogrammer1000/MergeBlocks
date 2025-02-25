@@ -14,7 +14,7 @@ const HelpModal = () => {
 
   return (
     <WSModal onClick={() => setIsOpen(false)}>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-2 p-4 bg-[var(--color-chocolate-100)] rounded-2xl">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-2 p-4 bg-[var(--color-main-100)] rounded-2xl">
         <Guide />
       </div>
     </WSModal>
