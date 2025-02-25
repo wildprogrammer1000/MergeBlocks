@@ -51,6 +51,5 @@ export const initProjectScene = () => {
   createGameManager(app);
   createInputHandler(app);
   createDeadline(app);
-
   evt.emit("view:game");
 };

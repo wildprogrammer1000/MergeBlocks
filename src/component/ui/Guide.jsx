@@ -1,10 +1,10 @@
-import { assets } from "@/playcanvas/assets";
+import { textureAssets } from "@/playcanvas/assets";
 import { useMemo } from "react";
 import { FaArrowRotateRight } from "react-icons/fa6";
 
 const Guide = () => {
   const blockImages = useMemo(() => {
-    return assets
+    return textureAssets
       .filter((asset) => asset.type === "texture")
       .sort((a, b) => {
         const numA = parseInt(a.name.split("_")[1]);

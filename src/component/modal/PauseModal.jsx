@@ -19,7 +19,9 @@ const PauseModal = () => {
   return (
     <WSModal onClick={closeModal}>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-2 p-4 bg-[var(--color-main-100)] rounded-2xl">
-        <WSButton onClick={() => evt.emit("view:main")}>
+        <WSButton
+          onClick={() => setTimeout(() => evt.emit("view:main"), 300)}
+        >
           <GoHomeFill />
         </WSButton>
         <WSButton

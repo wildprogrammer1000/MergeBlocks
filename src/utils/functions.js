@@ -34,4 +34,30 @@ const hexToRgb = (hex) => {
 
   return { r, g, b };
 };
-export { createSpriteAsset, hexToRgb };
+
+const configureAssets = (assetList, load = false) => {
+  for (let i = 0; i < assetList.length; i++) {
+    const data = assetList[i];
+    const asset = new pc.Asset(data.name, data.type, data.file, data.data);
+    asset.id = parseInt(data.id, 10);
+    asset.preload = data.preload ? data.preload : false;
+    // if this is a script asset and has already been embedded in the page then
+    // mark it as loaded
+    asset.loaded =
+      data.type === "script" && data.data && data.data.loadingType > 0;
+    // tags
+    asset.tags.add(data.tags);
+    // i18n
+    if (data.i18n) {
+      for (const locale in data.i18n) {
+        asset.addLocalizedAssetId(locale, data.i18n[locale]);
+      }
+    }
+    // registry
+    pc.app.assets.add(asset);
+    if (load) {
+      pc.app.assets.load(asset);
+    }
+  }
+};
+export { createSpriteAsset, hexToRgb, configureAssets };

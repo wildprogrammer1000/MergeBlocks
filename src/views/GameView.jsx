@@ -101,6 +101,7 @@ const GamePage = () => {
   }, []);
 
   useEffect(() => {
+    if (gameOver) app.fire("sound:play", "gameover");
     if (app) app.on("score:update", updateScore);
 
     return () => {

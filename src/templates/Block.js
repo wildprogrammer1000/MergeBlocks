@@ -70,6 +70,7 @@ class Block extends Entity {
       this.sprite.spriteAsset = spriteAsset.id;
     } else {
       this.destroy();
+      this.app.fire("sound:play", "bang");
       for (let i = 0; i < 5; i++) {
         setTimeout(() => evt.emit("confetti"), i * 200);
       }
@@ -80,6 +81,7 @@ class Block extends Entity {
       level: this.level,
       position: destroyPosition,
     });
+    this.app.fire("sound:play", "pop");
 
     this.rigidbody.enabled = false;
     this.isDestroying = true;

@@ -6,6 +6,7 @@ import { IoMdClose } from "react-icons/io";
 import { FiRefreshCw } from "react-icons/fi";
 import { useNakama } from "@/providers/NakamaProvider";
 import { FaRegUserCircle } from "react-icons/fa";
+import { WSButton } from "./ui/WSComponents";
 
 const Leaderboard = () => {
   const [records, setRecords] = useState([]);
@@ -94,12 +95,13 @@ const Leaderboard = () => {
               <FiRefreshCw />
             </div>
           </button>
-          <button
-            className="flex justify-center items-center w-12 h-12 text-2xl rounded-2xl  border-red-400 hover:border-red-400    text-[var(--color-main-100)] bg-red-400 hover:bg-[var(--color-main-900)] transition-all duration-300  "
+          <WSButton
+            type="close"
+            className="border-red-400 hover:border-red-400 text-[var(--color-main-100)] bg-red-400 hover:bg-[var(--color-main-900)"
             onClick={() => evt.emit("leaderboard:close")}
           >
             <IoMdClose />
-          </button>
+          </WSButton>
         </div>
       </div>
     </div>

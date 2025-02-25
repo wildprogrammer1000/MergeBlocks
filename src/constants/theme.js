@@ -13,8 +13,18 @@ export const THEME = {
       "--color-main-900": "#6f4e45" /* 가장 진한 초콜릿 */,
     },
     textures: [
-      
-    ]
+      "assets/valentine/level_0.png",
+      "assets/valentine/level_1.png",
+      "assets/valentine/level_2.png",
+      "assets/valentine/level_3.png",
+      "assets/valentine/level_4.png",
+      "assets/valentine/level_5.png",
+      "assets/valentine/level_6.png",
+      "assets/valentine/level_7.png",
+      "assets/valentine/level_8.png",
+      "assets/valentine/level_9.png",
+      "assets/valentine/level_10.png",
+    ],
   },
   dark: {
     palette: {
@@ -31,5 +41,18 @@ export const THEME = {
       "--color-background": "#2e2e2e",
       "--color-overlay": "rgba(255, 255, 255, 0.5)",
     },
+    textures: [
+      "assets/dark/level_0.png",
+      "assets/dark/level_1.png",
+      "assets/dark/level_2.png",
+      "assets/dark/level_3.png",
+      "assets/dark/level_4.png",
+      "assets/dark/level_5.png",
+      "assets/dark/level_6.png",
+      "assets/dark/level_7.png",
+      "assets/dark/level_8.png",
+      "assets/dark/level_9.png",
+      "assets/dark/level_10.png",
+    ],
   },
 };

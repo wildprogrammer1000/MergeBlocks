@@ -8,6 +8,7 @@ import {
 } from "playcanvas";
 import { initProjectScene } from "./ProjectScene";
 import evt from "@/utils/event-handler";
+import { createSoundManager } from "@/gamescripts/SoundManager";
 
 export const initSceneBase = () => {
   // 카메라 설정
@@ -18,7 +19,14 @@ export const initSceneBase = () => {
     projection: PROJECTION_ORTHOGRAPHIC,
   });
   camera.setPosition(0, 0, 10);
-  evt.emit("camera:clearColor", camera.camera);
+  const updateClearColor = () => {
+    evt.emit("camera:clearColor", camera.camera);
+  };
+  updateClearColor();
+  app.on("asset:applyTheme", updateClearColor);
+  app.on("destroy", () => {
+    app.off("asset:applyTheme", updateClearColor);
+  });
   app.root.addChild(camera);
 
   // Ground Material
@@ -81,6 +89,8 @@ export const initSceneBase = () => {
   light.setPosition(0, 0, 0);
   light.setEulerAngles(90, 0, 0);
   app.root.addChild(light);
+
+  createSoundManager(app);
 
   app.on("game:start", () => {
     initProjectScene();

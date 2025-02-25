@@ -34,6 +34,8 @@ class GameManager extends Script {
 
     this.app.on("particle:play", this.onPlayParticle, this);
 
+    this.app.on("asset:applyTheme", this.onApplyTheme, this);
+
     this.currentBlock = this.createBlock();
 
     this.on("destroy", this.onDestroy, this);
@@ -48,6 +50,22 @@ class GameManager extends Script {
     this.app.off("score:get", this.onScoreGet, this);
     this.app.off("game:view", this.onGameView, this);
     this.app.off("particle:play", this.onPlayParticle, this);
+    this.app.off("asset:applyTheme", this.onApplyTheme, this);
+  }
+  onApplyTheme() {
+    this.textures = [
+      this.app.assets.find("block_0"),
+      this.app.assets.find("block_1"),
+      this.app.assets.find("block_2"),
+      this.app.assets.find("block_3"),
+      this.app.assets.find("block_4"),
+      this.app.assets.find("block_5"),
+      this.app.assets.find("block_6"),
+      this.app.assets.find("block_7"),
+      this.app.assets.find("block_8"),
+      this.app.assets.find("block_9"),
+      this.app.assets.find("block_10"),
+    ];
   }
 
   createBlock() {
@@ -87,6 +105,7 @@ class GameManager extends Script {
       this.isWaiting = false;
       this.currentBlock = this.createBlock();
     }, 200);
+    this.app.fire("sound:play", "drop");
   }
   onGameOver() {
     this.gameOver = true;

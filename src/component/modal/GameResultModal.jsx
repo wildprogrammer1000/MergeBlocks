@@ -61,7 +61,9 @@ const GameResultModal = ({
               <WSButton onClick={restartGame}>
                 <VscDebugRestart />
               </WSButton>
-              <WSButton onClick={() => evt.emit("view:main")}>
+              <WSButton
+                onClick={() => setTimeout(() => evt.emit("view:main"), 300)}
+              >
                 <GoHomeFill />
               </WSButton>
               {canShare && (
