@@ -6,7 +6,7 @@ export const textureAssets = [
     preload: true,
     file: {
       url: new URL(
-        "../assets/valentine/level_0.png",
+        "@assets/valentine/level_0.png",
         import.meta.url
       ).toString(),
     },
@@ -18,7 +18,7 @@ export const textureAssets = [
     preload: true,
     file: {
       url: new URL(
-        "../assets/valentine/level_1.png",
+        "@assets/valentine/level_1.png",
         import.meta.url
       ).toString(),
     },
@@ -30,7 +30,7 @@ export const textureAssets = [
     preload: true,
     file: {
       url: new URL(
-        "../assets/valentine/level_2.png",
+        "@assets/valentine/level_2.png",
         import.meta.url
       ).toString(),
     },
@@ -42,7 +42,7 @@ export const textureAssets = [
     preload: true,
     file: {
       url: new URL(
-        "../assets/valentine/level_3.png",
+        "@assets/valentine/level_3.png",
         import.meta.url
       ).toString(),
     },
@@ -54,7 +54,7 @@ export const textureAssets = [
     preload: true,
     file: {
       url: new URL(
-        "../assets/valentine/level_4.png",
+        "@assets/valentine/level_4.png",
         import.meta.url
       ).toString(),
     },
@@ -66,7 +66,7 @@ export const textureAssets = [
     preload: true,
     file: {
       url: new URL(
-        "../assets/valentine/level_5.png",
+        "@assets/valentine/level_5.png",
         import.meta.url
       ).toString(),
     },
@@ -78,7 +78,7 @@ export const textureAssets = [
     preload: true,
     file: {
       url: new URL(
-        "../assets/valentine/level_6.png",
+        "@assets/valentine/level_6.png",
         import.meta.url
       ).toString(),
     },
@@ -90,7 +90,7 @@ export const textureAssets = [
     preload: true,
     file: {
       url: new URL(
-        "../assets/valentine/level_7.png",
+        "@assets/valentine/level_7.png",
         import.meta.url
       ).toString(),
     },
@@ -102,7 +102,7 @@ export const textureAssets = [
     preload: true,
     file: {
       url: new URL(
-        "../assets/valentine/level_8.png",
+        "@assets/valentine/level_8.png",
         import.meta.url
       ).toString(),
     },
@@ -114,7 +114,7 @@ export const textureAssets = [
     preload: true,
     file: {
       url: new URL(
-        "../assets/valentine/level_9.png",
+        "@assets/valentine/level_9.png",
         import.meta.url
       ).toString(),
     },
@@ -126,7 +126,7 @@ export const textureAssets = [
     preload: true,
     file: {
       url: new URL(
-        "../assets/valentine/level_10.png",
+        "@assets/valentine/level_10.png",
         import.meta.url
       ).toString(),
     },
@@ -141,7 +141,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL("../assets/sounds/bgm.mp3", import.meta.url).toString(),
+      url: new URL("@assets/sounds/bgm.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -150,7 +150,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL("../assets/sounds/bubble.mp3", import.meta.url).toString(),
+      url: new URL("@assets/sounds/bubble.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -159,7 +159,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL("../assets/sounds/button.mp3", import.meta.url).toString(),
+      url: new URL("@assets/sounds/button.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -168,10 +168,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL(
-        "../assets/sounds/cartoon pop.mp3",
-        import.meta.url
-      ).toString(),
+      url: new URL("@assets/sounds/cartoon pop.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -180,7 +177,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL("../assets/sounds/close.mp3", import.meta.url).toString(),
+      url: new URL("@assets/sounds/close.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -189,7 +186,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL("../assets/sounds/coin pop.mp3", import.meta.url).toString(),
+      url: new URL("@assets/sounds/coin pop.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -198,7 +195,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL("../assets/sounds/harp.mp3", import.meta.url).toString(),
+      url: new URL("@assets/sounds/harp.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -207,7 +204,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL("../assets/sounds/level up.mp3", import.meta.url).toString(),
+      url: new URL("@assets/sounds/level up.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -216,7 +213,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL("../assets/sounds/life pop.mp3", import.meta.url).toString(),
+      url: new URL("@assets/sounds/life pop.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -225,7 +222,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL("../assets/sounds/lose.mp3", import.meta.url).toString(),
+      url: new URL("@assets/sounds/lose.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -234,7 +231,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL("../assets/sounds/magical.mp3", import.meta.url).toString(),
+      url: new URL("@assets/sounds/magical.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -243,10 +240,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL(
-        "../assets/sounds/pause enter.mp3",
-        import.meta.url
-      ).toString(),
+      url: new URL("@assets/sounds/pause enter.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -255,10 +249,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL(
-        "../assets/sounds/pop close.mp3",
-        import.meta.url
-      ).toString(),
+      url: new URL("@assets/sounds/pop close.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -267,7 +258,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL("../assets/sounds/pop.mp3", import.meta.url).toString(),
+      url: new URL("@assets/sounds/pop.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -276,10 +267,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL(
-        "../assets/sounds/spin wheel prize.mp3",
-        import.meta.url
-      ).toString(),
+      url: new URL("@assets/sounds/spin wheel prize.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -288,10 +276,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL(
-        "../assets/sounds/spin wheel.mp3",
-        import.meta.url
-      ).toString(),
+      url: new URL("@assets/sounds/spin wheel.mp3", import.meta.url).toString(),
     },
   },
   {
@@ -300,7 +285,7 @@ export const soundAssets = [
     type: "audio",
     preload: true,
     file: {
-      url: new URL("../assets/sounds/win.mp3", import.meta.url).toString(),
+      url: new URL("@assets/sounds/win.mp3", import.meta.url).toString(),
     },
   },
 ];
