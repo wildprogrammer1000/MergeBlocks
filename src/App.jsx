@@ -59,8 +59,7 @@ function App() {
       const currentTheme = THEME[theme];
       const textures = currentTheme.textures;
       textureAssets.map((asset, i) => {
-        asset.file.url = new URL(textures[i], import.meta.url).toString();
-        console.log("asset.file.url", asset.file.url);
+        asset.file.url = textures[i];
         return asset;
       });
     };
