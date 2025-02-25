@@ -11,17 +11,17 @@ class GameManager extends Script {
     this.mainCamera = this.app.root.findByName("Camera");
     this.particleTemplate = new BlockParticle();
     this.textures = [
-      this.app.assets.find("chocolate_0"),
-      this.app.assets.find("chocolate_1"),
-      this.app.assets.find("chocolate_2"),
-      this.app.assets.find("chocolate_3"),
-      this.app.assets.find("chocolate_4"),
-      this.app.assets.find("chocolate_5"),
-      this.app.assets.find("chocolate_6"),
-      this.app.assets.find("chocolate_7"),
-      this.app.assets.find("chocolate_8"),
-      this.app.assets.find("chocolate_9"),
-      this.app.assets.find("chocolate_10"),
+      this.app.assets.find("block_0"),
+      this.app.assets.find("block_1"),
+      this.app.assets.find("block_2"),
+      this.app.assets.find("block_3"),
+      this.app.assets.find("block_4"),
+      this.app.assets.find("block_5"),
+      this.app.assets.find("block_6"),
+      this.app.assets.find("block_7"),
+      this.app.assets.find("block_8"),
+      this.app.assets.find("block_9"),
+      this.app.assets.find("block_10"),
     ];
 
     this.app.on("pointer:down", this.onPointerDown, this);

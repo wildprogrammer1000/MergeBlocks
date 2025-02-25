@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { THEME } from "@/constants/palette";
+import { THEME } from "@/constants/theme";
 import NetworkController from "@/component/NetworkController";
 import Interface from "@/component/Interface";
 import Chat from "@/component/Chat";
@@ -11,20 +11,27 @@ function App() {
   useEffect(() => {
     const currentTheme = THEME[theme];
     const applyClearColor = (camera) => {
-      const clearColor = hexToRgb(currentTheme["--color-main-100"]);
+      const clearColor = hexToRgb(currentTheme.palette["--color-main-100"]);
       camera.clearColor.set(
         clearColor.r / 255,
         clearColor.g / 255,
         clearColor.b / 255
       );
     };
-    const root = document.documentElement;
-    Object.entries(currentTheme).forEach(([key, value]) => {
-      root.style.setProperty(key, value);
-    });
+    const applyColor = () => {
+      const root = document.documentElement;
+      Object.entries(currentTheme.palette).forEach(([key, value]) => {
+        root.style.setProperty(key, value);
+      });
+    };
+
+    const loadAssets = () => {};
+    applyColor();
     evt.on("camera:clearColor", applyClearColor);
+    evt.on("asset:load", loadAssets);
     return () => {
       evt.off("camera:clearColor", applyClearColor);
+      evt.off("asset:load", loadAssets);
     };
   }, [theme]);
   return (

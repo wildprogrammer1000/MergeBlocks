@@ -121,7 +121,7 @@ const GamePage = () => {
         </div>
       )}
       <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
-        <div className="font-bold text-[var(--color-main-900)] bg-[var(--color-main-100)]/80 px-4 py-2 rounded-full">
+        <div className="font-bold text-[var(--color-main-900)] bg-[var(--color-main-300)]/80 px-4 py-2 rounded-full">
           SCORE: {score}
         </div>
         {/* <WalletPoint

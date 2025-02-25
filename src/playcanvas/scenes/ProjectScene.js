@@ -15,7 +15,7 @@ import {
 
 export const initProjectScene = () => {
   levels.forEach((_, index) => {
-    const textureAsset = app.assets.find(`chocolate_${index}`);
+    const textureAsset = app.assets.find(`block_${index}`);
     const atlas = new TextureAtlas();
 
     atlas.frames = {

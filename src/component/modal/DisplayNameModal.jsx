@@ -73,7 +73,7 @@ const DisplayNameModal = () => {
               <div className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center">
                 {displayName.length > 0 ? (
                   checking ? (
-                    <CgSpinner className="animate-spin text-2xl text-chocolate-900" />
+                    <CgSpinner className="animate-spin text-2xl text-main-900" />
                   ) : (
                     <FaCheck
                       className={`text-2xl ${
@@ -82,7 +82,7 @@ const DisplayNameModal = () => {
                     />
                   )
                 ) : (
-                  <BsThreeDots className="text-2xl text-chocolate-900" />
+                  <BsThreeDots className="text-2xl text-main-900" />
                 )}
               </div>
             </div>

@@ -46,7 +46,7 @@ const NetworkController = () => {
           <div className="text-xl font-bold">NETWORK ERROR</div>
         </WSModalHeader>
         <div className="flex gap-2 text-[var(--color-main-900)] pt-2 pb-4 font-bold">
-          <CgSpinner className="animate-spin text-2xl text-chocolate-900" />
+          <CgSpinner className="animate-spin text-2xl text-main-900" />
           reconnecting...
         </div>
       </div>

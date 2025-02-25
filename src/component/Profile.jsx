@@ -219,7 +219,7 @@ const Profile = ({ backup = false }) => {
                   displayName &&
                   displayName.length > 0 ? (
                     checking ? (
-                      <CgSpinner className="animate-spin text-2xl text-chocolate-900" />
+                      <CgSpinner className="animate-spin text-2xl text-main-900" />
                     ) : (
                       <FaCheck
                         className={`text-2xl ${
@@ -228,7 +228,7 @@ const Profile = ({ backup = false }) => {
                       />
                     )
                   ) : (
-                    <BsThreeDots className="text-2xl text-chocolate-900" />
+                    <BsThreeDots className="text-2xl text-main-900" />
                   )}
                 </div>
               </div>
