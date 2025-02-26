@@ -5,18 +5,21 @@ import { GoHomeFill } from "react-icons/go";
 import { useEffect, useState } from "react";
 import evt from "@/utils/event-handler";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
+
 const GameResultModal = ({
   score,
   result = { bestScore: 0, rank: 0 },
   maxCombo,
 }) => {
+  const { t } = useTranslation();
   const [canShare, setCanShare] = useState(false);
 
   const handleShare = async () => {
     try {
       await navigator.share({
         title: "Merge Blocks!",
-        text: `I scored ${score} points! Can you beat my score?`,
+        text: t("SHARE", { score }),
         url: window.location.origin,
       });
     } catch (error) {
@@ -33,26 +36,28 @@ const GameResultModal = ({
     <WSModal className="z-20">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] bg-[var(--color-main-100)] rounded-2xl">
         <WSModalHeader className="p-2">
-          <div className="text-2xl font-bold text-center w-full">GAME OVER</div>
+          <div className="text-2xl font-bold text-center w-full">
+            {t("GAME OVER")}
+          </div>
         </WSModalHeader>
         <div className="flex flex-col gap-4 p-4">
           <div className="flex justify-center gap-4">
             <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
-              <span className="text-2xl">SCORE</span>
+              <span className="text-2xl">{t("Score")}</span>
               {score}
             </div>
             <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
-              <span className="text-2xl">MAX COMBO</span>
+              <span className="text-2xl">{t("MAX COMBO")}</span>
               {maxCombo}
             </div>
           </div>
           <div className="flex justify-center gap-4">
             <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
-              <span className="text-2xl">BEST SCORE</span>
+              <span className="text-2xl">{t("BEST SCORE")}</span>
               {result.bestScore}
             </div>
             <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
-              <span className="text-2xl">MY RANK</span>
+              <span className="text-2xl">{t("MY RANK")}</span>
               {result.rank}
             </div>
           </div>

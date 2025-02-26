@@ -21,7 +21,7 @@ const Chat = ({ className }) => {
   const handleMessage = (e) => {
     const value = e.target.value;
     if (value.length > 60) {
-      alert("Please enter less than 60 characters.");
+      alert(t("Chat Limit Alert"));
       return;
     }
     setMessage(value);
@@ -45,7 +45,7 @@ const Chat = ({ className }) => {
       });
       setMessage("");
     } catch (err) {
-      alert("Failed to send message.");
+      alert(t("Chat Send Failed"));
       console.error(err);
     }
   };

@@ -5,10 +5,12 @@ import { FaCheck } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { CgSpinner } from "react-icons/cg";
 import { BsThreeDots } from "react-icons/bs";
-
+import { useTranslation } from "react-i18next";
 import { useNakama } from "@/providers/NakamaProvider";
 import { WSButton, WSModal, WSModalHeader } from "../ui/WSComponents";
+
 const DisplayNameModal = () => {
+  const { t } = useTranslation();
   const { refreshAccount } = useNakama();
   const checkTimeout = useRef(null);
   const [isOpen, setOpen] = useState(false);
@@ -56,11 +58,11 @@ const DisplayNameModal = () => {
     <WSModal onClick={() => setOpen(false)}>
       <div onClick={(e) => e.stopPropagation()}>
         <WSModalHeader className="flex w-full p-2">
-          <div className="text-xl font-bold">SET NICKNAME</div>
+          <div className="text-xl font-bold">{t("SET NICKNAME")}</div>
         </WSModalHeader>
         <div className="flex flex-col gap-1 p-4">
           <div className="text-[var(--color-main-900)] font-bold">
-            NICKNAME
+            {t("Nickname")}
           </div>
           <div className="flex gap-2">
             <div className="flex-1 relative flex gap-2 items-center">

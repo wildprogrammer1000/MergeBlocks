@@ -13,7 +13,6 @@ import EventsModal from "@/component/EventsModal";
 import CacheController from "@/component/CacheController";
 import Version from "@/component/ui/Version";
 import { app } from "playcanvas";
-import main from "@/playcanvas/start";
 
 function MainPage() {
   const pageRef = useRef(null);
@@ -69,9 +68,7 @@ function MainPage() {
                   if (isSupportedBrowser) {
                     evt.emit("profile:open");
                   } else {
-                    alert(
-                      "This feature is not supported in in-app browsers.\nPlease use browsers\n(Chrome , Safari, etc.)"
-                    );
+                    alert(t("Google Not Supported"));
                   }
                 }}
               >

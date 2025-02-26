@@ -35,9 +35,7 @@ const OutdatedPage = () => {
               if (isSupportedBrowser) {
                 evt.emit("profile:open");
               } else {
-                alert(
-                  "This feature is not supported in in-app browsers.\nPlease use browsers\n(Chrome , Safari, etc.)"
-                );
+                alert(t("Google Not Supported"));
               }
             }}
           >

@@ -2,8 +2,10 @@ import { getVersion } from "@/api/nakama";
 import { useEffect, useState } from "react";
 import { compareVersions } from "@/utils/version";
 import evt from "@/utils/event-handler";
+import { useTranslation } from "react-i18next";
 
 const Version = ({ visible = false }) => {
+  const { t } = useTranslation();
   const [isUpdaterVisible, setIsUpdaterVisible] = useState(false);
   const check = async () => {
     const { version } = await getVersion();
@@ -46,7 +48,7 @@ const Version = ({ visible = false }) => {
           className="absolute top-2 left-1/2 -translate-x-1/2 bg-[var(--color-main-900)] text-[var(--color-main-100)] p-2 rounded-xl hover:underline cursor-pointer"
           onClick={openNewWindow}
         >
-          Update Version?
+          {t("Update Version")}
         </button>
       )}
     </>

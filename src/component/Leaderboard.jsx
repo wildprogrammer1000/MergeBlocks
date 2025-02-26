@@ -6,9 +6,11 @@ import { IoMdClose } from "react-icons/io";
 import { FiRefreshCw } from "react-icons/fi";
 import { useNakama } from "@/providers/NakamaProvider";
 import { FaRegUserCircle } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import { WSButton } from "./ui/WSComponents";
 
 const Leaderboard = () => {
+  const { t } = useTranslation();
   const [records, setRecords] = useState([]);
   const [myRecord, setMyRecord] = useState();
 
@@ -57,7 +59,7 @@ const Leaderboard = () => {
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-center text-2xl font-bold text-[var(--color-main-900)] border-b-2 p-4">
-          👑 Ranking 👑
+          👑 {t("Ranking")} 👑
         </h2>
         <div className="flex-1 rounded-2xl overflow-y-auto">
           <div className="flex flex-col gap-2 h-full overflow-y-auto p-2">
@@ -67,7 +69,7 @@ const Leaderboard = () => {
               ))
             ) : (
               <div className="text-center text-[var(--color-main-100)] font-bold">
-                No records...
+                {t("No Records")}...
               </div>
             )}
           </div>

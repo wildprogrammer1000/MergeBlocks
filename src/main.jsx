@@ -7,6 +7,7 @@ import "@/utils/firebase";
 import "@/utils/confetti";
 import * as pc from "playcanvas";
 import StateProvider from "./providers/StateProvider";
+import "./i18n"
 
 if (import.meta.env.DEV) {
   window.pc = pc;

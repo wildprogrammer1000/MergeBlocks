@@ -5,7 +5,10 @@ import { getEvents } from "@/api/nakama";
 import { useNakama } from "@/providers/NakamaProvider";
 import PropTypes from "prop-types";
 import Timer from "./ui/Timer";
+import { useTranslation } from "react-i18next";
+
 const EventsModal = () => {
+  const { t } = useTranslation();
   const { client, session } = useNakama();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -32,7 +35,7 @@ const EventsModal = () => {
   return (
     <WSModal onClick={() => setIsOpen(false)}>
       <WSModalHeader className="flex w-full p-2">
-        <div className="text-xl font-bold">EVENTS</div>
+        <div className="text-xl font-bold">{t("Events")}</div>
         <WSCloseButton
           onClick={() => setIsOpen(false)}
           className="text-2xl rounded-2xl font-bold text-[var(--color-main-100)]"
@@ -44,7 +47,7 @@ const EventsModal = () => {
             events.map((event, index) => <Event key={index} {...event} />)
           ) : (
             <div className="font-bold text-[var(--color-main-900)]">
-              No events in progress
+              {t("No Events")}
             </div>
           )}
         </div>
@@ -76,7 +79,7 @@ const Event = ({
 
       {/* 🎁 경품 */}
       <div className="mt-2">
-        <div className="font-bold">🎁 경품</div>
+        <div className="font-bold">🎁 {t("Prize")}</div>
         <ul className="list-disc pl-4 text-sm">
           <li>{prize}</li>
         </ul>
@@ -84,7 +87,7 @@ const Event = ({
 
       {/* 📣 경품 안내 */}
       <div className="mt-2">
-        <div className="font-bold">📣 경품 안내</div>
+        <div className="font-bold">📣 {t("Prize Info")}</div>
         <ul className="list-disc pl-4 text-sm">
           {rewardInfo.map((info, idx) => (
             <li key={idx}>{info}</li>
@@ -94,7 +97,7 @@ const Event = ({
 
       {/* 📢 참여 방법 */}
       <div className="mt-2">
-        <div className="font-bold">📢 참여 방법</div>
+        <div className="font-bold">📢 {t("Participation")}</div>
         <ul className="list-disc pl-4 text-sm">
           {participation.map((step, idx) => (
             <li key={idx}>{step}</li>

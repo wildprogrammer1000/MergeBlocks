@@ -26,8 +26,10 @@ import { FaUnlink } from "react-icons/fa";
 import { FaLink } from "react-icons/fa";
 import { FaCloudDownloadAlt } from "react-icons/fa";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const Profile = ({ backup = false }) => {
+  const { t } = useTranslation();
   const { client, session, account, refreshAccount, authenticate } =
     useNakama();
   const [isOpen, setIsOpen] = useState(false);
@@ -86,7 +88,7 @@ const Profile = ({ backup = false }) => {
       if (account.user.display_name) await changeDisplayname(displayName);
       else await initDisplayName(displayName);
       await refreshAccount();
-      alert("Nickname updated successfully.");
+      alert(t("Update Nickname"));
     } catch (error) {
       console.error("Update display name error:", error);
     } finally {
@@ -98,12 +100,7 @@ const Profile = ({ backup = false }) => {
   const closeProfile = () => setIsOpen(false);
 
   const load = async () => {
-    if (
-      !window.confirm(
-        "Are you sure you want to load your Google account?\n(Data that is not saved may be lost."
-      )
-    )
-      return;
+    if (!window.confirm(t("Google Load Confirm"))) return;
 
     try {
       let response;
@@ -127,9 +124,9 @@ const Profile = ({ backup = false }) => {
       const { userId } = await getGoogleLinkedAccount(rawId);
       if (userId) {
         await authenticate(userId);
-        alert("Google account loaded successfully.\nPage will be reloaded");
+        alert(t("Google Link Success"));
       } else {
-        alert("Account is not registered.");
+        alert(t("Google Not Linked"));
       }
     } catch (error) {
       console.error("Load error:", error);
@@ -139,12 +136,7 @@ const Profile = ({ backup = false }) => {
   };
 
   const unlink = async () => {
-    if (
-      !window.confirm(
-        "Are you sure you want to unlink your Google account?\n(Data that is not saved may be lost."
-      )
-    )
-      return;
+    if (!window.confirm(t("Google Unlink Confirm"))) return;
 
     try {
       setGoogleLoading(true);
@@ -168,7 +160,7 @@ const Profile = ({ backup = false }) => {
       refreshAccount();
     } catch (error) {
       if (error.status === 409) {
-        alert("Google ID is already in use.");
+        alert(t("Google Already Linked"));
       }
       console.error("Google link error:", error);
     } finally {
@@ -191,7 +183,7 @@ const Profile = ({ backup = false }) => {
     <WSModal onClick={() => setIsOpen(false)}>
       <div className="rounded-lg flex flex-col">
         <WSModalHeader className="flex w-full p-2">
-          <div className="text-xl font-bold">ACCOUNT</div>
+          <div className="text-xl font-bold">{t("Account")}</div>
           <WSCloseButton
             onClick={closeProfile}
             className="text-2xl rounded-2xl font-bold text-[var(--color-main-100)]"
@@ -203,7 +195,7 @@ const Profile = ({ backup = false }) => {
             className="flex flex-col gap-1"
           >
             <div className="text-[var(--color-main-900)] font-bold">
-              NICKNAME
+              {t("Nickname")}
             </div>
             <div className="flex gap-2">
               <div className="flex-1 relative flex gap-2 items-center">
@@ -252,7 +244,7 @@ const Profile = ({ backup = false }) => {
           </form>
           <div className="flex flex-col gap-2">
             <div className="text-[var(--color-main-900)] font-bold">
-              SOCIAL
+              {t("Social")}
             </div>
             <div className="flex justify-between">
               <div className="flex gap-1 items-center text-[var(--color-main-900)]">
