@@ -60,6 +60,50 @@ class EventHandler {
       callback.apply(context, args);
     });
   }
+
+  /**
+   * 메서드 등록
+   * @param {string} name - 메서드 이름
+   * @param {Function} fn - 호출할 함수
+   */
+  method(name, fn) {
+    if (this.methods.get(name)) {
+      throw new Error(`${this._name} method '${name}' already registered`);
+    }
+    this.methods.set(name, fn);
+  }
+
+  /**
+   * 메서드 제거
+   * @param {string} name - 메서드 이름
+   */
+  methodRemove(name) {
+    this.methods.delete(name);
+  }
+
+  /**
+   * 메서드 호출
+   * @param {string} name - 메서드 이름
+   * @param {...*} args - 전달할 인자들
+   * @returns {*} 메서드 반환값
+   */
+  call(name, ...args) {
+    const fn = this.methods.get(name);
+    if (fn) {
+      try {
+        return fn(...args);
+      } catch (error) {
+        console.info(
+          "%c%s %c(editor.method error)",
+          "color: #06f",
+          name,
+          "color: #f00"
+        );
+        log.error(error);
+      }
+    }
+    return null;
+  }
 }
 
 // 싱글톤 인스턴스 생성 및 내보내기
