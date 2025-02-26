@@ -2,7 +2,6 @@ import NetworkController from "@/component/NetworkController";
 import Interface from "@/component/Interface";
 import Chat from "@/component/Chat";
 import SettingsModal from "./component/modal/SettingsModal";
-console.log("dev");
 function App() {
   return (
     <div className="absolute top-0 left-0 flex flex-col w-full h-full overflow-hidden select-none">
