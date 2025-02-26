@@ -6,9 +6,11 @@ import evt from "@/utils/event-handler";
 import { listChannelMessages } from "@/api/nakama";
 import PropTypes from "prop-types";
 import { app } from "playcanvas";
+import { useTranslation } from "react-i18next";
 const CHANNEL_ALL = "all";
 
 const Chat = ({ className }) => {
+  const { t } = useTranslation();
   const scrollRef = useRef();
   const { account, client, session, socket } = useNakama();
   const [isOpen, setOpen] = useState(false);
