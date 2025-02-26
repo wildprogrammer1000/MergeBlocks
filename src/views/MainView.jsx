@@ -14,8 +14,11 @@ import EventsModal from "@/component/EventsModal";
 import CacheController from "@/component/CacheController";
 import Version from "@/component/ui/Version";
 import { app } from "playcanvas";
+import Wallet from "@/component/layout/Wallet";
+import { useTranslation } from "react-i18next";
 
 function MainPage() {
+  const { t } = useTranslation();
   const pageRef = useRef(null);
   const { account } = useNakama();
   const [isSupportedBrowser, setIsSupportedBrowser] = useState(false);
@@ -89,7 +92,7 @@ function MainPage() {
         </div>
       )}
 
-      {/* <Chat /> */}
+      <Wallet />
       <Profile />
       <Leaderboard />
       <DisplayNameModal />

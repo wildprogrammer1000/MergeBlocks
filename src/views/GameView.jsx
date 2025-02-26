@@ -1,4 +1,4 @@
-import { app } from "playcanvas";
+import { app, Entity } from "playcanvas";
 import { useEffect, useRef, useState } from "react";
 
 import { addRecord } from "@/api/nakama";
@@ -15,6 +15,8 @@ import Version from "@/component/ui/Version";
 import CacheController from "@/component/CacheController";
 import GameResultModal from "@/component/modal/GameResultModal";
 import { useTranslation } from "react-i18next";
+import WalletDiamond from "@/component/ui/WalletDiamond";
+import { BackInOut } from "@/utils/tween";
 
 const GamePage = () => {
   const { t } = useTranslation();
@@ -139,16 +141,63 @@ const GamePage = () => {
         )}
       </div>
 
-      <div className="absolute top-4 right-4 flex gap-2 ">
-        <WSButton onClick={() => app.fire("game:view")}>
-          <BiLogoZoom />
-        </WSButton>
-        <WSButton onClick={() => evt.emit("help")}>
-          <IoMdHelp />
-        </WSButton>
-        <WSButton onClick={() => evt.emit("pause")}>
-          <FaPause />
-        </WSButton>
+      <div className="absolute top-4 right-4 flex flex-col gap-2 items-end">
+        <div className="flex gap-2">
+          <WSButton onClick={() => app.fire("game:view")}>
+            <BiLogoZoom />
+          </WSButton>
+          <WSButton onClick={() => evt.emit("help")}>
+            <IoMdHelp />
+          </WSButton>
+          <WSButton onClick={() => evt.emit("pause")}>
+            <FaPause />
+          </WSButton>
+        </div>
+        <WalletDiamond type="diamond" value={0} className="w-fit" />
+
+        <div
+          onClick={(e) => {
+            const block = app.root.findByName("Block");
+            const camera = app.root.findByName("Camera");
+            console.log(block.getLocalPosition().y);
+            const pos = block.getLocalPosition().clone();
+
+            const radius = 2;
+            const numEntities = 10;
+
+            console.log("e: ", e);
+            const element = e.target;
+            const rect = element.getBoundingClientRect();
+            const elementX = rect.left + rect.width / 2;
+            const elementY = rect.top + rect.height / 2;
+            const worldPos = camera.camera.screenToWorld(elementX, elementY, 0);
+            console.log("worldPos: ", worldPos);
+
+            for (let i = 0; i < numEntities; i++) {
+              setTimeout(() => {
+                const angle = (i / numEntities) * Math.PI * 2;
+                const x = Math.cos(angle) * radius;
+                const z = Math.sin(angle) * radius;
+
+                const entity = new Entity("Entity");
+                entity.addComponent("render", { type: "sphere" });
+                entity.setLocalPosition(x, z + pos.y, 0);
+                // entity.setLocalPosition(worldPos.x, worldPos.y, 0);
+                app.root.addChild(entity);
+                console.log("e: ", e);
+                const randomTimeout = Math.random() * 1000 + 500; // 1초에서 3초 사이
+                setTimeout(() => {
+                  entity
+                    .tween(entity.getLocalPosition())
+                    .to({ x: worldPos.x, y: worldPos.y, z: 0 }, 1, BackInOut)
+                    .start();
+                }, randomTimeout);
+              }, i * 30);
+            }
+          }}
+        >
+          Tween Test
+        </div>
       </div>
       <PauseModal />
       <HelpModal />

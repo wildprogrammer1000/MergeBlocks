@@ -3,12 +3,14 @@ import "./index.css";
 import App from "./App.jsx";
 // import { BrowserRouter } from "react-router-dom";
 import NakamaProvider from "@/providers/NakamaProvider";
-import "@/utils/firebase";
-import "@/utils/confetti";
 import * as pc from "playcanvas";
 import StateProvider from "./providers/StateProvider";
 import "./i18n";
 import ThemeProvider from "./providers/ThemeProvider";
+import "@/utils/firebase";
+import "@/utils/confetti";
+import { addTweenExtensions } from "./utils/tween";
+addTweenExtensions(pc);
 
 if (import.meta.env.DEV) {
   window.pc = pc;

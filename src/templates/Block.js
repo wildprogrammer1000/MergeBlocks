@@ -70,6 +70,7 @@ class Block extends Entity {
       this.sprite.spriteAsset = spriteAsset.id;
     } else {
       this.destroy();
+      this.app.fire("game:maxLevelMerged");
       this.app.fire("sound:play", "bang");
       for (let i = 0; i < 5; i++) {
         setTimeout(() => evt.emit("confetti"), i * 200);
