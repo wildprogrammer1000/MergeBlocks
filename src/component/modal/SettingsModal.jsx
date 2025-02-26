@@ -40,19 +40,25 @@ const SettingsModal = () => {
 
   const open = () => setIsOpen(true);
   const load = () => {
-    let settings = localStorage.getItem("settings");
-    if (settings) {
-      settings = JSON.parse(settings);
-      for (const key in initialSettings)
-        if (settings[key] === undefined) settings[key] = initialSettings[key];
-      setSettings(settings);
+    try {
+      let settings = localStorage.getItem("settings");
+      if (settings) {
+        settings = JSON.parse(settings);
+        for (const key in initialSettings)
+          if (settings[key] === undefined) settings[key] = initialSettings[key];
+        setSettings(settings);
+      }
+    } catch (err) {
+      console.error("Error loading settings: ", err);
+      localStorage.setItem("settings", JSON.stringify(initialSettings));
+      setSettings(initialSettings);
     }
   };
   const save = () => {
     evt.emit("settings:update", settings);
     localStorage.setItem("settings", JSON.stringify(settings));
   };
-  const returnSettigns = () => settings;
+  const returnSettings = () => settings;
   useEffect(() => {
     load();
     evt.on("settings:open", open);
@@ -67,7 +73,7 @@ const SettingsModal = () => {
 
   useEffect(() => {
     save();
-    evt.method("settings", returnSettigns);
+    evt.method("settings", returnSettings);
     return () => {
       evt.methodRemove("settings");
     };
@@ -83,7 +89,9 @@ const SettingsModal = () => {
       <div className="flex flex-col gap-4 p-4">
         {Object.keys(initialSettings).map((key) => (
           <div key={key} className="flex items-center justify-between">
-            <div className="text-2xl">{t(key)}</div>
+            <div className="text-2xl text-[var(--color-main-900)]">
+              {t(key)}
+            </div>
             <div>
               <WSButton
                 onClick={() =>

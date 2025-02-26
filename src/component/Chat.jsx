@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import { app } from "playcanvas";
 import { useTranslation } from "react-i18next";
 const CHANNEL_ALL = "all";
+import { IoChatboxEllipses } from "react-icons/io5";
 
 const Chat = ({ className }) => {
   const { t } = useTranslation();
@@ -149,6 +150,9 @@ const Chat = ({ className }) => {
           className="flex items-center h-12 border-t-2 border-[var(--color-main-900)]"
           onClick={() => setOpen(true)}
         >
+          <div className="text-2xl px-2 text-[var(--color-main-100)]">
+            <IoChatboxEllipses />
+          </div>
           {messages.length > 0 && (
             <ChatMessage content={latestMessage} multiLine={false} />
           )}
@@ -161,7 +165,6 @@ const Chat = ({ className }) => {
 export default Chat;
 
 const ChatMessage = ({ content, multiLine = true }) => {
-  const { t } = useTranslation();
   const [message, setMessage] = useState(null);
   const [displayName, setDisplayName] = useState(null);
   useEffect(() => {

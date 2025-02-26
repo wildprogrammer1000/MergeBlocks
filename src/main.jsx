@@ -7,7 +7,8 @@ import "@/utils/firebase";
 import "@/utils/confetti";
 import * as pc from "playcanvas";
 import StateProvider from "./providers/StateProvider";
-import "./i18n"
+import "./i18n";
+import ThemeProvider from "./providers/ThemeProvider";
 
 if (import.meta.env.DEV) {
   window.pc = pc;
@@ -16,7 +17,9 @@ if (import.meta.env.DEV) {
 createRoot(document.getElementById("root")).render(
   <StateProvider>
     <NakamaProvider>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </NakamaProvider>
   </StateProvider>
 );

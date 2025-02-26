@@ -44,7 +44,7 @@ async function main() {
   });
   app.on("canvas:resize", resize);
 
-  evt.emit("asset:applyTheme");
+  evt.emit("asset:beforeload", app);
 
   configureAssets([...textureAssets, ...soundAssets]);
   loadModules(PRELOAD_MODULES, "", () => {

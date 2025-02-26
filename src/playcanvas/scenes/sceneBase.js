@@ -1,6 +1,5 @@
 import {
   app,
-  Color,
   Entity,
   PROJECTION_ORTHOGRAPHIC,
   StandardMaterial,
@@ -9,13 +8,13 @@ import {
 import { initProjectScene } from "./ProjectScene";
 import evt from "@/utils/event-handler";
 import { createSoundManager } from "@/gamescripts/SoundManager";
+import { createThemeManager } from "@/gamescripts/ThemeManager";
 
 export const initSceneBase = () => {
   // 카메라 설정
   const camera = new Entity("Camera");
   camera.tags.add("MainCamera");
   camera.addComponent("camera", {
-    clearColor: new Color(0.9, 0.8, 0.7),
     projection: PROJECTION_ORTHOGRAPHIC,
   });
   camera.setPosition(0, 0, 10);
@@ -31,8 +30,7 @@ export const initSceneBase = () => {
 
   // Ground Material
   const groundMaterial = new StandardMaterial();
-  groundMaterial.diffuse.set(111 / 255, 78 / 255, 69 / 255);
-  groundMaterial.update();
+  groundMaterial.name = "GroundMaterial";
   // 바닥 생성
   const ground = new Entity("Ground");
   ground.addComponent("render", {
@@ -91,6 +89,7 @@ export const initSceneBase = () => {
   app.root.addChild(light);
 
   createSoundManager(app);
+  createThemeManager(app);
 
   app.on("game:start", () => {
     initProjectScene();

@@ -18,21 +18,22 @@ export class SoundManager extends Script {
       bang: "harp",
       gameover: "lose",
     };
-    this.settings = evt.call("settings");
+    this.settings = null;
+    // console.log("settings: ", this.settings);
 
-    if (this.settings.Sound) this.entity.sound.play("bgm");
+    // if (this.settings.Sound) this.entity.sound.play("bgm");
     evt.on("settings:update", this.onUpdateSettings, this);
     this.on("destroy", () => {
       evt.off("settings:update", this.onUpdateSettings, this);
     });
   }
   onPlay(type) {
-    if (this.soundMap[type] && this.settings.Effect) {
+    if (this.soundMap[type] && this.settings?.Effect) {
       this.entity.sound.play(this.soundMap[type]);
     }
   }
   onUpdateSettings(settings) {
-    this.settigns = settings;
+    this.settings = settings;
     for (const key in settings) {
       this.settings[key] = settings[key];
     }
