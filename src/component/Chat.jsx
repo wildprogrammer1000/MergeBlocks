@@ -113,7 +113,7 @@ const Chat = ({ className }) => {
         <div className="relative">
           <div className="relative h-10 flex items-center border-b-2 border-[var(--color-main-900)] ">
             <div className="text-[var(--color-main-100)] text-xl font-bold text-center w-full">
-              MESSAGES
+              {t("Chat")}
             </div>
             <button
               className="absolute top-0 right-0 flex items-center justify-center w-10 h-10 text-[var(--color-main-100)] text-xl"

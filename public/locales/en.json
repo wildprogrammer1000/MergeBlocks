@@ -26,5 +26,6 @@
   "Google Load Confirm": "Are you sure you want to load your Google account?\n(Data that is not saved may be lost.)",
   "Chat Limit Alert": "Please enter less than 60 characters.",
   "Chat Send Failed": "Failed to send message.",
-  "Google Not Supported": "This feature is not supported in in-app browsers.\nPlease use browsers\n(Chrome , Safari, etc.)"
+  "Google Not Supported": "This feature is not supported in in-app browsers.\nPlease use browsers\n(Chrome , Safari, etc.)",
+  "Chat": "CHAT"
 }

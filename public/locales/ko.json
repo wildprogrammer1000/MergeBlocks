@@ -26,5 +26,6 @@
   "Google Load Confirm": "구글 계정을 불러올까요?\n(저장되지 않은 데이터는 사라져요.)",
   "Chat Limit Alert": "60자 이하로 입력해주세요.",
   "Chat Send Failed": "채팅 전송에 실패했어요.",
-  "Google Not Supported": "이 기능은 앱 내 브라우저에서 지원되지 않아요.\n브라우저(Chrome, Safari 등) 앱을 통해 접속해주세요."
+  "Google Not Supported": "이 기능은 앱 내 브라우저에서 지원되지 않아요.\n브라우저(Chrome, Safari 등) 앱을 통해 접속해주세요.",
+  "Chat": "채팅"
 }
