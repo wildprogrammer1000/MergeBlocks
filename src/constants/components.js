@@ -134,7 +134,7 @@ export const SOUNDS = {
     2: {
       name: "bgm",
       loop: true,
-      autoPlay: true,
+      autoPlay: false,
       overlap: false,
       asset: 100,
       startTime: 0,

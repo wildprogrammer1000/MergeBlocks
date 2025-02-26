@@ -1,6 +1,7 @@
 class EventHandler {
   constructor() {
     this.events = new Map();
+    this.methods = new Map();
   }
 
   /**
@@ -99,7 +100,7 @@ class EventHandler {
           name,
           "color: #f00"
         );
-        log.error(error);
+        console.error(error);
       }
     }
     return null;

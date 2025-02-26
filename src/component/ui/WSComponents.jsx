@@ -57,7 +57,9 @@ const WSCloseButton = (props) => {
         props.onClick();
         app && app.fire(`sound:play`, "close");
       }}
-      className={`cursor-pointer ${props.className || ""}`}
+      className={`text-2xl rounded-2xl font-bold text-[var(--color-main-100)] cursor-pointer ${
+        props.className || ""
+      }`}
     >
       <IoMdClose />
     </button>

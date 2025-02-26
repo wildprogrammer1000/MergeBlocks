@@ -7,6 +7,7 @@ import { hexToRgb } from "./utils/functions";
 import evt from "./utils/event-handler";
 import { app } from "playcanvas";
 import { textureAssets } from "./playcanvas/assets";
+import SettingsModal from "./component/modal/SettingsModal";
 
 function App() {
   const [theme] = useState("valentine");
@@ -117,6 +118,7 @@ function App() {
 
       {/* Modules */}
       <NetworkController />
+      <SettingsModal />
     </div>
   );
 }

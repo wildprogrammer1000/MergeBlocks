@@ -36,10 +36,7 @@ const EventsModal = () => {
     <WSModal onClick={() => setIsOpen(false)}>
       <WSModalHeader className="flex w-full p-2">
         <div className="text-xl font-bold">{t("Events")}</div>
-        <WSCloseButton
-          onClick={() => setIsOpen(false)}
-          className="text-2xl rounded-2xl font-bold text-[var(--color-main-100)]"
-        />
+        <WSCloseButton onClick={() => setIsOpen(false)} />
       </WSModalHeader>
       <div className="p-4 max-h-[500px] overflow-y-auto">
         <div className="flex flex-col gap-4">

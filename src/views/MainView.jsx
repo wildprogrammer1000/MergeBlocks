@@ -1,6 +1,7 @@
 import evt from "@/utils/event-handler";
 import Leaderboard from "@/component/Leaderboard";
 import { FaPlay, FaUser } from "react-icons/fa";
+import { IoMdSettings } from "react-icons/io";
 import { MdLeaderboard } from "react-icons/md";
 import { useNakama } from "@/providers/NakamaProvider";
 import DisplayNameModal from "@/component/modal/DisplayNameModal";
@@ -80,6 +81,9 @@ function MainPage() {
             </WSButton>
             <WSButton onClick={() => evt.emit("leaderboard:open")}>
               <MdLeaderboard />
+            </WSButton>
+            <WSButton onClick={() => evt.emit("settings:open")}>
+              <IoMdSettings />
             </WSButton>
           </div>
         </div>

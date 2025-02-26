@@ -1,4 +1,5 @@
 {
+  "Settings": "Settings",
   "Account": "Account",
   "Nickname": "Nickname",
   "Social": "Social",
@@ -27,5 +28,8 @@
   "Chat Limit Alert": "Please enter less than 60 characters.",
   "Chat Send Failed": "Failed to send message.",
   "Google Not Supported": "This feature is not supported in in-app browsers.\nPlease use browsers\n(Chrome , Safari, etc.)",
-  "Chat": "CHAT"
+  "Chat": "CHAT",
+  "Sound": "Sound",
+  "Effect": "Effect",
+  "Vibration": "Vibration"
 }
