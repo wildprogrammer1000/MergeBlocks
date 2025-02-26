@@ -68,6 +68,7 @@ const Event = ({
   participation,
   rewardInfo,
 }) => {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-3 bg-[var(--color-main-300)] text-[var(--color-main-900)] rounded-2xl p-4">
       <Timer endDate={end} />
