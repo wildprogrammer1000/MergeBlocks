@@ -159,6 +159,7 @@ const Chat = ({ className }) => {
 export default Chat;
 
 const ChatMessage = ({ content, multiLine = true }) => {
+  const { t } = useTranslation();
   const [message, setMessage] = useState(null);
   const [displayName, setDisplayName] = useState(null);
   useEffect(() => {

@@ -133,7 +133,7 @@ const GamePage = () => {
           className="w-fit  bg-[var(--color-main-900)]/80"
         /> */}
         {pointCombo > 0 && (
-          <i className="text-[var(--color-main-900)] font-bold text-xl">
+          <i className="text-[var(--color-main-600)] font-bold text-xl">
             {pointCombo} {t("Combo")}!
           </i>
         )}
