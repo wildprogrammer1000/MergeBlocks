@@ -85,7 +85,7 @@ function App() {
     applyColor();
   }, []);
   return (
-    <div className="absolute top-0 left-0 flex flex-col w-full h-full overflow-hidden">
+    <div className="absolute top-0 left-0 flex flex-col w-full h-full overflow-hidden select-none">
       {/* <div className="absolute top-0 left-0 w-full h-10 bg-white z-40">
         <button
           onClick={() => {
