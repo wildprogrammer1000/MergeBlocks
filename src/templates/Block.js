@@ -3,19 +3,27 @@ import {
   BODYTYPE_STATIC,
   Entity,
   math,
+  RIGIDBODY_TYPE_DYNAMIC,
   Vec3,
 } from "playcanvas";
 import { levels } from "@/assets/json/block_levels.js";
-import { BlockController } from "@/gamescripts/BlockController";
+import { BlockController } from "@/playcanvas/gamescripts/BlockController";
 import evt from "@/utils/event-handler";
+import { Linear } from "@/utils/tween";
 
 class Block extends Entity {
   static SPAWN_HEIGHT = 8;
   static DROP_FORCE = 40;
+  static SPAWN_POSIITON = new Vec3(0, Block.SPAWN_HEIGHT, 0);
 
-  constructor(app) {
+  constructor(
+    app,
+    isStatic = true,
+    level = Math.floor(math.random(0, 4)),
+    pos = Block.SPAWN_POSIITON
+  ) {
     super("Block", app);
-    this.level = Math.floor(math.random(0, 4));
+    this.level = level;
     this.tags.add(["block", this.level]);
 
     this.mass = levels[this.level].mass;
@@ -28,16 +36,19 @@ class Block extends Entity {
     this.addComponent("sprite");
     this.sprite.spriteAsset = this.app.assets.find(`level_${this.level}`).id;
 
-    this.setPosition(0, Block.SPAWN_HEIGHT, 0);
-    this.setLocalScale(this.blockScale, this.blockScale, this.blockScale);
+    this.setPosition(pos.x, pos.y, pos.z);
+    this.tween(this.getLocalScale())
+      .to({ x: this.blockScale, y: this.blockScale, z: this.blockScale }, 0.1)
+      .start();
 
     this.addComponent("collision", {
       type: "sphere",
       radius: this.blockScale / 2,
     });
     this.addComponent("rigidbody", {
-      type: BODYTYPE_STATIC,
-      enabled: false,
+      type: isStatic ? BODYTYPE_STATIC : BODYTYPE_DYNAMIC,
+      enabled: isStatic ? false : true,
+      mass: this.mass,
     });
     this.rigidbody.on("collisionstart", this.onCollisionStart, this);
 
@@ -45,6 +56,9 @@ class Block extends Entity {
     this.rigidbody.friction = 0.3;
     this.rigidbody.linearFactor = new Vec3(1, 1, 0);
     this.rigidbody.angularFactor = new Vec3(0, 0, 1);
+
+    this.addComponent("script");
+    this.script.create(BlockController);
 
     this.app.root.addChild(this);
   }
@@ -54,9 +68,6 @@ class Block extends Entity {
     this.rigidbody.type = BODYTYPE_DYNAMIC;
     this.rigidbody.mass = this.mass;
     this.rigidbody.applyImpulse(new Vec3(0, -Block.DROP_FORCE * this.mass, 0));
-
-    this.addComponent("script");
-    this.script.create(BlockController);
   }
   upgrade() {
     if (this.level < levels.length - 1) {
@@ -68,14 +79,22 @@ class Block extends Entity {
       this.collision.radius = this.blockScale / 2;
       const spriteAsset = this.app.assets.find(`level_${this.level}`);
       this.sprite.spriteAsset = spriteAsset.id;
-    } else {
-      this.destroy();
-      this.app.fire("game:maxLevelMerged");
-      this.app.fire("sound:play", "bang");
-      for (let i = 0; i < 5; i++) {
-        setTimeout(() => evt.emit("confetti"), i * 200);
-      }
     }
+
+    if (this.level === levels.length - 1 || this.level === levels.length - 2) {
+      this.app.fire("game:maxLevelMerged");
+    }
+  }
+  execUpgrade({ targetPosition, destroyPosition }) {
+    this.app.fire("score:get", this.level);
+
+    const pos = this.getPosition().clone();
+    const level = this.level + 1;
+    this.execDestroy({ targetPosition, destroyPosition });
+    this.app.fire("block:merge", {
+      level,
+      position: pos,
+    });
   }
   execDestroy({ targetPosition, destroyPosition }) {
     this.app.fire("particle:play", {
@@ -87,29 +106,60 @@ class Block extends Entity {
     this.rigidbody.enabled = false;
     this.isDestroying = true;
     this.destroyTargetPosition = targetPosition;
+
+    this.tween(this.getLocalPosition())
+      .to(
+        { x: destroyPosition.x, y: destroyPosition.y, z: destroyPosition.z },
+        0.1,
+        Linear
+      )
+      .start()
+      .onComplete(() => {
+        this.destroy();
+      });
   }
   onCollisionStart({ other }) {
     if (!other.tags.has("block")) return;
-    if (other.tags.has("block")) {
-      if (this.level === other.level) {
-        const velocity = this.rigidbody.linearVelocity.length();
-        const otherVelocity = other.rigidbody.linearVelocity.length();
-        if (velocity < otherVelocity) {
-          this.app.fire("score:get", this.level);
-          other.execDestroy({
+    if (this.level !== other.level) return;
+    if (!this.rigidbody.enabled) return;
+
+    const velocity = this.rigidbody.linearVelocity.length();
+    const otherVelocity = other.rigidbody.linearVelocity.length();
+
+    if (this.level === levels.length - 1) {
+      this.app.fire("sound:play", "bang");
+      this.execDestroy({
+        targetPosition: this.getPosition(),
+        destroyPosition: this.getPosition(),
+      });
+      other.execDestroy({
+        targetPosition: other.getPosition(),
+        destroyPosition: this.getPosition(),
+      });
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => evt.emit("confetti"), i * 200);
+      }
+      this.app.fire("score:get", this.level);
+    } else {
+      if (velocity < otherVelocity) {
+        this.execUpgrade({
+          targetPosition: this.getPosition(),
+          destroyPosition: this.getPosition(),
+        });
+        other.execDestroy({
+          targetPosition: other.getPosition(),
+          destroyPosition: this.getPosition(),
+        });
+      } else {
+        if (this.createdAt < other.createdAt) {
+          this.execUpgrade({
             targetPosition: this.getPosition(),
-            destroyPosition: other.getPosition(),
+            destroyPosition: this.getPosition(),
           });
-          this.upgrade();
-        } else {
-          if (this.createdAt < other.createdAt) {
-            this.app.fire("score:get", other.level);
-            other.execDestroy({
-              targetPosition: this.getPosition(),
-              destroyPosition: other.getPosition(),
-            });
-            this.upgrade();
-          }
+          other.execDestroy({
+            targetPosition: other.getPosition(),
+            destroyPosition: this.getPosition(),
+          });
         }
       }
     }

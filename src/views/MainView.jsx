@@ -92,7 +92,7 @@ function MainPage() {
         </div>
       )}
 
-      <Wallet />
+      {/* <Wallet /> */}
       <Profile />
       <Leaderboard />
       <DisplayNameModal />

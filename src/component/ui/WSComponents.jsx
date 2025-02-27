@@ -1,7 +1,16 @@
 import { app } from "playcanvas";
 import PropTypes from "prop-types";
 import { IoMdClose } from "react-icons/io";
-const WSButton = ({ type = "click", ...props }) => {
+
+const ButtonSizes = {
+  xs: "w-8 h-8 text-xl",
+  sm: "w-10 h-10 text-2xl",
+  md: "w-12 h-12 text-3xl",
+  lg: "w-14 h-14 text-4xl",
+  xl: "w-16 h-16 text-5xl",
+};
+
+const WSButton = ({ type = "click", size = "md", ...props }) => {
   return (
     <button
       disabled={props.disabled || false}
@@ -9,9 +18,18 @@ const WSButton = ({ type = "click", ...props }) => {
         props?.onClick();
         app && app.fire(`sound:play`, type);
       }}
-      className={`bg-[var(--color-main-900)] text-[var(--color-main-100)] hover:bg-[var(--color-main-100)] hover:text-[var(--color-main-900)] rounded-2xl  transition-all duration-300 w-12 h-12 flex justify-center items-center text-3xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
-        props.className || ""
-      }`}
+      className={`
+        ${props.className || ""}
+        flex justify-center items-center
+        ${ButtonSizes[size]}
+        text-[var(--color-main-100)] 
+        transition-all duration-300
+        bg-[var(--color-main-900)]
+        rounded-2xl
+        cursor-pointer
+        disabled:opacity-50 disabled:cursor-not-allowed
+        hover:bg-[var(--color-main-100)] hover:text-[var(--color-main-900)]
+      `}
     >
       {props && props.children && props.children}
     </button>

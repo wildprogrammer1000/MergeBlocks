@@ -143,18 +143,18 @@ const GamePage = () => {
 
       <div className="absolute top-4 right-4 flex flex-col gap-2 items-end">
         <div className="flex gap-2">
-          <WSButton onClick={() => app.fire("game:view")}>
+          <WSButton size="sm" onClick={() => app.fire("game:view")}>
             <BiLogoZoom />
           </WSButton>
-          <WSButton onClick={() => evt.emit("help")}>
+          <WSButton size="sm" onClick={() => evt.emit("help")}>
             <IoMdHelp />
           </WSButton>
-          <WSButton onClick={() => evt.emit("pause")}>
+          <WSButton size="sm" onClick={() => evt.emit("pause")}>
             <FaPause />
           </WSButton>
         </div>
-        <WalletDiamond type="diamond" value={0} className="w-fit" />
-
+        {/* <WalletDiamond type="diamond" value={0} className="w-fit" /> */}
+{/* 
         <div
           onClick={(e) => {
             const block = app.root.findByName("Block");
@@ -190,14 +190,17 @@ const GamePage = () => {
                   entity
                     .tween(entity.getLocalPosition())
                     .to({ x: worldPos.x, y: worldPos.y, z: 0 }, 1, BackInOut)
-                    .start();
+                    .start()
+                    .onComplete(() => {
+                      entity.destroy();
+                    });
                 }, randomTimeout);
               }, i * 30);
             }
           }}
         >
           Tween Test
-        </div>
+        </div> */}
       </div>
       <PauseModal />
       <HelpModal />

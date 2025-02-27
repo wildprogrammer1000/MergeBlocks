@@ -1,6 +1,6 @@
 import { levels } from "@/assets/json/block_levels";
-import { createGameManager } from "@/gamescripts/GameManager";
-import { createInputHandler } from "@/gamescripts/InputHandler";
+import { createGameManager } from "@/playcanvas/gamescripts/GameManager";
+import { createInputHandler } from "@/playcanvas/gamescripts/InputHandler";
 import { createDeadline } from "@/templates/Deadline";
 import evt from "@/utils/event-handler";
 import {

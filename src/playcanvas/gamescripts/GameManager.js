@@ -31,10 +31,8 @@ class GameManager extends Script {
     this.app.on("game:restart", this.onGameRestart, this);
     this.app.on("score:get", this.onScoreGet, this);
     this.app.on("game:view", this.onGameView, this);
-
-    this.app.on("particle:play", this.onPlayParticle, this);
-
     this.app.on("asset:applyTheme", this.onApplyTheme, this);
+    this.app.on("block:merge", this.onBlockMerge, this);
 
     this.currentBlock = this.createBlock();
 
@@ -49,8 +47,8 @@ class GameManager extends Script {
     this.app.off("game:restart", this.onGameRestart, this);
     this.app.off("score:get", this.onScoreGet, this);
     this.app.off("game:view", this.onGameView, this);
-    this.app.off("particle:play", this.onPlayParticle, this);
     this.app.off("asset:applyTheme", this.onApplyTheme, this);
+    this.app.off("block:merge", this.onBlockMerge, this);
   }
   onApplyTheme() {
     this.textures = [
@@ -69,7 +67,7 @@ class GameManager extends Script {
   }
 
   createBlock() {
-    return new Block(this.app);
+    return new Block(this.app, { isStatic: true });
   }
   moveBlock(x) {
     this.currentBlock.setPosition(
@@ -158,13 +156,17 @@ class GameManager extends Script {
       this.mainCamera.camera.orthoHeight = orthoHeights[0];
     }
   }
-  onPlayParticle({ level, position }) {
+  playParticle({ level, position }) {
     const particle = this.particleTemplate.clone();
     particle.setPosition(position);
     this.app.root.addChild(particle);
     particle.particlesystem.colorMapAsset = this.textures[level].id;
     particle.particlesystem.play();
     setTimeout(() => particle.destroy(), 1000);
+  }
+  onBlockMerge({ level, position }) {
+    new Block(this.app, false, level, position);
+    this.playParticle({ level: level - 1, position });
   }
 }
 

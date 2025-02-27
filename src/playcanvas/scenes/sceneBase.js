@@ -7,8 +7,8 @@ import {
 } from "playcanvas";
 import { initProjectScene } from "./ProjectScene";
 import evt from "@/utils/event-handler";
-import { createSoundManager } from "@/gamescripts/SoundManager";
-import { createThemeManager } from "@/gamescripts/ThemeManager";
+import { createSoundManager } from "@/playcanvas/gamescripts/SoundManager";
+import { createThemeManager } from "@/playcanvas/gamescripts/ThemeManager";
 
 export const initSceneBase = () => {
   // 카메라 설정
