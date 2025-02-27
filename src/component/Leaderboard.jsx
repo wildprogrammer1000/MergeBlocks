@@ -1,7 +1,7 @@
 import evt from "@/utils/event-handler";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { getRecords } from "@/api/nakama";
+import { getRecords } from "@/api/rpc";
 import { IoMdClose } from "react-icons/io";
 import { FiRefreshCw } from "react-icons/fi";
 import { useNakama } from "@/providers/NakamaProvider";

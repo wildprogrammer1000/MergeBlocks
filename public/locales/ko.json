@@ -31,5 +31,9 @@
   "Chat": "채팅",
   "Sound": "배경음",
   "Effect": "효과음",
-  "Vibration": "진동"
+  "Vibration": "진동",
+  "PatchNote": "패치 노트",
+  "Feature": "새로운 기능",
+  "Bug Fix": "버그 수정",
+  "Improvement": "개선 사항"
 }

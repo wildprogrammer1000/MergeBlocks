@@ -1,11 +1,15 @@
 import evt from "@/utils/event-handler";
 import { useEffect, useState } from "react";
-import { WSCloseButton, WSModal, WSModalHeader } from "./ui/WSComponents";
-import { getEvents } from "@/api/nakama";
+import {
+  WSCloseButton,
+  WSModal,
+  WSModalHeader,
+} from "@/component/ui/WSComponents";
+import { getEvents } from "@/api/rpc";
 import { useNakama } from "@/providers/NakamaProvider";
-import PropTypes from "prop-types";
-import Timer from "./ui/Timer";
 import { useTranslation } from "react-i18next";
+import Timer from "@/component/ui/Timer";
+import PropTypes from "prop-types";
 
 const EventsModal = () => {
   const { t } = useTranslation();

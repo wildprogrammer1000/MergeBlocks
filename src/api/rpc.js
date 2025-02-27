@@ -60,6 +60,7 @@ const getGoogleLinkedAccount = async (google_id) =>
   await commonRpc("google:linkedAccount", { google_id });
 
 const getReward = async (level) => await rpc("reward:get", { level });
+const getPatchNote = async () => await rpc("patchnote");
 export {
   rpc,
   doHealthCheck,
@@ -75,4 +76,5 @@ export {
   getGoogleLinkedAccount,
   getVersion,
   getReward,
+  getPatchNote,
 };

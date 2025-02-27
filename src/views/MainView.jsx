@@ -10,12 +10,14 @@ import { useEffect, useRef, useState } from "react";
 import { MdEvent } from "react-icons/md";
 import { WSButton } from "@/component/ui/WSComponents";
 import Header from "@/component/layout/Header";
-import EventsModal from "@/component/EventsModal";
+import EventsModal from "@/component/modal/EventsModal";
 import CacheController from "@/component/CacheController";
 import Version from "@/component/ui/Version";
 import { app } from "playcanvas";
 import Wallet from "@/component/layout/Wallet";
 import { useTranslation } from "react-i18next";
+import { LuNotebook } from "react-icons/lu";
+import PatchNoteModal from "@/component/modal/PatchNoteModal";
 
 function MainPage() {
   const { t } = useTranslation();
@@ -89,6 +91,9 @@ function MainPage() {
               <IoMdSettings />
             </WSButton>
           </div>
+          <WSButton className="absolute bottom-4 left-4" onClick={() => evt.emit("patchnote:open")}>
+            <LuNotebook />
+          </WSButton>
         </div>
       )}
 
@@ -99,6 +104,7 @@ function MainPage() {
       <EventsModal />
       <CacheController />
       <Version />
+      <PatchNoteModal />
     </div>
   );
 }

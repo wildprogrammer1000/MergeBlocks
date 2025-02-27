@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { IoSend } from "react-icons/io5";
 import evt from "@/utils/event-handler";
-import { listChannelMessages } from "@/api/nakama";
+import { listChannelMessages } from "@/api/rpc";
 import PropTypes from "prop-types";
 import { app } from "playcanvas";
 import { useTranslation } from "react-i18next";

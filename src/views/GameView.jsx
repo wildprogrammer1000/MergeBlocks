@@ -1,7 +1,7 @@
 import { app, Entity } from "playcanvas";
 import { useEffect, useRef, useState } from "react";
 
-import { addRecord } from "@/api/nakama";
+import { addRecord } from "@/api/rpc";
 import { useNakama } from "@/providers/NakamaProvider";
 import { FaPause } from "react-icons/fa6";
 import { WSButton } from "@/component/ui/WSComponents";

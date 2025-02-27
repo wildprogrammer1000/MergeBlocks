@@ -17,7 +17,7 @@ import {
   getGoogleLinkedAccount,
   initDisplayName,
   unlinkGoogle,
-} from "@/api/nakama";
+} from "@/api/rpc";
 import { CgSpinner } from "react-icons/cg";
 import { FaCheck } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";

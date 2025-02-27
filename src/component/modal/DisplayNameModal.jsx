@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import evt from "@/utils/event-handler";
-import { checkDisplayName, initDisplayName } from "@/api/nakama";
+import { checkDisplayName, initDisplayName } from "@/api/rpc";
 import { FaCheck } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { CgSpinner } from "react-icons/cg";

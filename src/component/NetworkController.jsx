@@ -1,4 +1,4 @@
-import { doHealthCheck, getServerConfig } from "@/api/nakama";
+import { doHealthCheck, getServerConfig } from "@/api/rpc";
 import { useNakama } from "@/providers/NakamaProvider";
 import { useEffect, useRef, useState } from "react";
 import { WSModal, WSModalHeader } from "./ui/WSComponents";

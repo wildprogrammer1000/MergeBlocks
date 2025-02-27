@@ -1,4 +1,4 @@
-import { getReward } from "@/api/nakama";
+import { getReward } from "@/api/rpc";
 import Block from "@/templates/Block";
 import { BlockParticle } from "@/templates/BlockParticle";
 import { Entity, math, Script } from "playcanvas";

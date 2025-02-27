@@ -31,5 +31,9 @@
   "Chat": "CHAT",
   "Sound": "Sound",
   "Effect": "Effect",
-  "Vibration": "Vibration"
+  "Vibration": "Vibration",
+  "PatchNote": "Patch Note",
+  "Feature": "FEATURE",
+  "Bug Fix": "BUG FIX",
+  "Improvement": "IMPROVEMENT"
 }

@@ -1,4 +1,4 @@
-import { getVersion } from "@/api/nakama";
+import { getVersion } from "@/api/rpc";
 import { useEffect, useState } from "react";
 import { compareVersions } from "@/utils/version";
 import evt from "@/utils/event-handler";
