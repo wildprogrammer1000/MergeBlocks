@@ -1,3 +1,4 @@
+import { getReward } from "@/api/nakama";
 import Block from "@/templates/Block";
 import { BlockParticle } from "@/templates/BlockParticle";
 import { Entity, math, Script } from "playcanvas";
@@ -9,7 +10,6 @@ class GameManager extends Script {
     this.pointCombo = 0;
     this.pointComboTimeout = 0;
     this.mainCamera = this.app.root.findByName("Camera");
-    this.particleTemplate = new BlockParticle();
     this.textures = [
       this.app.assets.find("block_0"),
       this.app.assets.find("block_1"),
@@ -33,7 +33,8 @@ class GameManager extends Script {
     this.app.on("game:view", this.onGameView, this);
     this.app.on("asset:applyTheme", this.onApplyTheme, this);
     this.app.on("block:merge", this.onBlockMerge, this);
-
+    // this.app.on("block:maxLevelMerged", this.onBlockMaxLevelMerged, this);
+    this.app.on("block:particle", this.onBlockParticle, this);
     this.currentBlock = this.createBlock();
 
     this.on("destroy", this.onDestroy, this);
@@ -49,6 +50,8 @@ class GameManager extends Script {
     this.app.off("game:view", this.onGameView, this);
     this.app.off("asset:applyTheme", this.onApplyTheme, this);
     this.app.off("block:merge", this.onBlockMerge, this);
+    this.app.off("block:maxLevelMerged", this.onBlockMaxLevelMerged, this);
+    this.app.off("block:particle", this.onBlockParticle, this);
   }
   onApplyTheme() {
     this.textures = [
@@ -157,7 +160,7 @@ class GameManager extends Script {
     }
   }
   playParticle({ level, position }) {
-    const particle = this.particleTemplate.clone();
+    const particle = new BlockParticle({ level });
     particle.setPosition(position);
     this.app.root.addChild(particle);
     particle.particlesystem.colorMapAsset = this.textures[level].id;
@@ -165,8 +168,14 @@ class GameManager extends Script {
     setTimeout(() => particle.destroy(), 1000);
   }
   onBlockMerge({ level, position }) {
-    new Block(this.app, false, level, position);
-    this.playParticle({ level: level - 1, position });
+    new Block(this.app, false, level + 1, position);
+  }
+  async onBlockMaxLevelMerged(level) {
+    const a = await getReward(level);
+    console.log("a: ", a);
+  }
+  onBlockParticle({ level, position }) {
+    this.playParticle({ level, position });
   }
 }
 

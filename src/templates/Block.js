@@ -3,7 +3,6 @@ import {
   BODYTYPE_STATIC,
   Entity,
   math,
-  RIGIDBODY_TYPE_DYNAMIC,
   Vec3,
 } from "playcanvas";
 import { levels } from "@/assets/json/block_levels.js";
@@ -38,7 +37,7 @@ class Block extends Entity {
 
     this.setPosition(pos.x, pos.y, pos.z);
     this.tween(this.getLocalScale())
-      .to({ x: this.blockScale, y: this.blockScale, z: this.blockScale }, 0.1)
+      .to({ x: this.blockScale, y: this.blockScale, z: this.blockScale }, 0.2)
       .start();
 
     this.addComponent("collision", {
@@ -69,54 +68,31 @@ class Block extends Entity {
     this.rigidbody.mass = this.mass;
     this.rigidbody.applyImpulse(new Vec3(0, -Block.DROP_FORCE * this.mass, 0));
   }
-  upgrade() {
-    if (this.level < levels.length - 1) {
-      this.level += 1;
-      this.blockScale = levels[this.level].scale;
-      this.mass = levels[this.level].mass;
-      this.setLocalScale(this.blockScale, this.blockScale, this.blockScale);
-      this.rigidbody.mass = this.mass;
-      this.collision.radius = this.blockScale / 2;
-      const spriteAsset = this.app.assets.find(`level_${this.level}`);
-      this.sprite.spriteAsset = spriteAsset.id;
-    }
-
-    if (this.level === levels.length - 1 || this.level === levels.length - 2) {
-      this.app.fire("game:maxLevelMerged");
-    }
-  }
   execUpgrade({ targetPosition, destroyPosition }) {
     this.app.fire("score:get", this.level);
-
-    const pos = this.getPosition().clone();
-    const level = this.level + 1;
-    this.execDestroy({ targetPosition, destroyPosition });
     this.app.fire("block:merge", {
-      level,
-      position: pos,
+      level: this.level,
+      position: targetPosition,
     });
+    this.execDestroy({ targetPosition, destroyPosition });
   }
   execDestroy({ targetPosition, destroyPosition }) {
-    this.app.fire("particle:play", {
-      level: this.level,
-      position: destroyPosition,
-    });
     this.app.fire("sound:play", "pop");
-
-    this.rigidbody.enabled = false;
-    this.isDestroying = true;
-    this.destroyTargetPosition = targetPosition;
 
     this.tween(this.getLocalPosition())
       .to(
         { x: destroyPosition.x, y: destroyPosition.y, z: destroyPosition.z },
-        0.1,
+        0.2,
         Linear
       )
       .start()
       .onComplete(() => {
         this.destroy();
       });
+    this.app.fire("block:particle", {
+      level: this.level,
+      position: targetPosition,
+    });
   }
   onCollisionStart({ other }) {
     if (!other.tags.has("block")) return;
@@ -125,6 +101,12 @@ class Block extends Entity {
 
     const velocity = this.rigidbody.linearVelocity.length();
     const otherVelocity = other.rigidbody.linearVelocity.length();
+
+    this.rigidbody.enabled = false;
+    other.rigidbody.enabled = false;
+    // Reward
+    if (this.level === levels.length - 1 || this.level === levels.length - 2)
+      this.app.fire("block:maxLevelMerged", this.level);
 
     if (this.level === levels.length - 1) {
       this.app.fire("sound:play", "bang");

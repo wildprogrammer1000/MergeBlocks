@@ -59,6 +59,7 @@ const unlinkGoogle = async () => await commonRpc("google:unlink");
 const getGoogleLinkedAccount = async (google_id) =>
   await commonRpc("google:linkedAccount", { google_id });
 
+const getReward = async (level) => await rpc("reward:get", { level });
 export {
   rpc,
   doHealthCheck,
@@ -73,4 +74,5 @@ export {
   unlinkGoogle,
   getGoogleLinkedAccount,
   getVersion,
+  getReward,
 };
