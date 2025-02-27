@@ -49,7 +49,7 @@ const PatchNoteItem = ({ item }) => {
     !item.version ||
     !item.type ||
     !item.description ||
-    Array.isArray(item.description)
+    !Array.isArray(item.description)
   )
     return null;
   return (
