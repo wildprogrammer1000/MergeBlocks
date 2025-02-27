@@ -8,7 +8,7 @@ import {
 import { levels } from "@/assets/json/block_levels.js";
 import { BlockController } from "@/playcanvas/gamescripts/BlockController";
 import evt from "@/utils/event-handler";
-import { Linear } from "@/utils/tween";
+import { QuadraticOut } from "@/utils/tween";
 
 class Block extends Entity {
   static SPAWN_HEIGHT = 8;
@@ -77,23 +77,56 @@ class Block extends Entity {
     this.execDestroy({ targetPosition, destroyPosition });
   }
   execDestroy({ targetPosition, destroyPosition }) {
-    this.app.fire("sound:play", "pop");
+    if (this._isDestroying) return;
+    this._isDestroying = true;
 
-    this.tween(this.getLocalPosition())
+    this.rigidbody.enabled = false;
+
+    const destroyPos = destroyPosition.clone();
+    const targetPos = targetPosition.clone();
+
+    if (this._destroyTween) {
+      this._destroyTween.stop();
+    }
+
+    this._destroyTween = this.tween(this.getLocalPosition())
       .to(
-        { x: destroyPosition.x, y: destroyPosition.y, z: destroyPosition.z },
-        0.2,
-        Linear
+        { x: destroyPos.x, y: destroyPos.y, z: destroyPos.z },
+        0.3,
+        QuadraticOut
       )
       .start()
       .onComplete(() => {
-        this.destroy();
+        this._safeDestroy();
       });
+
+    this._scaleTween = this.tween(this.getLocalScale())
+      .to({ x: 0.1, y: 0.1, z: 0.1 }, 0.3, QuadraticOut)
+      .start();
+
+    this.app.fire("sound:play", "pop");
     this.app.fire("block:particle", {
       level: this.level,
-      position: targetPosition,
+      position: targetPos,
     });
   }
+
+  _safeDestroy() {
+    if (this._destroyed) return;
+    this._destroyed = true;
+
+    if (this._destroyTween) {
+      this._destroyTween.stop();
+      this._destroyTween = null;
+    }
+    if (this._scaleTween) {
+      this._scaleTween.stop();
+      this._scaleTween = null;
+    }
+
+    this.destroy();
+  }
+
   onCollisionStart({ other }) {
     if (!other.tags.has("block")) return;
     if (this.level !== other.level) return;
@@ -102,8 +135,6 @@ class Block extends Entity {
     const velocity = this.rigidbody.linearVelocity.length();
     const otherVelocity = other.rigidbody.linearVelocity.length();
 
-    this.rigidbody.enabled = false;
-    other.rigidbody.enabled = false;
     // Reward
     if (this.level === levels.length - 1 || this.level === levels.length - 2)
       this.app.fire("block:maxLevelMerged", this.level);
