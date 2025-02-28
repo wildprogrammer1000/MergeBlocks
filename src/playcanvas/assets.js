@@ -5,7 +5,7 @@ export const textureAssets = [
     type: "texture",
     preload: true,
     file: {
-      url: "/assets/valentine/level_0.png",
+      url: "/assets/valentine/block_0.png",
     },
   },
   {
@@ -14,7 +14,7 @@ export const textureAssets = [
     type: "texture",
     preload: true,
     file: {
-      url: "/assets/valentine/level_1.png",
+      url: "/assets/valentine/block_1.png",
     },
   },
   {
@@ -23,7 +23,7 @@ export const textureAssets = [
     type: "texture",
     preload: true,
     file: {
-      url: "/assets/valentine/level_2.png",
+      url: `/assets/valentine/block_2.png`,
     },
   },
   {
@@ -32,7 +32,7 @@ export const textureAssets = [
     type: "texture",
     preload: true,
     file: {
-      url: "/assets/valentine/level_3.png",
+      url: "/assets/valentine/block_3.png",
     },
   },
   {
@@ -41,7 +41,7 @@ export const textureAssets = [
     type: "texture",
     preload: true,
     file: {
-      url: "/assets/valentine/level_4.png",
+      url: "/assets/valentine/block_4.png",
     },
   },
   {
@@ -50,7 +50,7 @@ export const textureAssets = [
     type: "texture",
     preload: true,
     file: {
-      url: "/assets/valentine/level_5.png",
+      url: "/assets/valentine/block_5.png",
     },
   },
   {
@@ -59,7 +59,7 @@ export const textureAssets = [
     type: "texture",
     preload: true,
     file: {
-      url: "/assets/valentine/level_6.png",
+      url: "/assets/valentine/block_6.png",
     },
   },
   {
@@ -68,7 +68,7 @@ export const textureAssets = [
     type: "texture",
     preload: true,
     file: {
-      url: "/assets/valentine/level_7.png",
+      url: "/assets/valentine/block_7.png",
     },
   },
   {
@@ -77,7 +77,7 @@ export const textureAssets = [
     type: "texture",
     preload: true,
     file: {
-      url: "/assets/valentine/level_8.png",
+      url: "/assets/valentine/block_8.png",
     },
   },
   {
@@ -86,7 +86,7 @@ export const textureAssets = [
     type: "texture",
     preload: true,
     file: {
-      url: "/assets/valentine/level_9.png",
+      url: "/assets/valentine/block_9.png",
     },
   },
   {
@@ -95,7 +95,19 @@ export const textureAssets = [
     type: "texture",
     preload: true,
     file: {
-      url: "/assets/valentine/level_10.png",
+      url: "/assets/valentine/block_10.png",
+    },
+  },
+];
+
+export const commonAssets = [
+  {
+    id: 50,
+    name: "diamond",
+    type: "texture",
+    preload: true,
+    file: {
+      url: "/assets/common/diamond.png",
     },
   },
 ];

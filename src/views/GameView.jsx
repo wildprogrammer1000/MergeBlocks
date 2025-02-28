@@ -10,25 +10,27 @@ import { IoMdHelp } from "react-icons/io";
 import evt from "@/utils/event-handler";
 import PauseModal from "@/component/modal/PauseModal";
 import HelpModal from "@/component/modal/HelpModal";
-// import WalletPoint from "@/component/ui/WalletPoint";
 import Version from "@/component/ui/Version";
 import CacheController from "@/component/CacheController";
 import GameResultModal from "@/component/modal/GameResultModal";
 import { useTranslation } from "react-i18next";
 import WalletDiamond from "@/component/ui/WalletDiamond";
-import { BackInOut } from "@/utils/tween";
 
 const GamePage = () => {
   const { t } = useTranslation();
-  const pageRef = useRef(null);
   const { refreshAccount } = useNakama();
+
+  const diamondContainerRef = useRef(null);
+  const diamondContainerPos = useRef({ x: 0, y: 0 });
+  const [diamond, setDiamond] = useState(0);
+
+  const pageRef = useRef(null);
   const scoreRef = useRef(0);
   const pointRef = useRef(0);
   const maxComboRef = useRef(0);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
   const [maxCombo, setMaxCombo] = useState(0);
-  // const [point, setPoint] = useState(0);
   const [pointCombo, setPointCombo] = useState(0);
   const [countdown, setCountdown] = useState(0);
   const [result, setResult] = useState({
@@ -44,12 +46,8 @@ const GamePage = () => {
     setMaxCombo(maxComboRef.current);
     setPointCombo(pointCombo);
     setScore(scoreRef.current);
-    // setPoint(pointRef.current);
-  };
-  const updatePoint = (point) => {
     if (gameOver) return;
     pointRef.current = point;
-    // setPoint(pointRef.current);
   };
   const onGameOver = async () => {
     const { records } = await addRecord({
@@ -77,7 +75,6 @@ const GamePage = () => {
     setPointCombo(0);
     setMaxCombo(0);
     setScore(scoreRef.current);
-    // setPoint(pointRef.current);
     setGameOver(false);
     setResult({
       bestScore: 0,
@@ -85,20 +82,34 @@ const GamePage = () => {
     });
   };
 
+  const onUpdateDiamond = (amount) => {
+    setDiamond((state) => state + 1);
+  };
+  const onGetDiamondContainer = () => diamondContainerPos.current;
+  const initialize = () => {
+    const rect = diamondContainerRef.current.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    diamondContainerPos.current = { x, y };
+  };
   useEffect(() => {
+    initialize();
     app.on("score:update", updateScore);
-    app.on("point:update", updatePoint);
     app.on("game:over", onGameOver);
     app.on("game:countdown", onCountdown);
     const handlePWAOutdated = () => pageRef.current.remove();
 
     evt.on("restart", restartGame);
     evt.on("version:pwa-outdated", handlePWAOutdated);
+    evt.on("diamond:update", onUpdateDiamond);
+    evt.method("diamond:container", onGetDiamondContainer);
 
     return () => {
       evt.off("version:pwa-outdated", handlePWAOutdated);
       evt.off("restart", restartGame);
+      evt.methodRemove("diamond:container");
       if (app) {
+        evt.off("diamond:update", onUpdateDiamond);
         app.destroy();
       }
     };
@@ -112,6 +123,7 @@ const GamePage = () => {
       if (app) app.off("score:update", updateScore);
     };
   }, [gameOver]);
+
   return (
     <div>
       {countdown > 0 && (
@@ -153,54 +165,14 @@ const GamePage = () => {
             <FaPause />
           </WSButton>
         </div>
-        {/* <WalletDiamond type="diamond" value={0} className="w-fit" /> */}
-{/* 
-        <div
-          onClick={(e) => {
-            const block = app.root.findByName("Block");
-            const camera = app.root.findByName("Camera");
-            console.log(block.getLocalPosition().y);
-            const pos = block.getLocalPosition().clone();
-
-            const radius = 2;
-            const numEntities = 10;
-
-            console.log("e: ", e);
-            const element = e.target;
-            const rect = element.getBoundingClientRect();
-            const elementX = rect.left + rect.width / 2;
-            const elementY = rect.top + rect.height / 2;
-            const worldPos = camera.camera.screenToWorld(elementX, elementY, 0);
-            console.log("worldPos: ", worldPos);
-
-            for (let i = 0; i < numEntities; i++) {
-              setTimeout(() => {
-                const angle = (i / numEntities) * Math.PI * 2;
-                const x = Math.cos(angle) * radius;
-                const z = Math.sin(angle) * radius;
-
-                const entity = new Entity("Entity");
-                entity.addComponent("render", { type: "sphere" });
-                entity.setLocalPosition(x, z + pos.y, 0);
-                // entity.setLocalPosition(worldPos.x, worldPos.y, 0);
-                app.root.addChild(entity);
-                console.log("e: ", e);
-                const randomTimeout = Math.random() * 1000 + 500; // 1초에서 3초 사이
-                setTimeout(() => {
-                  entity
-                    .tween(entity.getLocalPosition())
-                    .to({ x: worldPos.x, y: worldPos.y, z: 0 }, 1, BackInOut)
-                    .start()
-                    .onComplete(() => {
-                      entity.destroy();
-                    });
-                }, randomTimeout);
-              }, i * 30);
-            }
-          }}
-        >
-          Tween Test
-        </div> */}
+        <div ref={diamondContainerRef}>
+          <WalletDiamond
+            animate
+            type="diamond"
+            value={diamond}
+            className="w-fit"
+          />
+        </div>
       </div>
       <PauseModal />
       <HelpModal />

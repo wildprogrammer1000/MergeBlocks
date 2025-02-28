@@ -10,7 +10,7 @@ import { CONTEXT_OPTIONS, PRELOAD_MODULES } from "./settings";
 import { loadModules } from "./modules";
 import showLoadingScreen from "./loading";
 import { initSceneBase } from "./scenes/sceneBase";
-import { textureAssets, soundAssets } from "./assets";
+import { textureAssets, soundAssets, commonAssets } from "./assets";
 import evt from "@/utils/event-handler";
 import { configureAssets } from "@/utils/functions";
 
@@ -46,7 +46,7 @@ async function main() {
 
   evt.emit("asset:beforeload", app);
 
-  configureAssets([...textureAssets, ...soundAssets]);
+  configureAssets([...commonAssets, ...textureAssets, ...soundAssets]);
   loadModules(PRELOAD_MODULES, "", () => {
     showLoadingScreen(app);
     app.preload(() => {

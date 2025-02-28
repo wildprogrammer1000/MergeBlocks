@@ -1,17 +1,50 @@
-import * as pc from "playcanvas";
+import {
+  app,
+  Asset,
+  Sprite,
+  SPRITE_RENDERMODE_SIMPLE,
+  TextureAtlas,
+  Vec2,
+  Vec4,
+} from "playcanvas";
 
-const createSpriteAsset = function (atlas, frame) {
-  const sprite = new pc.Sprite(pc.app.graphicsDevice, {
+const findSpriteAsset = function (name) {
+  let spriteAsset = app.assets.find(name, "sprite");
+  if (!spriteAsset) {
+    spriteAsset = createSpriteAsset(name);
+  }
+  return spriteAsset;
+};
+
+const createSpriteAsset = function (name) {
+  const textureAsset = app.assets.find(name, "texture");
+  const atlas = new TextureAtlas();
+
+  atlas.frames = {
+    1: {
+      rect: new Vec4(
+        0,
+        0,
+        textureAsset.resource.width,
+        textureAsset.resource.height
+      ),
+      pivot: new Vec2(0.5, 0.5),
+      border: new Vec4(0, 0, 0, 0),
+    },
+  };
+  atlas.texture = textureAsset.resource;
+
+  const sprite = new Sprite(app.graphicsDevice, {
     atlas: atlas,
-    frameKeys: [frame],
-    pixelsPerUnit: 100,
-    renderMode: pc.SPRITE_RENDERMODE_SIMPLE,
+    frameKeys: [1],
+    pixelsPerUnit: 512, // Block 클래스의 textureSize와 동일한 값
+    renderMode: SPRITE_RENDERMODE_SIMPLE,
   });
 
-  const spriteAsset = new pc.Asset("sprite", "sprite", { url: "" });
+  const spriteAsset = new Asset(name, "sprite", { url: "" });
   spriteAsset.resource = sprite;
   spriteAsset.loaded = true;
-  pc.app.assets.add(spriteAsset);
+  app.assets.add(spriteAsset);
   return spriteAsset;
 };
 
@@ -38,7 +71,7 @@ const hexToRgb = (hex) => {
 const configureAssets = (assetList, load = false) => {
   for (let i = 0; i < assetList.length; i++) {
     const data = assetList[i];
-    const asset = new pc.Asset(data.name, data.type, data.file, data.data);
+    const asset = new Asset(data.name, data.type, data.file, data.data);
     asset.id = parseInt(data.id, 10);
     asset.preload = data.preload ? data.preload : false;
     // if this is a script asset and has already been embedded in the page then
@@ -54,10 +87,10 @@ const configureAssets = (assetList, load = false) => {
       }
     }
     // registry
-    pc.app.assets.add(asset);
+    app.assets.add(asset);
     if (load) {
-      pc.app.assets.load(asset);
+      app.assets.load(asset);
     }
   }
 };
-export { createSpriteAsset, hexToRgb, configureAssets };
+export { hexToRgb, configureAssets, findSpriteAsset };

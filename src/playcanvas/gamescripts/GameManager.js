@@ -1,7 +1,10 @@
 import { getReward } from "@/api/rpc";
-import Block from "@/templates/Block";
-import { BlockParticle } from "@/templates/BlockParticle";
+import Block from "@/playcanvas/templates/Block";
+import { BlockParticle } from "@/playcanvas/templates/BlockParticle";
+import evt from "@/utils/event-handler";
+import { BackIn, QuadraticIn, QuadraticInOut, SineInOut } from "@/utils/tween";
 import { Entity, math, Script } from "playcanvas";
+import Diamond from "../templates/Diamond";
 
 class GameManager extends Script {
   initialize() {
@@ -11,17 +14,17 @@ class GameManager extends Script {
     this.pointComboTimeout = 0;
     this.mainCamera = this.app.root.findByName("Camera");
     this.textures = [
-      this.app.assets.find("block_0"),
-      this.app.assets.find("block_1"),
-      this.app.assets.find("block_2"),
-      this.app.assets.find("block_3"),
-      this.app.assets.find("block_4"),
-      this.app.assets.find("block_5"),
-      this.app.assets.find("block_6"),
-      this.app.assets.find("block_7"),
-      this.app.assets.find("block_8"),
-      this.app.assets.find("block_9"),
-      this.app.assets.find("block_10"),
+      this.app.assets.find("block_0", "texture"),
+      this.app.assets.find("block_1", "texture"),
+      this.app.assets.find("block_2", "texture"),
+      this.app.assets.find("block_3", "texture"),
+      this.app.assets.find("block_4", "texture"),
+      this.app.assets.find("block_5", "texture"),
+      this.app.assets.find("block_6", "texture"),
+      this.app.assets.find("block_7", "texture"),
+      this.app.assets.find("block_8", "texture"),
+      this.app.assets.find("block_9", "texture"),
+      this.app.assets.find("block_10", "texture"),
     ];
 
     this.app.on("pointer:down", this.onPointerDown, this);
@@ -33,7 +36,7 @@ class GameManager extends Script {
     this.app.on("game:view", this.onGameView, this);
     this.app.on("asset:applyTheme", this.onApplyTheme, this);
     this.app.on("block:merge", this.onBlockMerge, this);
-    // this.app.on("block:maxLevelMerged", this.onBlockMaxLevelMerged, this);
+    this.app.on("block:maxLevelMerged", this.onBlockMaxLevelMerged, this);
     this.app.on("block:particle", this.onBlockParticle, this);
     this.currentBlock = this.createBlock();
 
@@ -55,17 +58,17 @@ class GameManager extends Script {
   }
   onApplyTheme() {
     this.textures = [
-      this.app.assets.find("block_0"),
-      this.app.assets.find("block_1"),
-      this.app.assets.find("block_2"),
-      this.app.assets.find("block_3"),
-      this.app.assets.find("block_4"),
-      this.app.assets.find("block_5"),
-      this.app.assets.find("block_6"),
-      this.app.assets.find("block_7"),
-      this.app.assets.find("block_8"),
-      this.app.assets.find("block_9"),
-      this.app.assets.find("block_10"),
+      this.app.assets.find("block_0", "texture"),
+      this.app.assets.find("block_1", "texture"),
+      this.app.assets.find("block_2", "texture"),
+      this.app.assets.find("block_3", "texture"),
+      this.app.assets.find("block_4", "texture"),
+      this.app.assets.find("block_5", "texture"),
+      this.app.assets.find("block_6", "texture"),
+      this.app.assets.find("block_7", "texture"),
+      this.app.assets.find("block_8", "texture"),
+      this.app.assets.find("block_9", "texture"),
+      this.app.assets.find("block_10", "texture"),
     ];
   }
 
@@ -170,9 +173,54 @@ class GameManager extends Script {
   onBlockMerge({ level, position }) {
     new Block(this.app, false, level + 1, position);
   }
-  async onBlockMaxLevelMerged(level) {
-    const a = await getReward(level);
-    console.log("a: ", a);
+  async onBlockMaxLevelMerged({ level, position }) {
+    const targetDomPos = evt.call("diamond:container");
+    const targetWorldPos = this.mainCamera.camera.screenToWorld(
+      targetDomPos.x,
+      targetDomPos.y,
+      0
+    );
+
+    const result = await getReward(level);
+    for (let i = 0; i < result.reward; i++) {
+      const radius = Math.random() + 0.5;
+      const randomTimeout = Math.random() * 500 + 200;
+      setTimeout(() => {
+        const angle = (i / result.reward) * Math.PI * 2;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+
+        const entity = new Diamond(this.app);
+        entity.setLocalPosition(position);
+        this.app.root.addChild(entity);
+        entity.setEulerAngles(0, 0, Math.floor(Math.random() * 90) - 45);
+
+        entity
+          .tween(entity.getLocalPosition())
+          .to(
+            { x: position.x + x, y: position.y + y, z: 0 },
+            0.1,
+            QuadraticInOut
+          )
+          .start()
+          .onComplete(() => {
+            setTimeout(() => {
+              entity
+                .tween(entity.getLocalPosition())
+                .to(
+                  { x: targetWorldPos.x, y: targetWorldPos.y, z: 0 },
+                  1,
+                  BackIn
+                )
+                .start()
+                .onComplete(() => {
+                  evt.emit("diamond:update");
+                  entity.destroy();
+                });
+            }, randomTimeout);
+          });
+      }, i * 30);
+    }
   }
   onBlockParticle({ level, position }) {
     this.playParticle({ level, position });

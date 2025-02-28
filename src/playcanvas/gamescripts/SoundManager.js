@@ -19,9 +19,7 @@ export class SoundManager extends Script {
       gameover: "lose",
     };
     this.settings = null;
-    // console.log("settings: ", this.settings);
 
-    // if (this.settings.Sound) this.entity.sound.play("bgm");
     evt.on("settings:update", this.onUpdateSettings, this);
     this.on("destroy", () => {
       evt.off("settings:update", this.onUpdateSettings, this);

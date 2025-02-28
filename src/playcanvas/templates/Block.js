@@ -9,6 +9,7 @@ import { levels } from "@/assets/json/block_levels.js";
 import { BlockController } from "@/playcanvas/gamescripts/BlockController";
 import evt from "@/utils/event-handler";
 import { QuadraticOut } from "@/utils/tween";
+import { findSpriteAsset } from "@/utils/functions";
 
 class Block extends Entity {
   static SPAWN_HEIGHT = 8;
@@ -22,18 +23,18 @@ class Block extends Entity {
     pos = Block.SPAWN_POSIITON
   ) {
     super("Block", app);
+    this.app = app;
     this.level = level;
     this.tags.add(["block", this.level]);
 
     this.mass = levels[this.level].mass;
     this.blockScale = levels[this.level].scale;
-    this.app = app;
     this.createdAt = this.app._time;
 
     this.textureSize = 512;
 
     this.addComponent("sprite");
-    this.sprite.spriteAsset = this.app.assets.find(`level_${this.level}`).id;
+    this.sprite.spriteAsset = findSpriteAsset(`block_${this.level}`);
 
     this.setPosition(pos.x, pos.y, pos.z);
     this.tween(this.getLocalScale())
@@ -137,7 +138,10 @@ class Block extends Entity {
 
     // Reward
     if (this.level === levels.length - 1 || this.level === levels.length - 2)
-      this.app.fire("block:maxLevelMerged", this.level);
+      this.app.fire("block:maxLevelMerged", {
+        level: this.level,
+        position: this.getPosition(),
+      });
 
     if (this.level === levels.length - 1) {
       this.app.fire("sound:play", "bang");

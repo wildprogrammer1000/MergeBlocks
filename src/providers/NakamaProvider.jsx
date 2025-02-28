@@ -24,6 +24,7 @@ export const NakamaProvider = ({ children }) => {
   const [session, setSession] = useState(null);
   const [account, setAccount] = useState(null);
   const [socket, setSocket] = useState(null);
+  const [wallet, setWallet] = useState({});
   const logOut = async () => {
     socket && socket.disconnect();
     if (client && session) {
@@ -68,6 +69,8 @@ export const NakamaProvider = ({ children }) => {
     const account = await client.getAccount(session);
     nakama.account = account;
     setAccount(account);
+    const wallet = JSON.parse(account.wallet);
+    setWallet(wallet);
   };
   useEffect(() => {
     authenticate();
@@ -94,7 +97,15 @@ export const NakamaProvider = ({ children }) => {
 
   return (
     <NakamaContext.Provider
-      value={{ account, client, session, refreshAccount, socket, authenticate }}
+      value={{
+        account,
+        client,
+        session,
+        refreshAccount,
+        socket,
+        authenticate,
+        wallet,
+      }}
     >
       {children}
     </NakamaContext.Provider>
