@@ -18,10 +18,10 @@ const ITEMS = {
     description: "Item 1 description",
     image_url: "/assets/common/item_random_blast.png",
   },
-  item_earthquake: {
-    name: "Item_Earthquake",
+  item_tornado: {
+    name: "Item_Tornado",
     description: "Item 1 description",
-    image_url: "/assets/common/item_earthquake.png",
+    image_url: "/assets/common/item_tornado.png",
   },
 };
 
@@ -39,8 +39,8 @@ const GameItems = () => {
       case "item_random_blast":
         app.fire("item:random_blast");
         break;
-      case "item_earthquake":
-        app.fire("item:earthquake");
+      case "item_tornado":
+        app.fire("item:tornado");
         break;
     }
     setSelectedItem(null);
@@ -65,7 +65,7 @@ const GameItems = () => {
       >
         <Item type="item_sniping" />
         <Item type="item_random_blast" />
-        <Item type="item_earthquake" />
+        <Item type="item_tornado" />
       </div>
       {selectedItem && (
         <div
@@ -147,4 +147,4 @@ const Item = ({ type }) => {
 
 // Point Pop
 // Random Blast
-// Earthquake
+// Tornado

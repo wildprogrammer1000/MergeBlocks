@@ -14,6 +14,8 @@ import Version from "@/component/ui/Version";
 import GameResultModal from "@/component/modal/GameResultModal";
 import { useTranslation } from "react-i18next";
 import WalletDiamond from "@/component/ui/WalletDiamond";
+import MatchHandler from "@/component/MatchHandler";
+import Dashboard from "@/component/Dashboard";
 
 const GamePage = () => {
   const { t } = useTranslation();
@@ -47,6 +49,7 @@ const GamePage = () => {
     setScore(scoreRef.current);
     if (gameOver) return;
     pointRef.current = point;
+    evt.emit("player:update_score", { score: scoreRef.current });
   };
   const onGameOver = async () => {
     const { records } = await addRecord({
@@ -81,7 +84,6 @@ const GamePage = () => {
       rank: 0,
     });
   };
-
   const onUpdateDiamond = () => {
     setDiamond((state) => state + 1);
   };
@@ -155,6 +157,14 @@ const GamePage = () => {
 
       <div className="absolute top-4 right-4 flex flex-col gap-2 items-end">
         <div className="flex gap-2">
+          <div ref={diamondContainerRef}>
+            <WalletDiamond
+              animate
+              type="diamond"
+              value={diamond}
+              className="w-fit"
+            />
+          </div>
           <WSButton size="sm" onClick={() => app.fire("game:view")}>
             <BiLogoZoom />
           </WSButton>
@@ -165,14 +175,7 @@ const GamePage = () => {
             <FaPause />
           </WSButton>
         </div>
-        <div ref={diamondContainerRef}>
-          <WalletDiamond
-            animate
-            type="diamond"
-            value={diamond}
-            className="w-fit"
-          />
-        </div>
+        <Dashboard />
       </div>
       <PauseModal />
       <HelpModal />
@@ -182,6 +185,8 @@ const GamePage = () => {
       {gameOver && (
         <GameResultModal score={score} result={result} maxCombo={maxCombo} />
       )}
+
+      <MatchHandler />
     </div>
   );
 };

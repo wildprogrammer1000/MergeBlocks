@@ -39,11 +39,10 @@ const changeDisplayname = async (displayName) => {
     display_name: displayName,
   });
 };
-const addRecord = async ({ score, point }) => {
+const addRecord = async ({ score }) => {
   const account = nakama.account;
   const res = await rpc("record:add", {
     score,
-    point: 0,
     display_name: account.user.display_name || account.user.username,
   });
   return res;
@@ -52,15 +51,14 @@ const addRecord = async ({ score, point }) => {
 const getEvents = async () => await rpc("events:get");
 
 const getRecords = async () => await rpc("records:get");
-const listChannelMessages = async () =>
-  await commonRpc("channelmessage:list_recent");
-
 const unlinkGoogle = async () => await commonRpc("google:unlink");
 const getGoogleLinkedAccount = async (google_id) =>
   await commonRpc("google:linkedAccount", { google_id });
 
 const getReward = async (level) => await rpc("reward:get", { level });
 const getPatchNote = async () => await rpc("patchnote");
+
+const findMatch = async (module) => await commonRpc("match:find", { module });
 export {
   rpc,
   doHealthCheck,
@@ -69,7 +67,6 @@ export {
   getRecords,
   checkDisplayName,
   initDisplayName,
-  listChannelMessages,
   getEvents,
   changeDisplayname,
   unlinkGoogle,
@@ -77,4 +74,5 @@ export {
   getVersion,
   getReward,
   getPatchNote,
+  findMatch,
 };

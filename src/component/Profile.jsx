@@ -27,7 +27,7 @@ import { FaLink } from "react-icons/fa";
 import { FaCloudDownloadAlt } from "react-icons/fa";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-
+import PropTypes from "prop-types";
 const Profile = ({ backup = false }) => {
   const { t } = useTranslation();
   const { client, session, account, refreshAccount, authenticate } =
@@ -281,3 +281,7 @@ const Profile = ({ backup = false }) => {
 };
 
 export default Profile;
+
+Profile.propTypes = {
+  backup: PropTypes.bool,
+};

@@ -5,6 +5,7 @@ import axios from "axios";
 import { WebSocketAdapterPb } from "@heroiclabs/nakama-js-protobuf";
 import evt from "@/utils/event-handler";
 import PropTypes from "prop-types";
+import { CHANNEL_ALL } from "@/constants/variables";
 const NakamaContext = createContext();
 export const nakama = {
   client: null,
@@ -34,6 +35,9 @@ export const NakamaProvider = ({ children }) => {
     setSocket(null);
   };
   const authenticate = async (id) => {
+    const onChannelMessage = (channelMessage) =>
+      evt.emit("channelmessage", channelMessage);
+    const onMatchData = (matchData) => evt.emit("matchdata", matchData);
     try {
       await logOut();
       let res = await axios({
@@ -56,8 +60,16 @@ export const NakamaProvider = ({ children }) => {
         new WebSocketAdapterPb()
       );
       await newSocket.connect(newSession);
+      newSocket.onchannelmessage = onChannelMessage;
+      newSocket.onmatchdata = onMatchData;
+
+      // Chat
+      await newSocket.joinChat(CHANNEL_ALL);
 
       setAccount(account);
+      const wallet = JSON.parse(account.wallet);
+      setWallet(wallet);
+
       setSession(newSession);
       setSocket(newSocket);
       evt.emit("version:check");

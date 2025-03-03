@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { IoSend } from "react-icons/io5";
 import evt from "@/utils/event-handler";
-import { listChannelMessages } from "@/api/rpc";
 import PropTypes from "prop-types";
 import { app } from "playcanvas";
 import { useTranslation } from "react-i18next";
@@ -13,14 +12,12 @@ import { IoChatboxEllipses } from "react-icons/io5";
 const Chat = ({ className }) => {
   const { t } = useTranslation();
   const scrollRef = useRef();
-  const { account, client, session, socket } = useNakama();
+  const { account,  socket } = useNakama();
   const [isOpen, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [latestMessage, setLatestMessage] = useState(null);
-
-  const joinChat = async () => await socket.joinChat(CHANNEL_ALL);
-
+  
   const handleMessage = (e) => {
     const value = e.target.value;
     if (value.length > 60) {
@@ -28,12 +25,6 @@ const Chat = ({ className }) => {
       return;
     }
     setMessage(value);
-  };
-  const getMessages = async () => {
-    const { messages } = await listChannelMessages();
-    const sorted = messages.reverse();
-    setLatestMessage(sorted[sorted.length - 1]);
-    setMessages(sorted);
   };
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -60,21 +51,9 @@ const Chat = ({ className }) => {
   };
 
   useEffect(() => {
-    if (client && session) getMessages();
-  }, [client, session]);
-
-  useEffect(() => {
-    if (socket) {
-      joinChat();
-      socket.onchannelmessage = onChannelMessage;
-    }
-  }, [socket]);
-
-  useEffect(() => {
+    evt.on("channelmessage", onChannelMessage);
     return () => {
-      if (socket) {
-        socket.leaveChat(`2...${CHANNEL_ALL}`);
-      }
+      evt.off("channelmessage", onChannelMessage);
     };
   }, []);
 
