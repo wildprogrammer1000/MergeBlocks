@@ -1,4 +1,4 @@
-import { app, Entity } from "playcanvas";
+import { app } from "playcanvas";
 import { useEffect, useRef, useState } from "react";
 
 import { addRecord } from "@/api/rpc";
@@ -11,7 +11,6 @@ import evt from "@/utils/event-handler";
 import PauseModal from "@/component/modal/PauseModal";
 import HelpModal from "@/component/modal/HelpModal";
 import Version from "@/component/ui/Version";
-import CacheController from "@/component/CacheController";
 import GameResultModal from "@/component/modal/GameResultModal";
 import { useTranslation } from "react-i18next";
 import WalletDiamond from "@/component/ui/WalletDiamond";
@@ -177,7 +176,6 @@ const GamePage = () => {
       </div>
       <PauseModal />
       <HelpModal />
-      <CacheController />
 
       {/* Version */}
       <Version visible={false} />
