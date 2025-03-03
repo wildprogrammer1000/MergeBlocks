@@ -81,7 +81,7 @@ const SettingsModal = () => {
 
   if (!isOpen) return;
   return (
-    <WSModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+    <WSModal isOpen={isOpen} onClick={() => setIsOpen(false)}>
       <WSModalHeader className="flex w-full p-2">
         <div className="text-xl font-bold">{t("Settings")}</div>
         <WSCloseButton onClick={() => setIsOpen(false)} />
