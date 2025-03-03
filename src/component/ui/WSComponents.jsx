@@ -10,7 +10,12 @@ const ButtonSizes = {
   xl: "w-16 h-16 text-5xl",
 };
 
-const WSButton = ({ type = "click", size = "md", ...props }) => {
+const WSButton = ({
+  type = "click",
+  size = "md",
+  theme = "dark",
+  ...props
+}) => {
   return (
     <button
       disabled={props.disabled || false}
@@ -22,13 +27,21 @@ const WSButton = ({ type = "click", size = "md", ...props }) => {
         ${props.className || ""}
         flex justify-center items-center
         ${ButtonSizes[size]}
-        text-[var(--color-main-100)] 
-        transition-all duration-300
-        bg-[var(--color-main-900)]
         rounded-2xl
         cursor-pointer
         disabled:opacity-50 disabled:cursor-not-allowed
-        hover:bg-[var(--color-main-100)] hover:text-[var(--color-main-900)]
+        transition-all duration-300
+        
+        ${
+          theme === "light"
+            ? `text-[var(--color-main-900)] 
+          bg-[var(--color-main-100)]
+          border-2 border-[var(--color-main-900)]
+          hover:bg-[var(--color-main-900)] hover:text-[var(--color-main-100)]`
+            : `text-[var(--color-main-100)] 
+          bg-[var(--color-main-900)]
+          hover:bg-[var(--color-main-100)] hover:text-[var(--color-main-900)]`
+        }
       `}
     >
       {props && props.children && props.children}

@@ -15,7 +15,18 @@ class EventHandler {
       this.events.set(eventName, []);
     }
 
-    this.events.get(eventName).push({
+    const listeners = this.events.get(eventName);
+    
+    // 동일한 콜백과 컨텍스트가 이미 등록된 경우 방지
+    const isDuplicate = listeners.some(listener => 
+      listener.callback === callback && listener.context === context
+    );
+    
+    if (isDuplicate) {
+      throw new Error(`Duplicate listener: Event '${eventName}' already has this callback registered`);
+    }
+
+    listeners.push({
       callback,
       context,
     });

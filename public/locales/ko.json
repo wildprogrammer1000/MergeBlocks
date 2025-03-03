@@ -18,7 +18,7 @@
   "MAX COMBO": "최대 콤보",
   "BEST SCORE": "최고 점수",
   "MY RANK": "내 랭킹",
-  "SHARE": "나는 {score}점이야! 한번 도전해볼래?",
+  "SHARE": "나는 {{score}}점이야! 한번 도전해볼래?",
   "Update Nickname": "닉네임이 업데이트 되었어요.",
   "Google Link Success": "구글 계정이 연동되었어요.\n페이지를 새로고침할게요.",
   "Google Not Linked": "연동되지 않은 구글 계정이에요.",
@@ -35,5 +35,12 @@
   "PatchNote": "패치 노트",
   "Feature": "새로운 기능",
   "Bug Fix": "버그 수정",
-  "Improvement": "개선 사항"
+  "Improvement": "개선 사항",
+  "Shop": "상점",
+  "ITEM_USE": "이 아이템을 사용할까요?",
+  "ITEM_NAMES": {
+    "item_sniping": "스나이핑",
+    "item_random_blast": "랜덤 블래스트",
+    "item_earthquake": "어스퀘이크"
+  }
 }

@@ -18,7 +18,7 @@
   "MAX COMBO": "MAX COMBO",
   "BEST SCORE": "BEST SCORE",
   "MY RANK": "MY RANK",
-  "SHARE": "I scored {score} points! Can you beat my score?",
+  "SHARE": "I scored {{score}} points! Can you beat my score?",
   "Update Nickname": "Nickname updated successfully.",
   "Google Link Success": "Google account linked successfully.\nPage will be reloaded",
   "Google Not Linked": "Account is not registered.",
@@ -35,5 +35,12 @@
   "PatchNote": "Patch Note",
   "Feature": "FEATURE",
   "Bug Fix": "BUG FIX",
-  "Improvement": "IMPROVEMENT"
+  "Improvement": "IMPROVEMENT",
+  "Shop": "SHOP",
+  "ITEM_USE": "Will you use this item?",
+  "ITEM_NAMES": {
+    "item_sniping": "Sniping",
+    "item_random_blast": "Random Blast",
+    "item_earthquake": "Earthquake"
+  }
 }

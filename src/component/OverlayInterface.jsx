@@ -7,7 +7,7 @@ import OutdatedView from "@/views/OutdatedView";
 import LoadingView from "@/views/LoadingView";
 import main from "@/playcanvas/start";
 
-const Interface = () => {
+const OverlayInterface = () => {
   const { view, setView } = useGlobalState();
   const [loaded, setLoaded] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -54,4 +54,4 @@ const Interface = () => {
   );
 };
 
-export default Interface;
+export default OverlayInterface;
