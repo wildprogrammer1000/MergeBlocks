@@ -43,6 +43,11 @@ export default defineConfig({
           },
         ],
       },
+      workbox: {
+        maximumFileSizeToCacheInBytes: 100 * 1024 * 1024,
+        disableDevLogs: true, // 개발 환경에서 불필요한 로그 제거
+        cleanupOutdatedCaches: true,
+      },
       includeAssets: ["mergeblocks.png", "robots.txt"],
       devOptions: {
         enabled: true,
