@@ -76,13 +76,14 @@ const GamePage = () => {
     setMaxCombo(0);
     setScore(scoreRef.current);
     setGameOver(false);
+    setDiamond(0);
     setResult({
       bestScore: 0,
       rank: 0,
     });
   };
 
-  const onUpdateDiamond = (amount) => {
+  const onUpdateDiamond = () => {
     setDiamond((state) => state + 1);
   };
   const onGetDiamondContainer = () => diamondContainerPos.current;
