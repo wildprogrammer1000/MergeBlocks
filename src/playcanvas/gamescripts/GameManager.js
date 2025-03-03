@@ -1,9 +1,9 @@
-import { getReward } from "@/api/rpc";
+import { doUseItem, getReward } from "@/api/rpc";
 import Block from "@/playcanvas/templates/Block";
 import { BlockParticle } from "@/playcanvas/templates/BlockParticle";
 import evt from "@/utils/event-handler";
-import { BackIn, QuadraticIn, QuadraticInOut, SineInOut } from "@/utils/tween";
-import { Entity, math, Script } from "playcanvas";
+import { BackIn, QuadraticInOut } from "@/utils/tween";
+import { Entity, math, Script, Vec3 } from "playcanvas";
 import Diamond from "../templates/Diamond";
 
 class GameManager extends Script {
@@ -38,6 +38,7 @@ class GameManager extends Script {
     this.app.on("block:merge", this.onBlockMerge, this);
     this.app.on("block:maxLevelMerged", this.onBlockMaxLevelMerged, this);
     this.app.on("block:particle", this.onBlockParticle, this);
+    this.app.on("item:random_blast", this.onUseRandomBlast, this);
     this.currentBlock = this.createBlock();
 
     this.on("destroy", this.onDestroy, this);
@@ -55,6 +56,7 @@ class GameManager extends Script {
     this.app.off("block:merge", this.onBlockMerge, this);
     this.app.off("block:maxLevelMerged", this.onBlockMaxLevelMerged, this);
     this.app.off("block:particle", this.onBlockParticle, this);
+    this.app.off("item:random_blast", this.onUseRandomBlast, this);
   }
   onApplyTheme() {
     this.textures = [
@@ -86,30 +88,99 @@ class GameManager extends Script {
       0
     );
   }
-  onPointerDown(event) {
-    if (!this.currentBlock || this.isWaiting || this.gameOver) return;
+  doRaycast(event) {
+    const start = new Vec3(event.x, event.y, -100);
+    const end = new Vec3(event.x, event.y, 100);
+    const rayResult = this.app.systems.rigidbody.raycastFirst(start, end);
+    return rayResult;
+  }
+  async onUseRandomBlast() {
+    try {
+      // const response = await doUseItem("item_random_blast");
+      // if (response.success) {
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          const blocks = this.app.root
+            .findByTag("block")
+            .filter((b) => !b.rigidbody.isStatic());
+          if (blocks.length > 0) {
+            const randomIndex = Math.floor(Math.random() * blocks.length);
+            blocks[randomIndex].fire(
+              "block:destroyedByItem",
+              "item_random_blast"
+            );
+          }
+        }, i * 300);
+      }
+      evt.emit("item:used", "item_random_blast");
+      // } else {
+      //   if (response.reason && response.reason === "not enough")
+      //     evt.emit("item:notEnough");
+      //   else evt.emit("item:useFailed");
+      // }
+    } catch (err) {
+      console.error("err: ", err);
+      evt.emit("item:useFailed");
+    }
+  }
+  async onPointerDown(event) {
+    this.usingItem = evt.call("item:using");
+    if (this.usingItem || !this.currentBlock || this.isWaiting || this.gameOver)
+      return;
+
     const { x } = event;
     this.moveBlock(x);
   }
 
   onPointerMove(event) {
-    if (!this.currentBlock || this.isWaiting || this.gameOver) return;
+    if (this.usingItem || !this.currentBlock || this.isWaiting || this.gameOver)
+      return;
     const { x } = event;
     this.moveBlock(x);
   }
 
-  onPointerUp(event) {
+  async onPointerUp(event) {
+    this.usingItem = evt.call("item:using");
     if (!this.currentBlock || this.isWaiting || this.gameOver) return;
-    const { x } = event;
-    this.moveBlock(x);
-    this.currentBlock.drop();
-    this.isWaiting = true;
 
-    this.createTimer = setTimeout(() => {
-      this.isWaiting = false;
-      this.currentBlock = this.createBlock();
-    }, 200);
-    this.app.fire("sound:play", "drop");
+    const { x } = event;
+
+    if (this.usingItem) {
+      try {
+        const rayResult = this.doRaycast(event);
+        if (
+          rayResult &&
+          rayResult.entity.tags.has("block") &&
+          !rayResult.entity.rigidbody.isStatic()
+        ) {
+          // const response = await doUseItem(this.usingItem);
+          // if (response.success) {
+          rayResult.entity.fire("block:destroyedByItem", this.usingItem);
+          // } else {
+          //   if (response.reason && response.reason === "not enough")
+          //     evt.emit("item:notEnough");
+          //   else evt.emit("item:useFailed");
+          // }
+        } else {
+          evt.emit("item:reselect");
+          return;
+        }
+        evt.emit("item:used", this.usingItem);
+        this.usingItem = null;
+      } catch (err) {
+        console.error("err: ", err);
+      }
+    } else {
+      this.moveBlock(x);
+      this.currentBlock.drop();
+      this.isWaiting = true;
+
+      this.createTimer = setTimeout(() => {
+        this.isWaiting = false;
+        this.currentBlock = this.createBlock();
+      }, 200);
+      this.app.fire("sound:play", "drop");
+    }
   }
   onGameOver() {
     this.gameOver = true;

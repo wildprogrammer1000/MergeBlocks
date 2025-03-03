@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { FaCheck } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { app } from "playcanvas";
-
+import PropTypes from "prop-types";
 const ITEMS = {
   item_sniping: {
     name: "Item_Sniping",
@@ -27,14 +27,20 @@ const ITEMS = {
 
 const GameItems = () => {
   const { t } = useTranslation();
+  const { refreshAccount, wallet } = useNakama();
+  const [usedItem, setUsedItem] = useState({
+    item_sniping: false,
+    item_random_blast: false,
+    item_tornado: false,
+  });
   const [selectedItem, setSelectedItem] = useState();
-  const [isSelecting, setIsSelecting] = useState(false);
+  const [isSelecting, setIsSelecting] = useState();
   const onSelectItem = (type) => setSelectedItem(type);
   const handleUseItem = () => {
-    if (!selectedItem) return;
+    if (!selectedItem || usedItem[selectedItem]) return;
     switch (selectedItem) {
       case "item_sniping":
-        setIsSelecting(true);
+        setIsSelecting("item_sniping");
         break;
       case "item_random_blast":
         app.fire("item:random_blast");
@@ -45,10 +51,26 @@ const GameItems = () => {
     }
     setSelectedItem(null);
   };
+  const onUsedItem = (item) => {
+    setUsedItem((state) => ({ ...state, [item]: true }));
+    setIsSelecting(null);
+    refreshAccount();
+  };
   useEffect(() => {
     evt.on("item:select", onSelectItem);
-    return () => evt.off("item:select", onSelectItem);
+    return () => {
+      evt.off("item:select", onSelectItem);
+    };
   }, []);
+
+  useEffect(() => {
+    evt.method("item:using", () => isSelecting);
+    evt.on("item:used", onUsedItem);
+    return () => {
+      evt.methodRemove("item:using");
+      evt.off("item:used", onUsedItem);
+    };
+  }, [isSelecting]);
   return (
     <>
       <div
@@ -63,9 +85,18 @@ const GameItems = () => {
         border-[var(--color-main-900)]
         `}
       >
-        <Item type="item_sniping" />
-        <Item type="item_random_blast" />
-        <Item type="item_tornado" />
+        <Item
+          disabled={!wallet["item_sniping"] || usedItem.item_sniping}
+          type="item_sniping"
+        />
+        <Item
+          disabled={!wallet["item_random_blast"] || usedItem.item_random_blast}
+          type="item_random_blast"
+        />
+        {/* <Item
+          disabled={!wallet["item_tornado"] || usedItem.item_tornado}
+          type="item_tornado"
+        /> */}
       </div>
       {selectedItem && (
         <div
@@ -107,18 +138,40 @@ const GameItems = () => {
           </div>
         </div>
       )}
+      {isSelecting && isSelecting === "item_sniping" && (
+        <div
+          className={`
+            absolute top-0 left-1/2 -translate-x-1/2 z-30
+            flex flex-col items-center gap-2
+            w-full p-2
+            bg-[var(--color-main-900)]/50 text-[var(--color-main-100)]
+          `}
+        >
+          <div>{t("Select Block")}</div>
+          <WSButton
+            onClick={() => setIsSelecting(null)}
+            size="sm"
+            className={`
+              w-fit p-2
+            `}
+          >
+            {t("Cancel")}
+          </WSButton>
+        </div>
+      )}
     </>
   );
 };
 
 export default GameItems;
-const Item = ({ type }) => {
+const Item = ({ type, disabled = false }) => {
   const { wallet } = useNakama();
 
   if (!ITEMS[type]) return null;
   return (
     <WSButton
       theme="light"
+      disabled={disabled}
       className="relative"
       onClick={() => evt.emit("item:select", type)}
     >
@@ -128,7 +181,7 @@ const Item = ({ type }) => {
         className="w-20"
       />
       {/* Amount */}
-      <div
+      {/* <div
         className={`
           absolute bottom-0 right-0 translate-x-1/2 translate-y-1.5
           flex items-center justify-center
@@ -140,7 +193,7 @@ const Item = ({ type }) => {
         `}
       >
         {wallet[type] ? (wallet[type] > 99 ? "99+" : wallet[type]) : 0}
-      </div>
+      </div> */}
     </WSButton>
   );
 };
@@ -148,3 +201,8 @@ const Item = ({ type }) => {
 // Point Pop
 // Random Blast
 // Tornado
+
+Item.propTypes = {
+  type: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+};

@@ -59,6 +59,8 @@ const getReward = async (level) => await rpc("reward:get", { level });
 const getPatchNote = async () => await rpc("patchnote");
 
 const findMatch = async (module) => await commonRpc("match:find", { module });
+
+const doUseItem = async (item) => await rpc("item:use", { item });
 export {
   rpc,
   doHealthCheck,
@@ -75,4 +77,5 @@ export {
   getReward,
   getPatchNote,
   findMatch,
+  doUseItem,
 };

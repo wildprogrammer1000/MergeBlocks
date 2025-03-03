@@ -42,5 +42,7 @@
     "item_sniping": "Sniping",
     "item_random_blast": "Random Blast",
     "item_tornado": "Tornado"
-  }
+  },
+  "Cancel": "CANCEL",
+  "Select Block": "SELECT BLOCK TO DESTROY"
 }

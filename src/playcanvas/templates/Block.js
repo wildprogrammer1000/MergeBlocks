@@ -61,6 +61,8 @@ class Block extends Entity {
     this.script.create(BlockController);
 
     this.app.root.addChild(this);
+
+    this.on("block:destroyedByItem", this.onDestroyedByItem, this);
   }
   drop() {
     if (!this.rigidbody) return;
@@ -180,6 +182,15 @@ class Block extends Entity {
         }
       }
     }
+  }
+  onDestroyedByItem({ item }) {
+    switch (item) {
+      default:
+    }
+    this.execDestroy({
+      targetPosition: this.getPosition(),
+      destroyPosition: this.getPosition(),
+    });
   }
 }
 

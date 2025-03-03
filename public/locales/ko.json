@@ -42,5 +42,7 @@
     "item_sniping": "스나이핑",
     "item_random_blast": "랜덤 블래스트",
     "item_tornado": "토네이도"
-  }
+  },
+  "Cancel": "취소",
+  "Select Block": "제거할 블록을 선택하세요"
 }
