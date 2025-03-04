@@ -107,7 +107,7 @@ export const commonAssets = [
     type: "texture",
     preload: true,
     file: {
-      url: "/assets/items/diamond.png",
+      url: "/assets/common/diamond.png",
     },
   },
 ];
