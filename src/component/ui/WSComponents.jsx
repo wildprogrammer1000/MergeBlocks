@@ -12,8 +12,8 @@ const ButtonSizes = {
 
 const WSButton = ({
   type = "click",
-  size = "md",
   theme = "dark",
+  size = "md",
   ...props
 }) => {
   return (
@@ -24,14 +24,12 @@ const WSButton = ({
         app && app.fire(`sound:play`, type);
       }}
       className={`
-        ${props.className || ""}
         flex justify-center items-center
-        ${ButtonSizes[size]}
+        ${size !== "custom" ? ButtonSizes[size] : ""}
         rounded-2xl
         cursor-pointer
         disabled:opacity-50 disabled:cursor-not-allowed
         transition-all duration-300
-        
         ${
           theme === "light"
             ? `text-[var(--color-main-900)] 
@@ -42,6 +40,7 @@ const WSButton = ({
           bg-[var(--color-main-900)]
           hover:bg-[var(--color-main-100)] hover:text-[var(--color-main-900)]`
         }
+        ${props.className || ""}
       `}
     >
       {props && props.children && props.children}
@@ -97,6 +96,22 @@ const WSCloseButton = (props) => {
   );
 };
 
+const WSItemAmount = ({ amount, ...props }) => (
+  <div
+    className={`
+absolute
+flex items-center justify-center
+h-6 px-1.5
+text-[12px] font-bold text-[var(--color-main-900)]
+border-2 border-[var(--color-main-900)]
+bg-[var(--color-main-100)]
+rounded-full
+${props.className || ""}
+`}
+  >
+    {amount}
+  </div>
+);
 WSButton.propTypes = {
   type: PropTypes.oneOf(["click", "close", "pause"]).isRequired,
   disabled: PropTypes.bool,
@@ -122,4 +137,4 @@ WSCloseButton.propTypes = {
   onClick: PropTypes.func,
 };
 
-export { WSButton, WSModal, WSModalHeader, WSCloseButton };
+export { WSButton, WSModal, WSModalHeader, WSCloseButton, WSItemAmount };

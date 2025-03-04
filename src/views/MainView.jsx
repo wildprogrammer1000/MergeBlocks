@@ -17,8 +17,8 @@ import Wallet from "@/component/layout/Wallet";
 import { useTranslation } from "react-i18next";
 import { LuNotebook } from "react-icons/lu";
 import PatchNoteModal from "@/component/modal/PatchNoteModal";
-// import { FaShoppingCart } from "react-icons/fa";
-// import ShopModal from "@/component/modal/ShopModal";
+import { FaShoppingCart } from "react-icons/fa";
+import ShopModal from "@/component/modal/ShopModal";
 
 function MainPage() {
   const { t } = useTranslation();
@@ -88,12 +88,12 @@ function MainPage() {
             <WSButton onClick={() => evt.emit("leaderboard:open")}>
               <MdLeaderboard />
             </WSButton>
+            <WSButton onClick={() => evt.emit("shop:open")}>
+              <FaShoppingCart />
+            </WSButton>
             <WSButton onClick={() => evt.emit("settings:open")}>
               <IoMdSettings />
             </WSButton>
-            {/* <WSButton onClick={() => evt.emit("shop:open")}>
-              <FaShoppingCart />
-            </WSButton> */}
           </div>
           <WSButton
             className="absolute bottom-4 left-4"
@@ -110,8 +110,8 @@ function MainPage() {
       <DisplayNameModal />
       <EventsModal />
       <Version />
+      <ShopModal />
       <PatchNoteModal />
-      {/* <ShopModal /> */}
     </div>
   );
 }
