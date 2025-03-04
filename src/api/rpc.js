@@ -63,6 +63,8 @@ const findMatch = async (module) => await commonRpc("match:find", { module });
 const doUseItem = async (item) => await rpc("item:use", { item });
 
 const getShopProducts = async () => await rpc("shop:products");
+const purchaseItem = async (item) => await rpc("shop:purchase", { item });
+
 export {
   rpc,
   doHealthCheck,
@@ -81,4 +83,5 @@ export {
   findMatch,
   doUseItem,
   getShopProducts,
+  purchaseItem,
 };

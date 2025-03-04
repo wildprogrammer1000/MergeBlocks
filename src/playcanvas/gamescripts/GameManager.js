@@ -96,28 +96,28 @@ class GameManager extends Script {
   }
   async onUseRandomBlast() {
     try {
-      // const response = await doUseItem("item_random_blast");
-      // if (response.success) {
-      for (let i = 0; i < 5; i++) {
-        setTimeout(() => {
-          const blocks = this.app.root
-            .findByTag("block")
-            .filter((b) => !b.rigidbody.isStatic());
-          if (blocks.length > 0) {
-            const randomIndex = Math.floor(Math.random() * blocks.length);
-            blocks[randomIndex].fire(
-              "block:destroyedByItem",
-              "item_random_blast"
-            );
-          }
-        }, i * 300);
+      const response = await doUseItem("item_random_blast");
+      if (response.success) {
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            const blocks = this.app.root
+              .findByTag("block")
+              .filter((b) => !b.rigidbody.isStatic());
+            if (blocks.length > 0) {
+              const randomIndex = Math.floor(Math.random() * blocks.length);
+              blocks[randomIndex].fire(
+                "block:destroyedByItem",
+                "item_random_blast"
+              );
+            }
+          }, i * 300);
+        }
+        evt.emit("item:used", "item_random_blast");
+      } else {
+        if (response.reason && response.reason === "not enough")
+          evt.emit("item:notEnough");
+        else evt.emit("item:useFailed");
       }
-      evt.emit("item:used", "item_random_blast");
-      // } else {
-      //   if (response.reason && response.reason === "not enough")
-      //     evt.emit("item:notEnough");
-      //   else evt.emit("item:useFailed");
-      // }
     } catch (err) {
       console.error("err: ", err);
       evt.emit("item:useFailed");
@@ -153,14 +153,14 @@ class GameManager extends Script {
           rayResult.entity.tags.has("block") &&
           !rayResult.entity.rigidbody.isStatic()
         ) {
-          // const response = await doUseItem(this.usingItem);
-          // if (response.success) {
-          rayResult.entity.fire("block:destroyedByItem", this.usingItem);
-          // } else {
-          //   if (response.reason && response.reason === "not enough")
-          //     evt.emit("item:notEnough");
-          //   else evt.emit("item:useFailed");
-          // }
+          const response = await doUseItem(this.usingItem);
+          if (response.success) {
+            rayResult.entity.fire("block:destroyedByItem", this.usingItem);
+          } else {
+            if (response.reason && response.reason === "not enough")
+              evt.emit("item:notEnough");
+            else evt.emit("item:useFailed");
+          }
         } else {
           evt.emit("item:reselect");
           return;

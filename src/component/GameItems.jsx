@@ -86,12 +86,12 @@ const GameItems = () => {
         `}
       >
         <Item
-          disabled={!wallet["item_sniping"] || usedItem.item_sniping}
-          type="item_sniping"
-        />
-        <Item
           disabled={!wallet["item_random_blast"] || usedItem.item_random_blast}
           type="item_random_blast"
+        />
+        <Item
+          disabled={!wallet["item_sniping"] || usedItem.item_sniping}
+          type="item_sniping"
         />
         {/* <Item
           disabled={!wallet["item_tornado"] || usedItem.item_tornado}
@@ -181,7 +181,7 @@ const Item = ({ type, disabled = false }) => {
         className="w-20"
       />
       {/* Amount */}
-      {/* <div
+      <div
         className={`
           absolute bottom-0 right-0 translate-x-1/2 translate-y-1.5
           flex items-center justify-center
@@ -193,7 +193,7 @@ const Item = ({ type, disabled = false }) => {
         `}
       >
         {wallet[type] ? (wallet[type] > 99 ? "99+" : wallet[type]) : 0}
-      </div> */}
+      </div>
     </WSButton>
   );
 };

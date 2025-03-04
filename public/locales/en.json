@@ -44,5 +44,8 @@
     "item_tornado": "Tornado"
   },
   "Cancel": "CANCEL",
-  "Select Block": "SELECT BLOCK TO DESTROY"
+  "Select Block": "SELECT BLOCK TO DESTROY",
+  "Item Purchase": "ITEM PURCHASE",
+  "Purchase Success": "Purchased item successfully.",
+  "Purchase Failed": "Failed to purchase item."
 }

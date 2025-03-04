@@ -44,5 +44,8 @@
     "item_tornado": "토네이도"
   },
   "Cancel": "취소",
-  "Select Block": "제거할 블록을 선택하세요"
+  "Select Block": "제거할 블록을 선택하세요",
+  "Item Purchase": "아이템 구매",
+  "Purchase Success": "아이템을 구매했어요.",
+  "Purchase Failed": "아이템 구매에 실패했어요."
 }

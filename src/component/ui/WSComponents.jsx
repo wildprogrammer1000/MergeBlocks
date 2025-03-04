@@ -113,7 +113,9 @@ ${props.className || ""}
   </div>
 );
 WSButton.propTypes = {
-  type: PropTypes.oneOf(["click", "close", "pause"]).isRequired,
+  type: PropTypes.oneOf(["click", "close", "pause"]),
+  theme: PropTypes.oneOf(["light", "dark"]),
+  size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),
   disabled: PropTypes.bool,
   className: PropTypes.string,
   onClick: PropTypes.func,
@@ -135,6 +137,11 @@ WSModalHeader.propTypes = {
 WSCloseButton.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
+};
+
+WSItemAmount.propTypes = {
+  amount: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 export { WSButton, WSModal, WSModalHeader, WSCloseButton, WSItemAmount };
