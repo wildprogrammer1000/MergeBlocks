@@ -84,7 +84,7 @@ const ShopItem = ({ type, price, amount }) => {
 
       <div className="flex flex-col w-full">
         <WSButton size="custom" className={`h-fit text-[16px]`}>
-          <img src="/assets/common/diamond.png" alt="diamond" width={28} />
+          <img src="/assets/items/diamond.png" alt="diamond" width={28} />
           {price}
         </WSButton>
       </div>

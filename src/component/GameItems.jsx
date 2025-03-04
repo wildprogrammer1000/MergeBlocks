@@ -11,17 +11,17 @@ const ITEMS = {
   item_sniping: {
     name: "Item_Sniping",
     description: "Item 1 description",
-    image_url: "/assets/common/item_sniping.png",
+    image_url: "/assets/items/item_sniping.png",
   },
   item_random_blast: {
     name: "Item_Random_Blast",
     description: "Item 1 description",
-    image_url: "/assets/common/item_random_blast.png",
+    image_url: "/assets/items/item_random_blast.png",
   },
   item_tornado: {
     name: "Item_Tornado",
     description: "Item 1 description",
-    image_url: "/assets/common/item_tornado.png",
+    image_url: "/assets/items/item_tornado.png",
   },
 };
 

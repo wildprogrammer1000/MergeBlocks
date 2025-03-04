@@ -38,7 +38,7 @@ const WalletDiamond = ({ type, value, className, animate = false }) => {
       {type === "diamond" && (
         <img
           ref={diamondRef}
-          src="/assets/common/diamond.png"
+          src="/assets/items/diamond.png"
           className="w-8 transition-transform duration-300"
         />
       )}
