@@ -35,6 +35,7 @@ const NetworkController = () => {
     }
   };
   const startHealthCheck = () => {
+    healthCheckRef.current && clearInterval(healthCheckRef.current);
     healthCheckRef.current = setInterval(() => {
       healthCheck();
       checkServerStatus();
@@ -42,9 +43,18 @@ const NetworkController = () => {
   };
 
   useEffect(() => {
-    healthCheckRef.current && clearInterval(healthCheckRef.current);
     startHealthCheck();
   }, [socket]);
+
+  useEffect(() => {
+    window.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        healthCheckRef.current && clearInterval(healthCheckRef.current);
+      } else {
+        startHealthCheck();
+      }
+    });
+  }, []);
 
   return (
     <>

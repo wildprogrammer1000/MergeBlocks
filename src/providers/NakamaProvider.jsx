@@ -86,7 +86,8 @@ export const NakamaProvider = ({ children }) => {
     }
   };
   const refreshAccount = async () => {
-    const account = await client.getAccount(session);
+    if (!nakama.session) return;
+    const account = await client.getAccount(nakama.session);
     nakama.account = account;
     setAccount(account);
     const wallet = JSON.parse(account.wallet);
