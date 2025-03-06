@@ -38,7 +38,7 @@ const GamePage = () => {
     bestScore: 0,
     rank: 0,
   });
-
+  const [loading, setLoading] = useState(false);
   const updateScore = ({ score, point, pointCombo }) => {
     if (gameOver) return;
     scoreRef.current = score;
@@ -52,19 +52,32 @@ const GamePage = () => {
     evt.emit("player:update_score", { score: scoreRef.current });
   };
   const onGameOver = async () => {
-    const { records } = await addRecord({
-      score: scoreRef.current,
-      point: pointRef.current,
-    });
-    const ownerRecord = records.ownerRecords[0];
-    const rank = ownerRecord.rank;
-    const bestScore = ownerRecord.score;
-    setResult({
-      rank,
-      bestScore,
-    });
     setGameOver(true);
-    await refreshAccount();
+    setLoading(true);
+    const trySendRecord = () => {
+      const intervalId = setTimeout(async () => {
+        try {
+          const { records } = await addRecord({
+            score: scoreRef.current,
+            point: pointRef.current,
+          });
+          const ownerRecord = records.ownerRecords[0];
+          const rank = ownerRecord.rank;
+          const bestScore = ownerRecord.score;
+          setResult({
+            rank,
+            bestScore,
+          });
+          setLoading(false);
+          await refreshAccount();
+          clearInterval(intervalId);
+        } catch (err) {
+          trySendRecord();
+          console.log("record save failed");
+        }
+      }, 500);
+    };
+    trySendRecord();
   };
   const onCountdown = (time) => {
     setCountdown(time.toFixed(2));
@@ -183,7 +196,12 @@ const GamePage = () => {
       {/* Version */}
       <Version visible={false} />
       {gameOver && (
-        <GameResultModal score={score} result={result} maxCombo={maxCombo} />
+        <GameResultModal
+          score={score}
+          result={result}
+          maxCombo={maxCombo}
+          loading={loading}
+        />
       )}
 
       <MatchHandler />

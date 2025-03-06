@@ -5,19 +5,11 @@ const commonRpc = async (id, data = {}) => {
   return res.payload;
 };
 const rpc = async (id, data = {}) => {
-  try {
-    const res = await nakama.client.rpc(
-      nakama.session,
-      "mergeblocks." + id,
-      data
-    );
-    return res.payload;
-  } catch (err) {
-    console.error(err);
-  }
-};
-const doHealthCheck = async () => {
-  const res = await commonRpc("healthcheck", {});
+  const res = await nakama.client.rpc(
+    nakama.session,
+    "mergeblocks." + id,
+    data
+  );
   return res.payload;
 };
 const getServerConfig = async () => {
@@ -67,7 +59,6 @@ const purchaseItem = async (item) => await rpc("shop:purchase", { item });
 
 export {
   rpc,
-  doHealthCheck,
   getServerConfig,
   addRecord,
   getRecords,

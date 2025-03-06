@@ -13,7 +13,7 @@ i18n
   // i18n 초기화
   .init({
     fallbackLng: "en", // 기본 언어
-    debug: import.meta.env.DEV, // 디버그 모드 활성화 (개발 환경에서만 사용, 프로덕션에서는 false로 설정)
+    // debug: import.meta.env.DEV, // 디버그 모드 활성화 (개발 환경에서만 사용, 프로덕션에서는 false로 설정)
 
     interpolation: {
       escapeValue: false, // React에서는 이미 XSS 방지 처리를 하므로 false로 설정

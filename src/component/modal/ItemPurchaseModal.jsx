@@ -23,6 +23,9 @@ const ItemPurchaseModal = ({ isOpen, item, onConfirm, onCancel }) => {
             alt={item.type}
             width={100}
           />
+          <div className="flex flex-col gap-2">
+            {t(`ITEM_DESCRIPTION.${item.type}`)}
+          </div>
           <div className="flex gap-2 w-full">
             <WSButton size="sm" onClick={onConfirm} className="w-full">
               <img src="/assets/common/diamond.png" alt="diamond" width={32} />

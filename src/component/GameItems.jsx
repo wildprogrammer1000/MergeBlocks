@@ -31,7 +31,6 @@ const GameItems = () => {
   const [usedItem, setUsedItem] = useState({
     item_sniping: false,
     item_random_blast: false,
-    item_tornado: false,
   });
   const [selectedItem, setSelectedItem] = useState();
   const [isSelecting, setIsSelecting] = useState();
@@ -56,6 +55,12 @@ const GameItems = () => {
     setIsSelecting(null);
     refreshAccount();
   };
+  const onRestart = () => {
+    setUsedItem({
+      item_sniping: false,
+      item_random_blast: false,
+    });
+  };
   useEffect(() => {
     evt.on("item:select", onSelectItem);
     return () => {
@@ -66,9 +71,11 @@ const GameItems = () => {
   useEffect(() => {
     evt.method("item:using", () => isSelecting);
     evt.on("item:used", onUsedItem);
+    evt.on("restart", onRestart);
     return () => {
       evt.methodRemove("item:using");
       evt.off("item:used", onUsedItem);
+      evt.off("restart", onRestart);
     };
   }, [isSelecting]);
   return (

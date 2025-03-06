@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 import evt from "@/utils/event-handler";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import { CgSpinner } from "react-icons/cg";
 
 const GameResultModal = ({
   score,
   result = { bestScore: 0, rank: 0 },
   maxCombo,
+  loading,
 }) => {
   const { t } = useTranslation();
   const [canShare, setCanShare] = useState(false);
@@ -41,26 +43,35 @@ const GameResultModal = ({
           </div>
         </WSModalHeader>
         <div className="flex flex-col gap-4 p-4">
-          <div className="flex justify-center gap-4">
-            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
-              <span className="text-2xl">{t("Score")}</span>
-              {score}
+          {loading ? (
+            <div className="text-center flex justify-center items-center gap-2 font-bold text-[var(--color-main-900)]  text-xl">
+              <CgSpinner className="animate-spin" />
+              {t("Sending Result")}...
             </div>
-            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
-              <span className="text-2xl">{t("MAX COMBO")}</span>
-              {maxCombo}
-            </div>
-          </div>
-          <div className="flex justify-center gap-4">
-            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
-              <span className="text-2xl">{t("BEST SCORE")}</span>
-              {result.bestScore}
-            </div>
-            <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
-              <span className="text-2xl">{t("MY RANK")}</span>
-              {result.rank}
-            </div>
-          </div>
+          ) : (
+            <>
+              <div className="flex justify-center gap-4">
+                <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
+                  <span className="text-2xl">{t("Score")}</span>
+                  {score}
+                </div>
+                <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
+                  <span className="text-2xl">{t("MAX COMBO")}</span>
+                  {maxCombo}
+                </div>
+              </div>
+              <div className="flex justify-center gap-4">
+                <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
+                  <span className="text-2xl">{t("BEST SCORE")}</span>
+                  {result.bestScore}
+                </div>
+                <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
+                  <span className="text-2xl">{t("MY RANK")}</span>
+                  {result.rank}
+                </div>
+              </div>
+            </>
+          )}
           <div className="flex flex-col gap-4">
             <div className="flex justify-center gap-2 text-2xl font-bold">
               <WSButton onClick={restartGame}>
@@ -90,4 +101,5 @@ GameResultModal.propTypes = {
   score: PropTypes.number.isRequired,
   result: PropTypes.object,
   maxCombo: PropTypes.number,
+  loading: PropTypes.bool,
 };

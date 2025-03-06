@@ -43,9 +43,16 @@
     "item_random_blast": "Random Blast",
     "item_tornado": "Tornado"
   },
+  "ITEM_DESCRIPTION": {
+    "item_sniping": "Select a block and destroy",
+    "item_random_blast": "Destroy 5 blocks randomly"
+  },
   "Cancel": "CANCEL",
   "Select Block": "SELECT BLOCK TO DESTROY",
   "Item Purchase": "ITEM PURCHASE",
   "Purchase Success": "Purchased item successfully.",
-  "Purchase Failed": "Failed to purchase item."
+  "Purchase Failed": "Failed to purchase item.",
+  "Server Closed": "The server is temporarily under maintenance.",
+  "Reconnecting": "RECONNECTING",
+  "Sending Result": "SENDING RESULT"
 }

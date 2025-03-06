@@ -27,9 +27,17 @@ export const NakamaProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [wallet, setWallet] = useState({});
   const logOut = async () => {
-    socket && socket.disconnect();
-    if (client && session) {
-      await client.sessionLogout(session, session.token, session.refreshToken);
+    try {
+      socket && socket.disconnect();
+      if (client && session) {
+        await client.sessionLogout(
+          session,
+          session.token,
+          session.refreshToken
+        );
+      }
+    } catch (err) {
+      console.error("logout error", err);
     }
     setSession(null);
     setSocket(null);
@@ -113,10 +121,11 @@ export const NakamaProvider = ({ children }) => {
         account,
         client,
         session,
-        refreshAccount,
         socket,
-        authenticate,
         wallet,
+        refreshAccount,
+        authenticate,
+        logOut,
       }}
     >
       {children}
