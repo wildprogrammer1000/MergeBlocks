@@ -38,7 +38,7 @@ const NetworkController = () => {
     healthCheckRef.current = setInterval(() => {
       healthCheck();
       checkServerStatus();
-    }, 5000);
+    }, 3000);
   };
 
   useEffect(() => {
