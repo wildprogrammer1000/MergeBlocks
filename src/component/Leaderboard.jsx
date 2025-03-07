@@ -22,10 +22,12 @@ const Leaderboard = () => {
 
   const refresh = async () => {
     const { records } = await getRecords();
-    setRecords(records.records);
+    if (records && records.records) {
+      setRecords(records.records);
 
-    const [record] = records.ownerRecords;
-    setMyRecord(record);
+      const [record] = records.ownerRecords;
+      setMyRecord(record);
+    }
   };
   useEffect(() => {
     evt.on("leaderboard:open", openLeaderboard);
