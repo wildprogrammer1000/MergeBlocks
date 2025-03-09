@@ -12,12 +12,12 @@ import { IoChatboxEllipses } from "react-icons/io5";
 const Chat = ({ className }) => {
   const { t } = useTranslation();
   const scrollRef = useRef();
-  const { account,  socket } = useNakama();
+  const { account, socket } = useNakama();
   const [isOpen, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [latestMessage, setLatestMessage] = useState(null);
-  
+
   const handleMessage = (e) => {
     const value = e.target.value;
     if (value.length > 60) {
@@ -129,7 +129,7 @@ const Chat = ({ className }) => {
           className="flex items-center h-12 border-t-2 border-[var(--color-main-900)]"
           onClick={() => setOpen(true)}
         >
-          <div className="text-2xl px-2 text-[var(--color-main-100)]">
+          <div className="px-2 text-[var(--color-main-100)]">
             <IoChatboxEllipses />
           </div>
           {messages.length > 0 && (

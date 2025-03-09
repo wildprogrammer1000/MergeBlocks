@@ -89,7 +89,7 @@ const SettingsModal = () => {
       <div className="flex flex-col gap-4 p-4">
         {Object.keys(initialSettings).map((key) => (
           <div key={key} className="flex items-center justify-between">
-            <div className="text-2xl text-[var(--color-main-900)]">
+            <div className="text-xl text-[var(--color-main-900)]">
               {t(key)}
             </div>
             <div>

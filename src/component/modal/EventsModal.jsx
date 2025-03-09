@@ -73,7 +73,7 @@ const Event = ({
   return (
     <div className="flex flex-col gap-3 bg-[var(--color-main-300)] text-[var(--color-main-900)] rounded-2xl p-4">
       <Timer endDate={end} />
-      <div className="font-bold text-2xl">📌 {title}</div>
+      <div className="font-bold text-xl">📌 {title}</div>
       <div className="text-md">{description}</div>
       <div className="text-sm text-gray-700">
         📅 {formatDate(start)} ~ {formatDate(end)}

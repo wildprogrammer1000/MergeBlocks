@@ -123,7 +123,7 @@ const GameItems = () => {
               className="w-20"
             />
           </div>
-          <div className="text-2xl font-bold text-center w-full">
+          <div className="text-xl font-bold text-center w-full">
             {t(`ITEM_NAMES.${selectedItem}`)}
           </div>
           <div className="text-center w-full">{t("ITEM_USE")}</div>

@@ -38,9 +38,7 @@ const GameResultModal = ({
     <WSModal className="z-20">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] bg-[var(--color-main-100)] rounded-2xl">
         <WSModalHeader className="p-2">
-          <div className="text-2xl font-bold text-center w-full">
-            {t("GAME OVER")}
-          </div>
+          <div className="font-bold text-center w-full">{t("GAME OVER")}</div>
         </WSModalHeader>
         <div className="flex flex-col gap-4 p-4">
           {loading ? (
@@ -51,22 +49,22 @@ const GameResultModal = ({
           ) : (
             <>
               <div className="flex justify-center gap-4">
-                <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
-                  <span className="text-2xl">{t("Score")}</span>
+                <div className="flex flex-col flex-1 text-xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
+                  <span>{t("Score")}</span>
                   {score}
                 </div>
-                <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
-                  <span className="text-2xl">{t("MAX COMBO")}</span>
+                <div className="flex flex-col flex-1 text-xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
+                  <span>{t("MAX COMBO")}</span>
                   {maxCombo}
                 </div>
               </div>
               <div className="flex justify-center gap-4">
-                <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
-                  <span className="text-2xl">{t("BEST SCORE")}</span>
+                <div className="flex flex-col flex-1 text-xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
+                  <span>{t("BEST SCORE")}</span>
                   {result.bestScore}
                 </div>
-                <div className="flex flex-col flex-1 text-4xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
-                  <span className="text-2xl">{t("MY RANK")}</span>
+                <div className="flex flex-col flex-1 text-xl font-bold text-center bg-[var(--color-main-900)] text-[var(--color-main-100)] p-4 rounded-2xl">
+                  <span>{t("MY RANK")}</span>
                   {result.rank}
                 </div>
               </div>

@@ -60,7 +60,7 @@ const Leaderboard = () => {
         className="flex flex-col w-full h-full max-h-[80%] max-w-md rounded-3xl bg-[var(--color-main-100)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-center text-2xl font-bold text-[var(--color-main-900)] border-b-2 p-4">
+        <h2 className="text-center font-bold text-[var(--color-main-900)] border-b-2 p-4">
           👑 {t("Ranking")} 👑
         </h2>
         <div className="flex-1 rounded-2xl overflow-y-auto">
@@ -84,7 +84,7 @@ const Leaderboard = () => {
         <div className="flex gap-2 p-2">
           <button
             disabled={!canRefresh}
-            className={`flex justify-center items-center flex-1 text-2xl rounded-2xl border-2 bg-[var(--color-main-100)] text-[var(--color-main-900)] ${
+            className={`flex justify-center items-center flex-1 rounded-2xl border-2 bg-[var(--color-main-100)] text-[var(--color-main-900)] ${
               canRefresh
                 ? "hover:bg-[var(--color-main-900)] hover:text-[var(--color-main-100)]"
                 : ""
@@ -156,7 +156,7 @@ const Record = ({ record }) => {
         </span>
         {account && record.ownerId === account.user.id && <FaRegUserCircle />}
       </div>
-      <div className="text-2xl font-bold mr-2">{record.score}</div>
+      <div className="text-xl font-bold mr-2">{record.score}</div>
     </div>
   );
 };
