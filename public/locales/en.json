@@ -54,5 +54,6 @@
   "Purchase Failed": "Failed to purchase item.",
   "Server Closed": "The server is temporarily under maintenance.",
   "Reconnecting": "RECONNECTING",
-  "Sending Result": "SENDING RESULT"
+  "Sending Result": "SENDING RESULT",
+  "Support": "SUPPORT"
 }

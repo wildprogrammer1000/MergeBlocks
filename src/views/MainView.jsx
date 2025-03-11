@@ -19,6 +19,7 @@ import { LuNotebook } from "react-icons/lu";
 import PatchNoteModal from "@/component/modal/PatchNoteModal";
 import { FaShoppingCart } from "react-icons/fa";
 import ShopModal from "@/component/modal/ShopModal";
+import BuyMeACoffee from "@/component/BuyMeACoffee";
 
 function MainPage() {
   const { t } = useTranslation();
@@ -112,6 +113,7 @@ function MainPage() {
       <Version />
       <ShopModal />
       <PatchNoteModal />
+      <BuyMeACoffee />
     </div>
   );
 }
