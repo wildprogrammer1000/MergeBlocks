@@ -7,7 +7,7 @@ import evt from "@/utils/event-handler";
 const ThemeContext = createContext();
 
 const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("candy");
+  const [theme, setTheme] = useState("default");
   const [currentApp, setCurrentApp] = useState();
   // if (app) {
   //   const prevAsset = app.assets.find(asset.name);

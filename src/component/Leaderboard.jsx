@@ -53,7 +53,7 @@ const Leaderboard = () => {
   if (!isOpen) return null;
   return (
     <div
-      className="fixed inset-0 bg-[rgba(0,0,0,0.5)] flex justify-center items-center"
+      className="fixed inset-0 z-10 bg-[rgba(0,0,0,0.5)] flex justify-center items-center"
       onClick={() => evt.emit("leaderboard:close")}
     >
       <div
